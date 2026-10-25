@@ -1,6 +1,6 @@
 {
   "provider": {
-    "displayName": "Local llama.cpp (RTX 3060 12 GB)",
+    "displayName": "Local llama.cpp (NVIDIA 12 GB)",
     "api": "openai-completions",
     "baseURL": "http://127.0.0.1:10000/v1",
     "apiKeyEnv": "LLAMA_CPP_API_KEY",

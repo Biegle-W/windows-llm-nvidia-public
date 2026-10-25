@@ -1,4 +1,4 @@
-"""Read-only RTX 3060/CUDA preflight; never stops another process."""
+"""Read-only single RTX 3060/3080 Ti CUDA preflight; never stops another process."""
 import argparse
 import csv
 import json
@@ -9,6 +9,23 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+SUPPORTED_NAMES = {'NVIDIA GeForce RTX 3060', 'NVIDIA GeForce RTX 3080 Ti'}
+
+
+def choose_gpu(text):
+    rows = list(csv.reader(text.splitlines()))
+    if len(rows) != 1 or len(rows[0]) != 4:
+        raise RuntimeError('Exactly one NVIDIA GPU is required for these swap profiles; multiple cards are not selected automatically.')
+    name, uuid, total, free = [value.strip() for value in rows[0]]
+    if name not in SUPPORTED_NAMES:
+        raise RuntimeError('Only RTX 3060 and RTX 3080 Ti are approved for this Windows setup.')
+    try:
+        total, free = int(total), int(free)
+    except ValueError:
+        raise RuntimeError('The driver returned invalid GPU memory information.') from None
+    if total < 12000 or not uuid or free < 0 or free > total:
+        raise RuntimeError('A supported card with at least 12 GB VRAM and valid memory information is required.')
+    return {'name': name, 'uuid': uuid, 'total_mib': total, 'free_mib': free}
 
 def clean_environment():
     env = {k: v for k, v in os.environ.items()
@@ -24,22 +41,17 @@ def selected_gpu():
                          timeout=15, creationflags=subprocess.CREATE_NO_WINDOW)
     if run.returncode:
         raise RuntimeError('NVIDIA driver is unavailable; check Device Manager.')
-    matches = [r for r in csv.reader(run.stdout.splitlines())
-               if len(r) == 4 and r[0].strip() == 'NVIDIA GeForce RTX 3060']
-    if len(matches) != 1:
-        raise RuntimeError('Exactly one RTX 3060 is required; another GPU is not substituted.')
-    name, uuid, total, free = [v.strip() for v in matches[0]]
-    return {'name': name, 'uuid': uuid, 'total_mib': int(total), 'free_mib': int(free)}
+    return choose_gpu(run.stdout)
 
-def validate_devices(text, minimum_free_mib=2048):
+def validate_devices(text, minimum_free_mib=2048, expected_name=None):
     rows = re.findall(r'^\s*(CUDA\d+): (.*?) \((\d+) MiB, (\d+) MiB free\)', text, re.M)
     if len(rows) != 1 or rows[0][0] != 'CUDA0':
-        raise RuntimeError('The selected RTX 3060 must be the only visible CUDA device.')
+        raise RuntimeError('The selected card must be the only visible CUDA device.')
     for device, name, total, free in rows:
-        if name != 'NVIDIA GeForce RTX 3060' or int(total) < 12000:
-            raise RuntimeError(f'{device} is not the expected 12 GB RTX 3060.')
+        if name not in SUPPORTED_NAMES or int(total) < 12000 or (expected_name and name != expected_name):
+            raise RuntimeError(f'{device} is not the selected supported 12 GB NVIDIA card.')
         if int(free) < minimum_free_mib:
-            raise RuntimeError('The RTX 3060 needs at least 2 GiB reported free VRAM.')
+            raise RuntimeError(f'The selected card needs at least {minimum_free_mib} MiB reported free VRAM.')
     return [{'device': d, 'name': n, 'total_mib': int(t), 'free_mib': int(f)} for d,n,t,f in rows]
 
 def preflight(require_model=True, profile=None):
@@ -53,7 +65,7 @@ def preflight(require_model=True, profile=None):
                          timeout=30, creationflags=subprocess.CREATE_NO_WINDOW)
     if run.returncode:
         raise RuntimeError('CUDA device enumeration failed; check the NVIDIA driver/runtime.')
-    devices = validate_devices(run.stdout + run.stderr)
+    devices = validate_devices(run.stdout + run.stderr, expected_name=selected_gpu()['name'])
     ram = memory()
     if ram['physical_available_gib'] < 2 or ram['commit_available_gib'] < 8:
         raise RuntimeError('Close unused applications: at least 2 GiB available RAM and 8 GiB commit headroom are required.')
@@ -72,7 +84,7 @@ def preflight(require_model=True, profile=None):
             raise RuntimeError(f'The registered profile requires {required_ram} GiB available system RAM and {required_commit} GiB commit headroom; close unused applications first.')
         required = max(p.get('minimumFreeVRAMMiB', 2048) for p in profiles)
         if selected_gpu()['free_mib'] < required:
-            raise RuntimeError(f'The registered profile requires {required} MiB free on the RTX 3060; close GPU-heavy apps first.')
+            raise RuntimeError(f'The registered profile requires {required} MiB free on the selected card; close GPU-heavy apps first.')
     return {'passed': True, 'devices': devices, 'memory': ram,
             'cudaVisibleDevices': env['CUDA_VISIBLE_DEVICES'], 'model_required': require_model}
 

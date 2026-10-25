@@ -30,7 +30,7 @@ def build():
         catalog.append({'id':p['id'],'name':p['label'],'contextWindow':p['context'],
                         'maxTokens':p.get('maxTokens',8192),'input':['text'],'reasoningEfforts':False})
     (ROOT/'config'/'models.ini').write_text('\n'.join(ini)+'\n')
-    provider={'displayName':'Local llama.cpp (RTX 3060 12 GB)',
+    provider={'displayName':'Local llama.cpp (NVIDIA 12 GB)',
               'api':'openai-completions','baseURL':'http://127.0.0.1:10000/v1',
               'apiKeyEnv':'LLAMA_CPP_API_KEY','timeoutMs':600000,'streamIdleTimeoutMs':600000,
               'compat':{'supportsDeveloperRole':False,'supportsStore':False,'supportsReasoningEffort':False,

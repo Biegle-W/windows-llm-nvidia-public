@@ -40,6 +40,8 @@ def digest(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--target', choices=('rtx3060','rtx3080ti'), default='rtx3060',
+                        help='Packaging label and additional host fixture; does not change the read-only EFI')
     parser.add_argument("--source", type=Path, default=PROJECT/"runtimes/rtx30-uefi-probe-source")
     parser.add_argument("--llvm-bin", type=Path,
                         default=PROJECT/"runtimes/uefi-probe-tools/llvm-20.1.8/bin")
@@ -89,6 +91,10 @@ def main():
     if fixture.count(original) != 1 or fixture.count("config[0] = Ids[i];") != 2:
         raise RuntimeError("Unexpected upstream mock fixture layout.")
     fixture = fixture.replace(original, "0x248410de, 0x250310de, 0x25a210de")
+    if args.target == 'rtx3080ti':
+        if fixture.count('0x220310de') != 1:
+            raise RuntimeError('Expected one GA102 fixture identity.')
+        fixture = fixture.replace('0x220310de','0x220810de')
     fixture = fixture.replace("config[0] = Ids[i];", "config[0] = Ids[i];\n"
                               "      if (Ids[i] == 0x250310de) config[11] = 0x407b1458;")
     fixture = fixture.replace("config[11] = 0x12345678;",
@@ -105,6 +111,9 @@ def main():
         raise RuntimeError("Exact-card mock did not report a clean pass.")
     results["gigabyte_2503_407b1458_capture_mocks"] = "passed"
     print("gigabyte_2503_407b1458_capture_mocks: passed (simulated)")
+    if args.target == 'rtx3080ti':
+        results['rtx3080ti_2208_ga102_capture_mocks'] = 'passed'
+        print('rtx3080ti_2208_ga102_capture_mocks: passed (simulated; subsystem not yet known)')
 
     image = build/"BOOTX64.EFI"
     mapfile = build/"BOOTX64.map"
@@ -132,14 +141,15 @@ def main():
          "tools/build-probe.ts", "tools/test_support.ts", "tools/verify_pe.ts", "LICENSE",
          "THIRD_PARTY_NOTICES.md", "LICENSES"], source, env)
     shutil.copy2(PROJECT/"scripts/prepare_uefi_probe.py", correspondence/"prepare_uefi_probe.py")
-    instructions = PROJECT/"reports/RTX3060-READONLY-UEFI-PROBE.md"
+    instructions = PROJECT/('reports/WINDOWS-3060-3080TI-SWAP-20261025.md' if args.target == 'rtx3080ti' else 'reports/RTX3060-READONLY-UEFI-PROBE.md')
     shutil.copy2(instructions, output/"START-HERE.md")
     (output/"RTX30-PROBE/README.txt").write_text(
         "Keep this directory on the same FAT32 USB as EFI/BOOT/BOOTX64.EFI.\n"
         "The probe creates a new RUN00..RUN99 directory here without overwriting old runs.\n"
         "Captures can identify the machine; keep REPORT/PROM/ROMIMAGE files private.\n", encoding="utf-8")
     metadata = {"upstream": UPSTREAM, "source_commit": PIN, "source_modified_for_efi": False,
-                "expected_pci_id": "10de:2503", "expected_subsystem": "1458:407b",
+                "expected_pci_id": '10de:2208' if args.target == 'rtx3080ti' else '10de:2503',
+                "expected_subsystem": None if args.target == 'rtx3080ti' else '1458:407b',
                 "compiler": run([clang, "--version"], source, env).stdout.splitlines()[0],
                 "linker": run([llvm/"lld-link.exe", "--version"], source, env).stdout.strip(),
                 "bun": run([bun, "--version"], source, env).stdout.strip(),

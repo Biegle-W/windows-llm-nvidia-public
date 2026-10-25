@@ -9,7 +9,8 @@
   "devices": [
     "CUDA0"
   ],
-  "targetGpu": "NVIDIA GeForce RTX 3060",
+  "targetGpu": "auto-single-supported",
+  "allowedGpuNames": ["NVIDIA GeForce RTX 3060", "NVIDIA GeForce RTX 3080 Ti"],
   "router": {
     "port": 10000,
     "workerPort": 10001,

@@ -17,7 +17,17 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**Latest: paired automatic unlock VERIFIED in RUN0004, October 25.** The installed
+**GPU swap prepared, October 25:** Windows Boot Manager is first for the incoming
+RTX3080Ti. The verified3060 unlock entry/payload are preserved but bypassed by
+default. CUDA now accepts exactly one RTX3060 or RTX3080Ti with12GB or more;
+the four model settings and memory guards remain unchanged. The3080Ti will boot
+at stock settings until its own board data is captured and reviewed. A separate
+read-only probe is packaged; no USB is currently connected or changed.
+When returning the original3060 to the same slot, run **Restore RTX3060 Unlock.cmd**
+and accept UAC to re-enable its verified entry. The helper refuses the3080Ti,
+other boards and changed identity/EFI state. [Swap workflow and validation](reports/WINDOWS-3060-3080TI-SWAP-20261025.md).
+
+**Historical paired3060 success, RUN0004:** The installed
 EFI accepted70520074/5, completed preflight and one safe transaction/FLR, restored
 the display and booted Windows. FP16 50.459TFLOPS (+88.0% vs stock), BF16
 50.792TFLOPS (+89.6%); GPU OK/error0 and no NVIDIA Error/Critical events found

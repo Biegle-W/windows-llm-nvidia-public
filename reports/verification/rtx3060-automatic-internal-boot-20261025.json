@@ -65,5 +65,8 @@
       "70520074",
       "00000005"
     ]
-  ]
+  ],
+  "boot_unlock_enabled": false,
+  "current_boot_policy": "Windows Boot Manager first for planned 3080 Ti swap; verified 3060 entry retained",
+  "gpu_swap_prepared": true
 }

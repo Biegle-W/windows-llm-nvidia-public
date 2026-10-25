@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-25",
+  "status": "prepared-for-physical-3080ti-swap-windows-first",
+  "currently_installed_gpu": "RTX 3060 12GB",
+  "planned_gpu": "RTX 3080 Ti (board/subsystem/VBIOS not yet known)",
+  "windows_boot_manager_first": true,
+  "windows_entry_preserved": true,
+  "original_3060_unlock_entry_and_payload_preserved": true,
+  "3060_unlock_boot_enabled": false,
+  "existing_3060_efi_sha256": "a57b0621ea87dd53c0a50aceca8de2467f2f4c3da1580f1fee230af6b8844394",
+  "original_3060_restore_identity_and_hash_checked": true,
+  "restore_requires_original_3060_board_bdf_vbios_vram_and_efi": true,
+  "restore_refuses_3080ti_other_boards_or_multiple_cards": true,
+  "llm_gpu_selection": "exactly one approved RTX 3060 or RTX 3080 Ti with at least 12000MiB VRAM; UUID-bound CUDA0",
+  "model_ids_contexts_options_and_admission_limits_unchanged": true,
+  "selected_profile_count": 4,
+  "models_reloaded_or_downloaded": false,
+  "tests": {
+    "hardware_guard_unit_tests": 8,
+    "fake_worker_router_tests": 7,
+    "boot_policy_tests": 10,
+    "powershell_versions": [
+      "5.1",
+      "7.6"
+    ],
+    "actual_3060_hardware_only_preflight": true,
+    "actual_original_3060_restore_checks": true,
+    "final_windows_first_order_verified": true
+  },
+  "rtx3080ti_readonly_probe": {
+    "prepared": true,
+    "efi_sha256": "ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a",
+    "source_modified_for_efi": false,
+    "host_validation": {
+      "probe_build": "passed",
+      "upstream_probe_mocks": "passed",
+      "report_parser_11_tests": "passed",
+      "gigabyte_2503_407b1458_capture_mocks": "passed",
+      "rtx3080ti_2208_ga102_capture_mocks": "passed",
+      "pe_rejects_wrong_machine": "passed",
+      "pe_rejects_wrong_subsystem": "passed",
+      "pe_rejects_unexpected_import": "passed"
+    },
+    "physical_3080ti_capture_tested": false,
+    "installed_or_scheduled_as_boot_unlock": false,
+    "usb_connected_or_modified": false
+  },
+  "rtx3080ti_unlock_profile_prepared": false,
+  "rtx3080ti_hardware_validation": false,
+  "new_partition_or_resize": false,
+  "linux_amd_changed": false,
+  "reboot_initiated": false
+}

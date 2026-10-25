@@ -1,5 +1,24 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
+LATEST GPU SWAP PREPARATION: Windows Boot Manager first;3060 unlock retained but
+bypassed by default. [Swap instructions](WINDOWS-3060-3080TI-SWAP-20261025.md).
+The next user shutdown/swap installs an unknown-board3080Ti. Verify Windows/driver,
+PCI/subsystem/VBIOS/VRAM and CUDA, then collect a stock compute baseline. No3080Ti
+unlock profile is prepared or authorized by the3060 evidence. Separate read-only
+package/ZIP are under data/uefi-probe/rtx3080ti-readonly; no USB attached/staged.
+Need its physical PROM/register and display-ownership evidence before a new unlock.
+LLM hardware guard accepts exactly one3060 or3080Ti with>=12000MiB; UUID maps that
+card to CUDA0. Eight guard/7 router tests pass; current3060 hardware-only preflight
+passes. Four model contexts/options/thresholds unchanged, no weights reloaded.
+Restore RTX3060 Unlock.cmd -> Set-GpuBootMode.ps1 -Mode3060 -Elevate requires the
+original Gigabyte2503/407b1458/REV_A1, BDF01:00.0, VBIOS94.06.14.40.b2,12GB,
+Secure Boot off, saved internal disk/GUID/hash. Actual guard passed on current
+card;10 policy tests pass on Windows PowerShell5.1 and7.6. It reenables the existing
+entry and leaves Windows second; no reboot. ModeStock restores Windows-first.
+Private swap state/backups remain under data/uefi-probe/internal-startup/. Existing
+paired3060 verification remains historical, while BootUnlockEnabled=false records
+its effective bypass. Keep Linux AMD and credentials unrelated settings intact.
+
 LATEST: paired automatic payload verified successful in RUN0004:
 [physical paired-profile result](RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md).
 It accepted initial70520074/5, passed complete preflight/live PROM, AUTO_START,
