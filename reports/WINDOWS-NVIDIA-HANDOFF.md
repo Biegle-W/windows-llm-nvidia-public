@@ -1,5 +1,18 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
+Automatic internal boot is prepared but not installed: [design, recovery and OS-update behavior](RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md).
+`prepare_uefi_3060_automatic.py` and `Install-RTX3060AutomaticUnlock.ps1` pass14
+host automatic/source cases and13 installer policy checks. Preview under ignored
+`data/uefi-probe/internal-startup/preview-v2/` is bound to a synthetic partition
+GUID and MUST NOT be installed. Existing ESP free space is64106496 bytes, too
+small for firmware assets. Explicit approval is pending for shrinking C: by
+536870912 bytes and creating a new512MiB FAT32 ESP; no partition/boot order has
+changed. After approval, run the installer elevated with Mode Install and
+AllowResizeCBy512MiB. It compiles against the actual new ESP GUID and verifies
+files before promoting a separate firmware entry, preserving Windows Boot Manager
+as fallback. State/backups are private under `data/uefi-probe/internal-startup/`.
+The tested manual USB and current unlocked Windows boot remain unchanged.
+
 **Latest October25 result: first physical unlock succeeded in Windows.**
 [Execution and identical-executable comparison](RTX3060-WINDOWS-UNLOCK-RESULT-20261025.md).
 RUN01 logs are hash-verified in ignored `data/uefi-probe/captures/20261025-UNLOCK-RUN01/`.

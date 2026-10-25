@@ -24,6 +24,11 @@ The unchanged-driver/170W short GEMM comparison measured FP16 26.84->50.72TFLOPS
 The Windows GPU reports StatusOK/error0. [Physical result and measurement limits](reports/RTX3060-WINDOWS-UNLOCK-RESULT-20261025.md).
 The USB remains manual-only; no persistent boot installation or VBIOS flash was
 made. Unlock persistence, repeat-boot reliability and LLM speed gains are untested.
+An [automatic internal-boot package and installer](reports/RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md)
+are now prepared, with14 automatic/source and13 installer-policy checks passing.
+The existing ESP has61MiB free; the81MiB payload needs a separate512MiB FAT32
+ESP. Creating it by shrinking C:512MiB awaits explicit user approval; no partition
+or permanent firmware boot order has changed. Do not install the preview build.
 Do not rerun the unlock in the current boot. The preparation paragraphs below
 describe earlier stages, not the latest hardware result.
 
