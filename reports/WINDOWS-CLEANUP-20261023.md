@@ -49,7 +49,7 @@ Unused CUDA builds b11065/b11155, Vulkan builds b11680/b11706, ROCm 10.1.0 and
 the disabled Strata checkout were moved into
 `archive/retired-windows-20261023/runtimes/`. Retired setup/tuning/test helpers,
 `Start Strata.cmd` and full Strata configuration snapshots are in
-`retired/20261023/`. Restore them only after reviewing that directory's README.
+`archives/2026-10-23-strata/`. Restore them only after reviewing that directory's README.
 
 ## Validation and unchanged behavior
 

@@ -1,5 +1,12 @@
 # Windows NVIDIA handoff — 23 October 2026
 
+Repository organization: private `windows-llm-nvidia`, sanitized
+`windows-llm-nvidia-public`; retired source/documentation is indexed in
+[archives](../archives/README.md). Ubuntu AMD repositories remain independent.
+GitHub renaming does not change local installation paths, API ports, selected
+models, contexts, credentials or memory guards.
+
+
 Windows is independent: RTX 3060 12 GB / i5-13600KF /16 GB DDR5 at 6000 MT/s, NVIDIA 610.88, llama.cpp b11630 CUDA 13.4 (`6868a52cb`). Linux remains its separate i9/64-GB/dual-7900-XTX HIP build; do not apply its policies or edit its runtime files here.
 
 Current default: **Ornith 1.5 35B-A3B (IQ2_S) | 32K | GPU + RAM**, API ID `Ornith-1.5-35B-A3B-IQ2_S`, weights in project `models/`. Source registry retains fit on / GPU layers auto / fit-target2816 / no-host true. Q8 KV, FA on, one slot, batch512/ubatch128, thinking off, no speculation. This is not full GPU: normal buffers were 7,840.74 MiB GPU /2,643.67 MiB host. Fresh minimums:4 GiB RAM available /16 GiB commit headroom /9,728 MiB actual free VRAM. Never kill unrelated apps to satisfy these checks.
@@ -22,7 +29,7 @@ Ornith's default/catalog and production limits are unchanged. Perplexity, the Qu
 
 ## Directory consolidation — later October 23
 
-All four inference GGUFs are in project `models/`; source paths are project-relative. Candidate profiles are in `config/test-profiles-lfm-qwen-20261023.json`. Regenerate catalogs after moving the project. Retired Strata source is in `retired/20261023/`; inactive runtimes are in ignored `archive/retired-windows-20261023/runtimes/`. Reports and prior benchmarks remain preserved; no inference rerun. See [cleanup record](WINDOWS-CLEANUP-20261023.md).
+All four inference GGUFs are in project `models/`; source paths are project-relative. Candidate profiles are in `config/test-profiles-lfm-qwen-20261023.json`. Regenerate catalogs after moving the project. Retired Strata source is in `archives/2026-10-23-strata/`; inactive runtimes are in ignored `archive/retired-windows-20261023/runtimes/`. Reports and prior benchmarks remain preserved; no inference rerun. See [cleanup record](WINDOWS-CLEANUP-20261023.md).
 
 ## Current: model router — later October 23
 

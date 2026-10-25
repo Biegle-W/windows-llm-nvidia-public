@@ -12,3 +12,12 @@ JavaScript syntax, local document links, credential/identity scans and excluded
 model/runtime/private state. PowerShell and Windows runtime behavior were not
 executed on Linux. No private Git history was imported. Keep models, binaries,
 credentials, private data, raw logs and generated configuration outside Git.
+
+
+October 24 hardware-specific reorganization: repository identities distinguish
+Ubuntu AMD from Windows NVIDIA. Retired setup source is indexed under `archives/`.
+All previously tracked source/configuration and numeric evidence is preserved;
+non-document bytes are unchanged. Markdown links were adjusted for relocation.
+Python/JSON syntax and publication privacy checks pass, with no new broken local
+document targets. Active launchers, model profiles, contexts, guards, ports and
+runtime paths are unchanged. No new inference or performance test is claimed.

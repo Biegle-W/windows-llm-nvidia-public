@@ -1,7 +1,24 @@
-# Windows local LLM — RTX 3060
+# Windows LLM NVIDIA — RTX 3060
+
+## Repository and archive map
+
+This system uses **Windows / NVIDIA RTX 3060 12 GB / i5-13600KF / 16 GB RAM**.
+The private operational repository is `windows-llm-nvidia`; its independently
+sanitized reference is [windows-llm-nvidia-public](https://github.com/Biegle-W/windows-llm-nvidia-public).
+Ubuntu AMD has separate private/public repositories named `ubuntu-llm-amd` and
+`ubuntu-llm-amd-public`. Keep the existing Windows installation directory and
+runtime/model/configuration paths; renaming GitHub does not relocate that install.
+
+Current launchers remain at the root, active source in `scripts/` and selected
+profiles in `config/`. [archives/](archives/README.md) contains retired Strata source
+and older setup documentation. Current reports stay under `reports/`; dated
+benchmark/verification payloads retain their original locations for provenance.
+The archive is not an active launcher or a request to restore retired models.
+
+
 
 Sanitized reference for the independent Windows RTX3060 12GB /i5-13600KF /16GB
-build, llama.cpp b11630 CUDA13.4, NVIDIA610.88. Linux AMD remains separate in [ubuntu-llm-public](https://github.com/Biegle-W/ubuntu-llm-public).
+build, llama.cpp b11630 CUDA13.4, NVIDIA610.88. Linux AMD remains separate in [ubuntu-llm-public](https://github.com/Biegle-W/ubuntu-llm-amd-public).
 
 ## One setting per model — October 23, 2026
 
@@ -51,7 +68,7 @@ CPU KV increases capacity at a speed cost. The router is left running idle.
 
 Keep exactly one active configuration per model in `config/selected-profiles.json`.
 Do not re-add smaller context alternatives. Archived trial profiles/source are
-in `retired/20261023/`; dated reports preserve their original IDs and settings.
+in `archives/2026-10-23-strata/`; dated reports preserve their original IDs and settings.
 Historical settings may differ from the current registry. Keep weights/runtime/
 state/backups ignored; publish no credentials, workstation paths or private app
 data. Preserve retired Windows files and historical hardware/method attribution.
@@ -63,13 +80,13 @@ Qwen27B's8K-only setting was replaced in place by64K/Q8 KV in RAM; no extra prof
 This repository is the Windows half of the former combined public distribution.
 The sanitized Windows files, reports and retired configurations were moved intact
 from its October 24, 2026 snapshot (public commit
-[`8fbe5b5`](https://github.com/Biegle-W/ubuntu-llm-public/tree/8fbe5b515ba623b786d7a28d825989bcd627a725/windows)).
+[`8fbe5b5`](https://github.com/Biegle-W/ubuntu-llm-amd-public/tree/8fbe5b515ba623b786d7a28d825989bcd627a725/windows)).
 Scripts and configuration now live at the repository root, so the launch commands
 above remain valid. Earlier public history stays accessible at that snapshot.
 No private repository history is included.
 
 Publish reviewed Windows changes here and Ubuntu changes in
-[ubuntu-llm-public](https://github.com/Biegle-W/ubuntu-llm-public).
+[ubuntu-llm-public](https://github.com/Biegle-W/ubuntu-llm-amd-public).
 Keep both private operational repositories private. Never copy credentials,
 private paths, hostnames, IP addresses, chat sessions, raw logs, model weights,
 installed runtimes or private Git history into this distribution. Use example
