@@ -18,7 +18,14 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 Sanitized reference for the independent Windows RTX3060 12GB /i5-13600KF /16GB
-build, llama.cpp b11630 CUDA13.4, NVIDIA610.88. Linux AMD remains separate in [ubuntu-llm-public](https://github.com/Biegle-W/ubuntu-llm-amd-public).
+build, llama.cpp b11630 CUDA13.4, NVIDIA610.88. Linux AMD remains separate in [ubuntu-llm-amd-public](https://github.com/Biegle-W/ubuntu-llm-amd-public).
+
+October25: [native Linux gpu-unlock preparation](reports/NATIVE-LINUX-NVIDIA-GPU-UNLOCK-20261025.md)
+for this NVIDIA host targets RTX3060/2503 and a future retail RTX3080Ti/2208
+on an additional SSD, preserving Windows. The pinned helper refuses WSL and
+includes exact-PCI selection and rollback. Ten host-only tests pass; native
+installation, actual unlock and performance remain untested. This does not
+change the separate AMD Linux build or the archived NVIDIA Linux setup.
 
 ## One setting per model — October 23, 2026
 
@@ -86,7 +93,7 @@ above remain valid. Earlier public history stays accessible at that snapshot.
 No private repository history is included.
 
 Publish reviewed Windows changes here and Ubuntu changes in
-[ubuntu-llm-public](https://github.com/Biegle-W/ubuntu-llm-amd-public).
+[ubuntu-llm-amd-public](https://github.com/Biegle-W/ubuntu-llm-amd-public).
 Keep both private operational repositories private. Never copy credentials,
 private paths, hostnames, IP addresses, chat sessions, raw logs, model weights,
 installed runtimes or private Git history into this distribution. Use example
