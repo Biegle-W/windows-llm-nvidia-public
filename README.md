@@ -27,6 +27,12 @@ includes exact-PCI selection and rollback. Ten host-only tests pass; native
 installation, actual unlock and performance remain untested. This does not
 change the separate AMD Linux build or the archived NVIDIA Linux setup.
 
+[Windows UEFI unlock research](reports/WINDOWS-GPU-UNLOCK-RESEARCH-20261025.md)
+now includes real desktop3060/2504 results and a no-iGPU Intel/3070Ti boot.
+The reviewed craftingmod GA10x framework is a candidate for this Gigabyte2503 /
+B760M host, whose own unlock boot remains untested. Next step is a separate
+read-only UEFI capture. No boot entry, driver or inference setting changed.
+
 ## One setting per model — October 23, 2026
 
 The OpenAI-compatible router exposes exactly four IDs, retaining the largest

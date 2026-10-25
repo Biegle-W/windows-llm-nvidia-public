@@ -2,6 +2,8 @@
 
 **准备完成，尚未安装或启用解锁。** 用户选择另加 SSD 安装 Linux，保留 Windows。新盘尚未在当前系统检测到；没有改分区、引导项、Secure Boot、Windows 驱动或推理配置。另一台双 AMD Linux 主机不属于本次任务。
 
+补充：[Windows 路线深入调查](WINDOWS-GPU-UNLOCK-RESEARCH-20261025.md) 找到了桌面3060/2504及无核显Intel单卡的实际UEFI成功案例，也有GA106通用实验框架。本机2503/B760M仍需只读采集和适配；原生Linux是保留方案，不是现在唯一可能的路线。
+
 ## 硬件、源码与限制
 
 本机 i5-13600KF、16 GB DDR5-6000、RTX 3060 12 GB，Windows NVIDIA 610.88。3060 PCI ID 为 `10de:2503`；计划增加标准零售 RTX 3080 Ti 12 GB，预期 `10de:2208`，到货后以实际 ID 为准。Linux 的 PCI 地址可能与 Windows 不同，安装第二张卡后也可能改变。
