@@ -1,0 +1,105 @@
+{
+  "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
+  "mode": "fixed 3060 single-child AMI manual experiment",
+  "upstream_checkout_changed": false,
+  "display_source_override": true,
+  "transaction_source_changed": false,
+  "ownership_tree_complete": true,
+  "display_children": 1,
+  "driver_roles": 5,
+  "driver_metadata": [
+    {
+      "version": 393227,
+      "bytes": 179904,
+      "code_type": 3,
+      "start_offset": 1908,
+      "stop_offset": 1688
+    },
+    {
+      "version": 17,
+      "bytes": 8576,
+      "code_type": 3,
+      "start_offset": 1712,
+      "stop_offset": 2188
+    },
+    {
+      "version": 16,
+      "bytes": 15296,
+      "code_type": 3,
+      "start_offset": 2116,
+      "stop_offset": 2860
+    },
+    {
+      "version": 16,
+      "bytes": 27360,
+      "code_type": 3,
+      "start_offset": 3948,
+      "stop_offset": 4172
+    },
+    {
+      "version": 1,
+      "bytes": 36864,
+      "code_type": 5,
+      "start_offset": 4996,
+      "stop_offset": 5332
+    }
+  ],
+  "driver_code_hashes_captured": false,
+  "driver_method_offsets_checked_in_efi": true,
+  "mock_flag_in_efi": false,
+  "manual_u_required": true,
+  "automatic_execution": false,
+  "firmware_assets_verified": 5,
+  "physical_unlock_tested": false,
+  "efi": {
+    "path": "BOOTX64.EFI",
+    "bytes": 93696,
+    "sha256": "61fa2b71d1332d4d6180610175955d3cad015420c41f393b7abea717507d09e1",
+    "machine": "AMD64",
+    "subsystem": 10,
+    "entry": "efi_main",
+    "entry_rva": 4096,
+    "imports": 0,
+    "iat": 0,
+    "delay_imports": 0,
+    "nx": true,
+    "dynamic_base": true
+  },
+  "tests": {
+    "single_child_full_replay": "passed",
+    "single_child_patch_replay": "passed",
+    "driver_policy_26_cases": "passed",
+    "wrong_bdf_and_extra_child_preflight": "passed",
+    "hardware_preprocessed_driver_checks_present": "passed",
+    "ownership_parser_4_negative_cases": "passed"
+  },
+  "note": "Host replay is not proof of real GOP Stop/Start behavior; first hardware trial remains experimental.",
+  "date": "2026-10-25",
+  "physical_ownership_capture_passed": true,
+  "ownership_capture_bytes": 12062,
+  "ownership_capture_detach_attempted": false,
+  "ownership_capture_touched": false,
+  "raw_capture_published": false,
+  "source_profile_unlock_approved": false,
+  "source_profile_firmware_compatible": false,
+  "trial_status": "Prepared for first manual hardware attempt; no unlock has run",
+  "platform": "Gigabyte RTX 3060 12 GB / ASUS TX GAMING B760M WIFI BIOS1836 / i5-13600KF",
+  "original_readonly_capture_preserved": true,
+  "selector_policy": "Unmodified upstream full SS0=88888888 / SS1=8",
+  "windows_baseline_driver": "610.88",
+  "usb_stage": {
+    "date": "2026-10-25",
+    "fileSystem": "FAT32",
+    "mode": "manual single-child RTX 3060 unlock trial",
+    "manualURequired": true,
+    "automaticExecution": false,
+    "backupFiles": 32,
+    "priorCapturesPreserved": true,
+    "fallbackSha256": "61fa2b71d1332d4d6180610175955d3cad015420c41f393b7abea717507d09e1",
+    "firmwareAssetsVerified": 5,
+    "allCopiedHashesVerified": true,
+    "formatted": false,
+    "bootVariablesChanged": false,
+    "gpuUnlockExecuted": false
+  }
+}

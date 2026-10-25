@@ -1,5 +1,22 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
+Current first-trial preparation, October25: the ownership capture passed but
+rejects the generic two-child design. [Single-child adaptation and manual trial](RTX3060-WINDOWS-FIRST-UNLOCK-TRIAL.md)
+is built under ignored `data/uefi-probe/windows3060-single-child-20261025-v3/`.
+The source override changes only the display path, binds exact2503/407b1458/BDF
+and five driver metadata/method-offset profiles, and retains the original firmware
+transaction and manual U gate.31 full display,22 simulated unlock/rejoin and26
+policy tests pass, including wrong-BDF/extra-child refusal and real-build
+preprocessor verification. Driver code hashes were not captured; metadata checks
+and host mocks are not hardware validation. The Kingston fallback is now this
+manual candidate, SHA256 `61fa2b71d1332d4d6180610175955d3cad015420c41f393b7abea717507d09e1`,
+with all five assets verified. Both earlier RUN00 captures and a complete
+pre-trial USB backup remain private/preserved. No unlock has executed. Next boot
+is the first manual attempt: U only after preflight, Windows in the same boot;
+if stopped or no Windows within10 minutes, fully power off/remove USB/boot stock.
+Inspect new `RTX-UNLOCK/RUNnn/GOP.TXT` and any `UNLOCK.TXT` before measuring.
+Do not reuse the unadapted candidate or replay an unlock in the same firmware session.
+
 Latest October25: [manual Windows unlock preparation](RTX3060-WINDOWS-UNLOCK-PREPARATION.md)
 is complete locally at ignored `data/uefi-probe/windows3060-unlock-20261025-v2/`.
 Actual PROM FWSEC parsing, fuse/signature selection, DMA alignment, memory layout

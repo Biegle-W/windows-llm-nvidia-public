@@ -51,6 +51,15 @@ administrator queries. The Kingston USB now boots a separate read-only ownership
 tree probe, preserving the first capture; the unlock candidate stays off USB
 until that display tree is reviewed. No hardware unlock has run.
 
+Latest ownership review: the physical capture passed and shows a one-child AMI
+console chain. A [separate exact-board display adaptation and first manual trial](reports/RTX3060-WINDOWS-FIRST-UNLOCK-TRIAL.md)
+now replaces the incompatible generic two-child candidate on the USB. It checks
+five captured driver metadata/entry-offset profiles, preserves the unchanged
+firmware transaction, and passes31 display replays,22 simulated transaction/rejoin
+cases and26 policy checks. The USB requires U after preflight; no actual unlock
+has run. Inspect the next `RTX-UNLOCK/RUNnn/GOP.TXT` and any `UNLOCK.TXT` after
+the first trial. Previous captures, the old candidate and USB backups remain private.
+
 ## One setting per model â€” October 23, 2026
 
 The OpenAI-compatible router exposes exactly four IDs, retaining the largest

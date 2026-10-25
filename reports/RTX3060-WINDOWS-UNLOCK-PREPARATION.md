@@ -1,5 +1,10 @@
 # RTX 3060 Windows unlock preparation — October 25, 2026
 
+**Later update:** the ownership capture passed and requires a one-child AMI
+adaptation. The earlier generic two-child candidate described here remains
+incompatible. See the [current manual trial and USB instructions](RTX3060-WINDOWS-FIRST-UNLOCK-TRIAL.md)
+for the separately built/tested single-child candidate. No hardware unlock has run.
+
 The fixed-board **manual unlock candidate is built**, with all five pinned
 firmware assets verified. It has not run on the GPU and is **not yet cleared
 for an unlock boot**. The next USB boot captures the display ownership tree

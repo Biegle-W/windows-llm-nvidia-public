@@ -1,11 +1,10 @@
 # Read-only RTX 3060 UEFI probe
 
-**Current USB mode:** the first register/PROM capture below is complete. The
-Kingston fallback now runs the separate read-only **ownership-tree** probe for
-[Windows unlock preparation](RTX3060-WINDOWS-UNLOCK-PREPARATION.md). Its new logs
-are under `RTX-UNLOCK/RUNnn/GOP.TXT`; the original `RTX30-PROBE/RUN00` remains
-preserved and backed up. The following register-probe boot instructions describe
-the earlier package, not the current USB fallback.
+**Current USB mode:** both read-only captures are complete. The Kingston fallback
+is now the [manual single-child unlock trial](RTX3060-WINDOWS-FIRST-UNLOCK-TRIAL.md),
+which requires U after preflight. Register/PROM `RTX30-PROBE/RUN00` and ownership
+`RTX-UNLOCK/RUN00/GOP.TXT` remain preserved and backed up. The following
+register-probe instructions describe the earlier package, not the current fallback.
 
 This package contains the **standalone read-only probe**, not an unlock image.
 Target host: Gigabyte RTX 3060 12 GB, PCI `10de:2503`, subsystem `1458:407b`,
