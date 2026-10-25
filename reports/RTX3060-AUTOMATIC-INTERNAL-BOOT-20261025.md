@@ -11,7 +11,17 @@ The base [manual hardware trial succeeded](RTX3060-WINDOWS-UNLOCK-RESULT-2026102
 with about89% higher FP16/BF16 Tensor GEMM throughput. Automatic internal boot is
 a separate integration step and needs a subsequent physical boot check.
 
-## Installed status — awaiting first physical boot
+## First physical boot result: unlock refused
+
+The internal EFI executed RUN0000 but stopped at unlock-preflight on a mismatch
+between the saved initial SS0/SS1 pair and this boot's zero/zero state. No unlock
+transaction or FLR ran. The current same-executable FP16/BF16 results are stock-like,
+26.786/26.806TFLOPS. [First-boot evidence and diagnosis](RTX3060-AUTOMATIC-FIRST-BOOT-20261025.md).
+Automatic unlock is not successful yet. No startup checks or boot payload were
+changed during verification; the fixed startup profile needs review and retest.
+The installation notes below describe the earlier on-disk installation checks.
+
+## Installation status before the first boot
 
 The user approved the partition change and installation. C: was reduced by
 exactly 536870912 bytes once. A new 512 MiB FAT32 ESP now holds the actual-partition

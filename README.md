@@ -17,6 +17,15 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
+**First automatic boot, October 25: the internal EFI ran but refused before unlocking.**
+Its RUN0000 logs show a strict startup-state mismatch: the saved initial SS0/SS1
+values differ from this boot's zero/zero values. No unlock transaction or FLR ran.
+Current FP16/BF16 are stock-like at 26.79/26.81 TFLOPS; GPU StatusOK/error0 and
+no NVIDIA Error/Critical events were found this boot. [Evidence and next step](reports/RTX3060-AUTOMATIC-FIRST-BOOT-20261025.md).
+Automatic unlock is not verified successful. The earlier LLM speed results below
+were measured in the prior successful manual-unlock boot. No boot payload or
+startup checks were changed during this verification.
+
 **LLM tests after unlocking, October 25:** all four existing profiles passed short
 chat, streaming and two 128-token speed samples with matched sampling and unchanged
 weight placement. Mean generation: Ornith 28.34 t/s, LFM 65.29 t/s (reasoning-only),
@@ -38,8 +47,7 @@ the original Windows Boot Manager second. Original partitions and the Windows
 boot entry passed preservation checks; temporary U: was removed. The actual-partition
 build passes 14 automatic/source scenarios; the corrected installer passes 20
 policy/state/resume checks. A first state-writing failure was audited and recovered
-without a second shrink. No VBIOS flash or reboot was initiated. **First physical
-automatic boot remains untested: restart without USB, then inspect the new logs.**
+without a second shrink. No VBIOS flash or reboot was initiated. **First physical automatic boot ran but refused preflight; the unlock did not apply.**
 F8 -> Windows Boot Manager bypasses the unlock. Do not install the preview build.
 Do not rerun the unlock in the current boot. The preparation paragraphs below
 describe earlier stages, not the latest hardware result.

@@ -1,5 +1,18 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
+Latest first automatic-boot verification FAILED to apply the unlock:
+[logs, compute results and diagnosis](RTX3060-AUTOMATIC-FIRST-BOOT-20261025.md).
+The internal EFI executed RUN0000 but refused unlock-preflight with EFI_NOT_READY,
+touched0, before automatic start/transaction/FLR. Captured initial SS0/SS1 were
+zero/zero, while the fixed profile expects the earlier nonzero pair. Do not skip
+ColdCheck or mark the unlock successful. Later layout/PROM checks were not reached.
+Current Windows FP16/BF16 are 26.786/26.806TFLOPS; device OK/error0, no NVIDIA
+Error/Critical events found. Logs copied/hash-verified, U: removed. Same dedicated
+ESP GUID is now partition4 after reboot; private bookkeeping corrected from5.
+Firmware order/payload/guards were not changed. A reviewed startup-profile
+correction and another physical boot test remain necessary. Prior LLM samples
+below belong to the successful manual-unlock boot, not the current stock state.
+
 Latest October 25 LLM tests: [results and model research](RTX3060-UNLOCKED-LLM-20261025.md).
 Unchanged profiles passed short chat/streaming and two 128-token temperature 0.1
 speed samples. Means: Ornith 28.34, LFM 65.29, Empero 29.45, Qwen27B 6.59 tok/s.
@@ -11,7 +24,7 @@ nvlddmkm Error/Critical events found this boot. No profile/runtime/boot changes.
 Recommended future experiment: full-GPU LFM2.5-2.6B BF16 or Qwen3.5-4B 16-bit,
 separately measuring prefill and decode; candidates are not installed.
 
-Automatic internal boot is installed, awaiting first physical boot:
+Automatic internal boot is installed; first boot refused preflight, as recorded above:
 [installation, recovery and OS-update behavior](RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md).
 The user explicitly approved the 512 MiB C: shrink and dedicated FAT32 ESP.
 Exactly 536870912 bytes were released once; original partition identities and
@@ -24,9 +37,8 @@ null-to-empty-path state-write bug after shrinking C. A read-only audit confirme
 no new partition/entry; corrected state writes and guarded Mode Resume completed
 the installation without another shrink. Installer now passes 20 policy/state/
 resume checks; actual EFI build passes 14 automatic/internal-source cases.
-No reboot or second unlock was initiated. Next: user restarts without USB;
-inspect internal RTX-UNLOCK logs and verify GPU/compute afterward. Do not mark
-physical automatic boot verified yet. F8 -> Windows Boot Manager bypasses the
+The installer initiated no reboot or second unlock. The subsequent user restart
+ran the entry but refused preflight. Physical automatic unlock remains unsuccessful. F8 -> Windows Boot Manager bypasses the
 application; six-second Esc cancellation is retained. Preview must not be used.
 
 **Latest October25 result: first physical unlock succeeded in Windows.**

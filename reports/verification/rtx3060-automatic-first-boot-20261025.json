@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-25",
+  "status": "automatic-entry-executed-unlock-preflight-refused",
+  "internal_automatic_entry_executed": true,
+  "automatic_unlock_succeeded": false,
+  "transaction_started": false,
+  "flr_count": 0,
+  "gpu_touched_before_refusal": false,
+  "stage": "unlock-preflight",
+  "efi_status": "0x8000000000000006",
+  "status_name": "EFI_NOT_READY",
+  "log_run": "RUN0000",
+  "installed_efi_sha256": "7adcaa078172121a39861bf388596f161aec50ec336af57dd9f9821834cb77d8",
+  "logs_copied_and_hash_verified": true,
+  "log_files": [
+    {
+      "Bytes": 5263,
+      "Name": "GOP.TXT",
+      "Sha256": "ac60bdfade424fc1d8d90a3218bf5d64359c4e9115eab333ff51c8a4f9ae92b5"
+    },
+    {
+      "Bytes": 1445,
+      "Name": "UNLOCK.TXT",
+      "Sha256": "8cb17c0b9c0c0acf12fd5306eaee7f3afa1be429bc1d040e18154dce40893f9c"
+    }
+  ],
+  "expected_initial_selectors": {
+    "ss0": "70520074",
+    "ss1": "00000005"
+  },
+  "observed_initial_selectors": {
+    "ss0": "00000000",
+    "ss1": "00000000"
+  },
+  "later_layout_and_prom_checks_completed": false,
+  "windows_gpu_status": "OK",
+  "windows_gpu_error_code": 0,
+  "nvlddmkm_errors_or_critical_events_this_boot": 0,
+  "driver": "610.88",
+  "power_limit_w": 170,
+  "same_benchmark_executable": true,
+  "benchmark_executable_sha256": "aa8cca683335ee33ab000829b0aa47eceb7de04281eec39d3d36103b2338916e",
+  "benchmarks": [
+    {
+      "mode": "fp32_pedantic",
+      "stock_tflops": 8.642602,
+      "current_tflops": 8.590579,
+      "prior_manual_unlocked_tflops": 8.539924000000001,
+      "current_median_ms": 15.9988,
+      "reference_checked": true
+    },
+    {
+      "mode": "fp16_tensor_fp32_accumulate",
+      "stock_tflops": 26.835493999999997,
+      "current_tflops": 26.785705999999998,
+      "prior_manual_unlocked_tflops": 50.724468,
+      "current_median_ms": 5.131056,
+      "reference_checked": true
+    },
+    {
+      "mode": "bf16_tensor_fp32_accumulate",
+      "stock_tflops": 26.788294999999998,
+      "current_tflops": 26.805849,
+      "prior_manual_unlocked_tflops": 50.590928,
+      "current_median_ms": 5.1272,
+      "reference_checked": true
+    }
+  ],
+  "partition_located_by_exact_guid": true,
+  "partition_number_changed_after_reboot": true,
+  "temporary_mount_removed": true,
+  "unlock_or_preflight_checks_modified": false,
+  "boot_configuration_changed_during_verification": false,
+  "llm_models_retested": false,
+  "required_next_step": "Review the fixed startup profile against the observed zero selector state; preserve other preflight checks; validate a corrected build on a later physical boot."
+}
