@@ -1,6 +1,25 @@
-# Windows NVIDIA handoff â€” 23 October 2026
+# Windows NVIDIA handoff — 25 October 2026
 
-LATEST3080Ti unlock preparation: [toolkit workflow](RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
+LATEST installed3080Ti: [four-model comparison](RTX3080TI-VS-3060-20261025.md).
+PCI2208/subsystem10de:1535, VBIOS94.02.71.00.01,12288MiB, driver610.88,350W.
+No project3080Ti unlock attempted; selector state not independently captured.
+Capture RTX3080Ti Baseline.cmd passed actual hardware and all three compute
+reference checks: FP32 25.683/FP16 70.350/BF16 70.363TFLOPS. Private baseline
+is under data/uefi-probe/3080ti-baseline-20261025-*/. Exact-command four-profile
+chat/streaming/two128-token checks passed, temperature0.1/seed42/cacheoff.
+Ornith30.72/LFM78.35/Empero30.00/Qwen27B6.21t/s; versus historical unlocked3060
++8.4%/+20.0%/+1.9%/-5.8%. Auto fit differs:150–205MiB more CPU weights and
+Qwen49/66 GPU layers versus51/66 previously. Contexts/options/guards unchanged;
+no full-window/tool retest. Raw results data/state/rtx3080ti-bench-20261025/.
+Workers exited, no router initially running/restored. GPU OK/error0, zero NVIDIA
+Error/Critical events found this boot after tests. No app termination, power,
+driver, firmware or boot changes. Windows-first and exact3060 restore remain.
+Next collect this board's read-only PROM/register and GOP ownership captures,
+audit offline, then review its own topology before building a guarded manual EFI.
+Earlier paragraphs below describe preparation while3060 was still installed.
+
+
+Historical3080Ti unlock preparation: [toolkit workflow](RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
 rtx3080ti_setup.py prepare produced data/uefi-probe/rtx3080ti-unlock-setup/
 with01-board-probe.zip and02-ownership-probe.zip; these are distinct USB fallback
 images, never merge them. Hashes: board ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a;
@@ -18,7 +37,7 @@ manual unlock. Current3060 is still installed; no USB connected, no3080Ti data
 available and no3080Ti unlock image built. Windows-first boot unchanged; original
 3060 EFI/restore and separate Linux AMD system preserved.
 
-LATEST GPU SWAP PREPARATION: Windows Boot Manager first;3060 unlock retained but
+Historical GPU SWAP PREPARATION: Windows Boot Manager first;3060 unlock retained but
 bypassed by default. [Swap instructions](WINDOWS-3060-3080TI-SWAP-20261025.md).
 The next user shutdown/swap installs an unknown-board3080Ti. Verify Windows/driver,
 PCI/subsystem/VBIOS/VRAM and CUDA, then collect a stock compute baseline. No3080Ti

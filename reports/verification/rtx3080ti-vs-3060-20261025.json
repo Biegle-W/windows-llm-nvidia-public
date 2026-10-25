@@ -1,0 +1,277 @@
+{
+  "date": "2026-10-25",
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 3080 Ti",
+    "vram_mib": 12288,
+    "cpu": "i5-13600KF",
+    "ram_gib": 15.76,
+    "driver": "610.88",
+    "power_limit_w": 350,
+    "vbios": "94.02.71.00.01",
+    "pci_device": "2208",
+    "pci_subsystem": "10de:1535"
+  },
+  "unlock_state": "No project 3080 Ti unlock has been attempted; register state not independently captured.",
+  "runtime": "llama.cpp b11630 CUDA13.4 (6868a52cb)",
+  "method": {
+    "runner": "scripts/test_models.py",
+    "speed_only": true,
+    "temperature": 0.1,
+    "seed": 42,
+    "max_tokens": 128,
+    "samples": 2,
+    "cache_prompt": false,
+    "sequential_workers": true,
+    "profiles_unchanged": true,
+    "cpu_q8_kv": true
+  },
+  "compute": {
+    "same_executable_sha256": "aa8cca683335ee33ab000829b0aa47eceb7de04281eec39d3d36103b2338916e",
+    "rtx3080ti_tflops": {
+      "fp32_pedantic": 25.682687,
+      "fp16_tensor_fp32_accumulate": 70.34990300000001,
+      "bf16_tensor_fp32_accumulate": 70.36316099999999
+    },
+    "all_reference_checks_passed": true,
+    "rtx3060_stock_tflops": {
+      "fp32_pedantic": 8.642602,
+      "fp16_tensor_fp32_accumulate": 26.835494,
+      "bf16_tensor_fp32_accumulate": 26.788295
+    },
+    "rtx3060_unlocked_manual_tflops": {
+      "fp32_pedantic": 8.539924,
+      "fp16_tensor_fp32_accumulate": 50.724468,
+      "bf16_tensor_fp32_accumulate": 50.590928
+    }
+  },
+  "profiles": [
+    {
+      "id": "Ornith-1.5-35B-A3B-IQ2_S",
+      "context_allocated": 131072,
+      "rtx3060_stock_mean_tps": 26.628735092043982,
+      "rtx3060_unlocked_mean_tps": 28.34168750910567,
+      "rtx3080ti_decode_samples_tps": [
+        31.2756346306483,
+        30.156614936595126
+      ],
+      "rtx3080ti_mean_tps": 30.716124783621716,
+      "difference_vs_3060_stock_percent": 15.349545058935021,
+      "difference_vs_3060_unlocked_percent": 8.377896601086942,
+      "short_prompt_tokens": [
+        48,
+        48
+      ],
+      "short_prompt_tps": [
+        191.96774941809775,
+        170.53811882243428
+      ],
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true
+      },
+      "server_command_matches_3060": true,
+      "placement_matches_3060": false,
+      "rtx3080ti_placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7840.74
+        },
+        "cpu_model_buffers_mib": [
+          2643.67
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "rtx3060_placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7985.17
+        },
+        "cpu_model_buffers_mib": [
+          2499.81
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "load_seconds": 17.62,
+      "private_result_sha256": "9de4c4ed7c075b433794c41a9b6c5e85585830ad40aafef1f16faf1722a229b0",
+      "reasoning_only_at_cap": false
+    },
+    {
+      "id": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+      "context_allocated": 131072,
+      "rtx3060_stock_mean_tps": 64.55374353940861,
+      "rtx3060_unlocked_mean_tps": 65.28950668946823,
+      "rtx3080ti_decode_samples_tps": [
+        78.0262192671925,
+        78.66728939775544
+      ],
+      "rtx3080ti_mean_tps": 78.34675433247398,
+      "difference_vs_3060_stock_percent": 21.366709406473138,
+      "difference_vs_3060_unlocked_percent": 19.998998774962406,
+      "short_prompt_tokens": [
+        45,
+        45
+      ],
+      "short_prompt_tps": [
+        240.58638922600684,
+        252.93119147453268
+      ],
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true
+      },
+      "server_command_matches_3060": true,
+      "placement_matches_3060": false,
+      "rtx3080ti_placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7015.41
+        },
+        "cpu_model_buffers_mib": [
+          1726.08
+        ],
+        "offloaded_layers": "offloaded 41/41 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "rtx3060_placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7220.91
+        },
+        "cpu_model_buffers_mib": [
+          1520.58
+        ],
+        "offloaded_layers": "offloaded 41/41 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "load_seconds": 14.56,
+      "private_result_sha256": "d0c2dcc1146cfcb7dd7a2d89b982781e31feb50d5895f8c502d32da953021612",
+      "reasoning_only_at_cap": true
+    },
+    {
+      "id": "Qwen3.8-35B-A3B-IQ2_M",
+      "context_allocated": 65536,
+      "rtx3060_stock_mean_tps": 26.56717703389903,
+      "rtx3060_unlocked_mean_tps": 29.44649089011744,
+      "rtx3080ti_decode_samples_tps": [
+        29.890391698284976,
+        30.107015029327076
+      ],
+      "rtx3080ti_mean_tps": 29.998703363806026,
+      "difference_vs_3060_stock_percent": 12.916413081933609,
+      "difference_vs_3060_unlocked_percent": 1.8753082523456754,
+      "short_prompt_tokens": [
+        48,
+        48
+      ],
+      "short_prompt_tps": [
+        156.4873799448382,
+        154.75135004432983
+      ],
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true
+      },
+      "server_command_matches_3060": true,
+      "placement_matches_3060": false,
+      "rtx3080ti_placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7982.2
+        },
+        "cpu_model_buffers_mib": [
+          3117.43
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "rtx3060_placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 8145.88
+        },
+        "cpu_model_buffers_mib": [
+          2953.75
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "load_seconds": 18.56,
+      "private_result_sha256": "e5dd4d517eaa5be13533fe5f5c96cf82022e2b792771b205fe123530d71c83a1",
+      "reasoning_only_at_cap": false
+    },
+    {
+      "id": "Qwen3.8-27B-UD-IQ3_XXS",
+      "context_allocated": 65536,
+      "rtx3060_stock_mean_tps": 6.733086119873329,
+      "rtx3060_unlocked_mean_tps": 6.591683029294948,
+      "rtx3080ti_decode_samples_tps": [
+        6.332321740780177,
+        6.089223814311853
+      ],
+      "rtx3080ti_mean_tps": 6.2107727775460155,
+      "difference_vs_3060_stock_percent": -7.7574136588815845,
+      "difference_vs_3060_unlocked_percent": -5.778649398887669,
+      "short_prompt_tokens": [
+        48,
+        48
+      ],
+      "short_prompt_tps": [
+        72.9015737627236,
+        98.0933112623383
+      ],
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true
+      },
+      "server_command_matches_3060": true,
+      "placement_matches_3060": false,
+      "rtx3080ti_placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7761.26
+        },
+        "cpu_model_buffers_mib": [
+          2257.12
+        ],
+        "offloaded_layers": "offloaded 49/66 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "rtx3060_placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7960.59
+        },
+        "cpu_model_buffers_mib": [
+          2060.6
+        ],
+        "offloaded_layers": "offloaded 51/66 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "load_seconds": 16.58,
+      "private_result_sha256": "816d74f4ba9faf042a29a4c0bbaff15cacd0351e5d176307cb19c6553e0c8fb5",
+      "reasoning_only_at_cap": false
+    }
+  ],
+  "limits": [
+    "Historical comparison across boots/days, not a controlled card A/B/A.",
+    "Two short 128-token samples per model; full context and tools were not retested.",
+    "Same commands, profiles, runtime and sampling; automatic fit placement may differ.",
+    "Desktop workloads, free memory, clocks and thermals were not controlled across sessions.",
+    "No model, memory guard, production profile, power setting, driver or firmware was changed."
+  ],
+  "post_test": {
+    "workers_exited": true,
+    "router_was_running_before": false,
+    "gpu_status": "OK",
+    "device_error_code": 0,
+    "nvlddmkm_error_or_critical_events_this_boot_found": 0,
+    "gpu_temperature_c": 38,
+    "vram_free_mib": 10516
+  }
+}

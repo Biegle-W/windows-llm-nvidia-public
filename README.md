@@ -1,8 +1,9 @@
-# Windows LLM NVIDIA â€” RTX 3060
+# Windows LLM NVIDIA — RTX 3080 Ti / RTX 3060
 
 ## Repository and archive map
 
-This system uses **Windows / NVIDIA RTX 3060 12 GB / i5-13600KF / 16 GB RAM**.
+This system now uses **Windows / NVIDIA RTX 3080 Ti 12 GB / i5-13600KF / 16 GB RAM**.
+The RTX 3060 remains supported for swapping back; its measurements are historical.
 The private operational repository is `windows-llm-nvidia`; its independently
 sanitized reference is [windows-llm-nvidia-public](https://github.com/Biegle-W/windows-llm-nvidia-public).
 Ubuntu AMD has separate private/public repositories named `ubuntu-llm-amd` and
@@ -16,6 +17,17 @@ benchmark/verification payloads retain their original locations for provenance.
 The archive is not an active launcher or a request to restore retired models.
 
 
+
+**RTX3080Ti installed and tested, October25:** all four unchanged profiles pass
+short chat, streaming and two128-token samples. Mean generation: Ornith30.72t/s,
+LFM78.35t/s, Empero30.00t/s and Qwen27B6.21t/s. Versus the saved unlocked3060
+means: +8.4%, +20.0%, +1.9% and -5.8%. Automatic fit left150–205MiB more weights
+in RAM, including two fewer Qwen GPU layers; this is a historical current-setup
+comparison, not isolated GPU or unlock gains. Same-executable FP16/BF16 baseline
+is70.35/70.36TFLOPS. No3080Ti unlock has been attempted; its own read-only board
+and display captures remain necessary. Driver610.88/350W unchanged; GPU OK/error0
+and no NVIDIA Error/Critical events found this boot after testing. Windows-first
+boot and3060 restore remain preserved. [Full comparison and placement](reports/RTX3080TI-VS-3060-20261025.md).
 
 **3080 Ti unlock toolkit prepared, October 25:** separate board and display-
 ownership diagnostic ZIPs, a guarded baseline launcher and an offline PROM/
@@ -90,7 +102,7 @@ F8 -> Windows Boot Manager bypasses the unlock. Do not install the preview build
 Do not rerun the unlock in the current boot. The preparation paragraphs below
 describe earlier stages, not the latest hardware result.
 
-Sanitized reference for the independent Windows RTX3060 12GB /i5-13600KF /16GB
+Sanitized reference for the independent Windows RTX3080Ti 12GB /i5-13600KF /16GB
 build, llama.cpp b11630 CUDA13.4, NVIDIA610.88. Linux AMD remains separate in [ubuntu-llm-amd-public](https://github.com/Biegle-W/ubuntu-llm-amd-public).
 
 October25: [native Linux gpu-unlock preparation](reports/NATIVE-LINUX-NVIDIA-GPU-UNLOCK-20261025.md)
