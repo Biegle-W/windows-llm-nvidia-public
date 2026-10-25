@@ -21,3 +21,9 @@ non-document bytes are unchanged. Markdown links were adjusted for relocation.
 Python/JSON syntax and publication privacy checks pass, with no new broken local
 document targets. Active launchers, model profiles, contexts, guards, ports and
 runtime paths are unchanged. No new inference or performance test is claimed.
+
+
+October 25 publication preserves the three new source/report files and README note
+from already-public combined commit `7b22916` byte for byte for source/report
+payloads. This includes NVIDIA-host native-Linux preparation; no installation or
+GPU-unlock action was performed by this repository split.
