@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-25",
+  "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
+  "physical_uefi_boot_tested": true,
+  "capture_slot": "RUN00",
+  "probe_efi_sha256_matches_audited_build": true,
+  "target": {
+    "vendor_id": "10de",
+    "device_id": "2503",
+    "subsystem_vendor_id": "1458",
+    "subsystem_device_id": "407b",
+    "observed_architecture": "GA106"
+  },
+  "matching_nvidia_display_devices": 1,
+  "valid_register_reads": 16,
+  "expected_register_reads": 16,
+  "inventory_saved_before_detail_reads": true,
+  "capture_files": {
+    "INVENTORY.TXT": 4648,
+    "REPORT.TXT": 6997,
+    "PROM.BIN": 1048576,
+    "ROMIMAGE.BIN": 157696
+  },
+  "private_copy_hashes_verified": true,
+  "prom_signature_and_report_hash_verified": true,
+  "strict_parser_probe_complete": true,
+  "reported_gpu_writes": "none",
+  "reported_gpu_resets": "none",
+  "reported_boot_variable_changes": "none",
+  "windows_gpu_visible_after_reboot": true,
+  "windows_driver": "610.88",
+  "firmware_compatible_validated": false,
+  "unlock_approved": false,
+  "gpu_unlock_performed": false,
+  "unlock_hardware_tested": false,
+  "display_driver_ownership_validated": false,
+  "next_step": "Review captured firmware, selector policy and GOP driver ownership before preparing a guarded unlock experiment.",
+  "privacy": "Raw capture, diagnostic profile, device paths, dump hashes and firmware remain in ignored local data; this record is sanitized."
+}

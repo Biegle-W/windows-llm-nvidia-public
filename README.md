@@ -31,11 +31,14 @@ change the separate AMD Linux build or the archived NVIDIA Linux setup.
 now includes real desktop3060/2504 results and a no-iGPU Intel/3070Ti boot.
 The reviewed craftingmod GA10x framework is a candidate for this Gigabyte2503 /
 B760M host, whose own unlock boot remains untested. Next step is a separate
-read-only UEFI capture. The [probe package is now prepared](reports/RTX3060-READONLY-UEFI-PROBE.md)
+read-only UEFI capture, now completed. The [probe package is now prepared](reports/RTX3060-READONLY-UEFI-PROBE.md)
 from pinned5c076dc with LLVM20.1.8/Bun1.4.4. Upstream/exact2503 mocks,11 parser
 tests and3 negative PE cases pass. A user-authorized FAT32 USB is now staged;
-all14 restored files passed independent SHA256 checks. Physical probe boot
-remains pending. Binary,
+all14 restored files passed independent SHA256 checks. Physical RUN00 capture
+passed: exact2503/407b1458 identity,16 valid register reads and verified1MiB PROM.
+The diagnostic profile retains firmware compatibility and unlock approval as
+false. Windows recognizes the3060/610.88 after reboot; firmware, selector policy
+and display-driver ownership still require review before an unlock experiment. Binary,
 ZIP, toolchain and captures stay ignored under `data/`/`runtimes/`. No boot entry,
 driver or inference setting changed.
 

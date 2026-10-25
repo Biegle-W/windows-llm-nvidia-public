@@ -9,8 +9,34 @@ Deployment update, October25: the user-authorized USB was quick-formatted from
 exFAT to FAT32, labelled `UEFI_PROBE`, and all14 probe files restored from a
 verified private backup. An independent SHA256 check passed for every restored
 file, including the fallback EFI. [Sanitized staging record](verification/rtx3060-uefi-usb-stage-20261025.json).
-The first physical UEFI capture is still pending. This did not change Windows
-boot entries, the system disk, driver settings or GPU state.
+The first physical UEFI capture now passed: see the results below. Staging did
+not change Windows boot entries, the system disk, driver settings or GPU state.
+
+## Physical capture results — October 25, 2026
+
+The USB boot produced `RUN00` with a complete inventory/report, a 1 MiB PROM
+window and a 157,696-byte firmware ROM image. It detected exactly one NVIDIA
+display device matching `10de:2503` / `1458:407b`; the chip register identifies
+GA106. All 16 sampled registers were valid. The strict upstream parser accepted
+the report and verified the PROM signature, size and SHA256 against the report.
+All four capture files were copied to ignored local storage and independently
+hash-checked against the USB. The USB EFI still matches the audited build hash.
+Windows recognizes the RTX 3060 with driver610.88 after the reboot.
+
+The report explicitly records no GPU writes, resets or boot-variable changes.
+This validates the read-only capture, not an unlock. The generated diagnostic
+profile keeps `firmwareCompatible`, `unlockApproved`, `hardwareTested` and
+`architectureVerified` false; `probeComplete` is true. Raw reports, ROM/PROM,
+dump hashes and device paths remain private under ignored
+`data/uefi-probe/captures/20261025-RUN00/`.
+[Sanitized physical-capture evidence](verification/rtx3060-uefi-physical-capture-20261025.json).
+
+The preboot selectors were SS0=`70520074`, SS1=`5`. Do not substitute the
+desktop2504 example's SS1=`2` or assume that the generic framework's SS1=`8`
+target is validated for this board. A display GOP path descends from this GPU,
+but the probe does not capture the complete driver-ownership graph. Firmware
+compatibility, selector policy and the single-GPU display handoff need review
+before preparing a guarded unlock experiment. No unlock EFI has been staged.
 
 ## Prepare the USB
 
@@ -121,5 +147,5 @@ Host mock tests also require installed MSVC C/C++ headers/libraries and Windows
 SDK, detected by clang. The helper stages a new local folder/ZIP and never
 selects, formats or copies to a physical drive. Source archive and upstream
 licenses are included locally; EFI/toolchain binaries remain ignored by Git.
-**A physical UEFI boot on this machine is still required. No unlock or performance
-claim follows from a successful build or mock capture.**
+**The physical read-only capture passed. Unlock compatibility, an unlock boot
+and any performance benefit remain untested.**

@@ -6,8 +6,16 @@ Pinned5c076dc/LLVM20.1.8/Bun1.4.4 EFI is14848 bytes, SHA256
 Upstream and exact2503/407b1458 mocks,11 parser tests and3 negative PE cases pass.
 Package/ZIP are ignored under `data/uefi-probe/`; raw captures must also remain
 private. The USB is now staged as FAT32/UEFI_PROBE after explicit user approval;
-all14 restored files passed independent SHA256 checks. Physical capture, unlock
-and performance remain pending. [Staging proof](verification/rtx3060-uefi-usb-stage-20261025.json).
+all14 restored files passed independent SHA256 checks. Physical RUN00 capture
+passed: exact2503/407b1458 identity,16 valid register reads, verified1MiB PROM and
+157696-byte ROM image. All four files are backed up and hash-checked in ignored
+`data/uefi-probe/captures/20261025-RUN00/`; never publish the raw capture or profile.
+The strict parser sets probeComplete=true but retains firmwareCompatible=false
+and unlockApproved=false. Observed SS0=70520074 / SS1=5; selector policy and
+complete GOP ownership require review. Windows recognizes the3060/610.88 after
+reboot. Unlock and performance remain pending.
+[Staging proof](verification/rtx3060-uefi-usb-stage-20261025.json),
+[physical capture](verification/rtx3060-uefi-physical-capture-20261025.json).
 
 Repository organization: private `windows-llm-nvidia`, sanitized
 `windows-llm-nvidia-public`; retired source/documentation is indexed in
