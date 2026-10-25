@@ -1,10 +1,17 @@
 # Further Windows GPU unlock research - October 25, 2026
 
+**Later preparation update:** the first physical read-only capture passed.
+[Board-specific preparation](RTX3060-WINDOWS-UNLOCK-PREPARATION.md) now includes
+offline firmware/signature/layout validation, a manual-only fixed-board candidate,
+verified assets and host tests. The USB is staged for the additional read-only
+ownership tree needed to assess the single-GPU display handoff. The candidate
+remains local, untested on hardware and not yet deployed for an unlock boot.
+
 **Windows UEFI unlocks have succeeded on real hardware, including a desktop RTX 3060. This host still needs adaptation and its first validated boot; installing Linux is not a prerequisite for the technique.** This investigation reviewed source and read inventory only. No EFI was installed, system ESP mounted, BCD/NVRAM changed, disk decrypted, driver changed or unlock attempted.
 
 Preparation update: the [standalone read-only probe package](RTX3060-READONLY-UEFI-PROBE.md)
 has now been built and checked on the host, including an exact2503/407b1458 mocked
-capture. The prepared EFI is not an unlock image. Physical USB boot is pending.
+capture. That original EFI is not an unlock image; its physical capture now passed.
 
 ## Host compatibility
 

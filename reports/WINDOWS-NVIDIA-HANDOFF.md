@@ -1,4 +1,21 @@
-# Windows NVIDIA handoff — 23 October 2026
+# Windows NVIDIA handoff â€” 23 October 2026
+
+Latest October25: [manual Windows unlock preparation](RTX3060-WINDOWS-UNLOCK-PREPARATION.md)
+is complete locally at ignored `data/uefi-probe/windows3060-unlock-20261025-v2/`.
+Actual PROM FWSEC parsing, fuse/signature selection, DMA alignment, memory layout
+and FRTS command encoding pass on CPU-owned copies. A fixed generated header
+binds the manual candidate to2503/407b1458 and captured state; upstream core is
+unchanged, no automatic/production/SSD/profile-refresh flags are enabled, and U
+is always required. The eight-flow gate test and eight upstream host suites pass.
+Secure Boot=false, C:FullyDecrypted, BitLocker:Off confirmed by admin query only.
+The USB fallback is now the read-only ownership probe, SHA256
+`58f4d6beb444d423a8509dd4d1cdbb7a2e10a425e51ae2e65f2cceaa011342b8`.
+Read `RTX-UNLOCK/RUNnn/GOP.TXT` after the next boot; review its topology before
+deploying the candidate. All18 original USB files including first RUN00 were
+backed up and retained except the intentionally replaced fallback EFI. No unlock
+candidate or firmware assets are on USB. No GPU unlock, ESP/BCD or boot-variable
+change occurred. Source profile approval flags remain false. Stock short CUDA
+baseline FP16/BF16 FP32-accumulate is26.835/26.788TFLOPS; no unlocked result exists.
 
 Read-only UEFI probe prepared October25: [USB instructions and scope](RTX3060-READONLY-UEFI-PROBE.md).
 Pinned5c076dc/LLVM20.1.8/Bun1.4.4 EFI is14848 bytes, SHA256
@@ -28,7 +45,7 @@ Windows is independent: RTX 3060 12 GB / i5-13600KF /16 GB DDR5 at 6000 MT/s, NV
 
 Current default: **Ornith 1.5 35B-A3B (IQ2_S) | 32K | GPU + RAM**, API ID `Ornith-1.5-35B-A3B-IQ2_S`, weights in project `models/`. Source registry retains fit on / GPU layers auto / fit-target2816 / no-host true. Q8 KV, FA on, one slot, batch512/ubatch128, thinking off, no speculation. This is not full GPU: normal buffers were 7,840.74 MiB GPU /2,643.67 MiB host. Fresh minimums:4 GiB RAM available /16 GiB commit headroom /9,728 MiB actual free VRAM. Never kill unrelated apps to satisfy these checks.
 
-Selected decode samples: **48.24 /44.29 t/s**; chat, streaming, tool round trip and **8,080-token input retrieval** pass at32K allocation. Normal API streaming leaves1,571MiB whole-card VRAM /1.19GiB available RAM; sampled generation dipped to1,336MiB VRAM. Larger memory targets are not guaranteed real reserves. Early Ornith62–67t/s and Empero60–64t/s results used less desktop headroom; do not label them current default speed. Low-bit trials do not prove general quality superiority.
+Selected decode samples: **48.24 /44.29 t/s**; chat, streaming, tool round trip and **8,080-token input retrieval** pass at32K allocation. Normal API streaming leaves1,571MiB whole-card VRAM /1.19GiB available RAM; sampled generation dipped to1,336MiB VRAM. Larger memory targets are not guaranteed real reserves. Early Ornith62â€“67t/s and Empero60â€“64t/s results used less desktop headroom; do not label them current default speed. Low-bit trials do not prove general quality superiority.
 
 September Empero Qwen3.8 35B-A3B Distill IQ2_M remains in project `models/`, outside the active catalog. The retired Qwen3.5 9B GGUF was deleted at the user's request on October 23, freeing 5.56 GiB; do not assume its old path exists. Empero is a community Qwen3.8-teacher distillation into Qwen3.6's MoE architecture, not an official small Qwen3.8 release. It passed functional checks but had tight memory margins. Ornith and Empero weights were preserved. Strata stays disabled.
 
@@ -44,11 +61,11 @@ LFM2.5 24B-A2B and official Qwen3.8 27B, both UD-IQ3_XXS, are verified in projec
 
 Ornith's default/catalog and production limits are unchanged. Perplexity, the Quest client and Quest service were temporarily paused with explicit approval and restored; user app state is private. Production restart failed memory admission, so the owned backend is stopped at this snapshot. Do not silently lower its limits. No Linux runtime/profile or network settings were changed.
 
-## Directory consolidation — later October 23
+## Directory consolidation â€” later October 23
 
 All four inference GGUFs are in project `models/`; source paths are project-relative. Candidate profiles are in `config/test-profiles-lfm-qwen-20261023.json`. Regenerate catalogs after moving the project. Retired Strata source is in `archives/2026-10-23-strata/`; inactive runtimes are in ignored `archive/retired-windows-20261023/runtimes/`. Reports and prior benchmarks remain preserved; no inference rerun. See [cleanup record](WINDOWS-CLEANUP-20261023.md).
 
-## Current: model router — later October 23
+## Current: model router â€” later October 23
 
 The authenticated API on10000 now lists all four downloaded models and selects
 by the OpenAI request's `model` field. Ornith remains default at32K; LFM, Qwen27B
@@ -71,7 +88,7 @@ Chrome was reopened with session restoration requested after testing.
 See [router API and proof](WINDOWS-MODEL-ROUTER-20261023.md). Keep both repositories
 current, Windows-only exports sanitized, and Linux files unchanged.
 
-## Current: optional RAM context — later October 23
+## Current: optional RAM context â€” later October 23
 
 Seven router/DSH IDs now reuse four files. Three new MoE alternatives put Q8 KV
 in CPU RAM: Ornith128K, LFM128K, Empero64K. Original four profiles/default/limits
@@ -80,7 +97,7 @@ all three pass functional tests and retrieval beyond their old allocations.
 Full windows are untested; preserve the physical-RAM admission and continuous
 guard. [Methods and proof](WINDOWS-MOE-RAM-CONTEXT-20261023.md).
 
-## Current: one setting per model — later October 23
+## Current: one setting per model â€” later October 23
 
 Exactly four canonical IDs remain: Ornith128K (default), LFM128K, Qwen27B8K and
 Empero64K. They use the previously verified largest configurations. Three MoEs
@@ -89,6 +106,6 @@ alternatives are removed. Dated test profiles moved into retired/20261023/config
 Preserve their measured fitting/resource limits. Reopen DSH to refresh its four
 entries. No inference rerun; weights/chats/history retained. README is current.
 
-## Current: Qwen64K for harness input — later October23
+## Current: Qwen64K for harness input â€” later October23
 
 Qwen27B now has one64K/Q8-CPU-KV profile, replacing8K in place. Chat/SSE/tools and24,460-input retrieval pass; installed SDK passed16,310-input system instructions/tools with a tool-result follow-up. Full64K/GUI/remote-peer are untested. Fresh6GiB RAM/20GiB commit/9216MiB VRAM, fit-target2816/no-host; loaded1024MiB and existing continuous RAM guard retained. Four profiles and Ornith128K default remain. Large dense-model prefill takes minutes. See [current proof](WINDOWS-QWEN-CONTEXT-20261023.md).

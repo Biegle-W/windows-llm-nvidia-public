@@ -1,4 +1,4 @@
-# Windows LLM NVIDIA — RTX 3060
+# Windows LLM NVIDIA â€” RTX 3060
 
 ## Repository and archive map
 
@@ -42,7 +42,16 @@ and display-driver ownership still require review before an unlock experiment. B
 ZIP, toolchain and captures stay ignored under `data/`/`runtimes/`. No boot entry,
 driver or inference setting changed.
 
-## One setting per model — October 23, 2026
+Later October25: [Windows unlock preparation](reports/RTX3060-WINDOWS-UNLOCK-PREPARATION.md)
+now passes offline FWSEC/signature/DMA-geometry/layout checks on the actual PROM.
+A fixed-board manual-only unlock candidate and all five verified assets are
+prepared locally; eight manual-gate/failure cases and upstream host mocks pass.
+Secure Boot is confirmed off and C: fully decrypted/BitLocker off by read-only
+administrator queries. The Kingston USB now boots a separate read-only ownership
+tree probe, preserving the first capture; the unlock candidate stays off USB
+until that display tree is reviewed. No hardware unlock has run.
+
+## One setting per model â€” October 23, 2026
 
 The OpenAI-compatible router exposes exactly four IDs, retaining the largest
 currently configured context for each model. Ornith remains default at128K.
