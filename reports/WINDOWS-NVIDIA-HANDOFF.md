@@ -5,7 +5,9 @@ Pinned5c076dc/LLVM20.1.8/Bun1.4.4 EFI is14848 bytes, SHA256
 `ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a`.
 Upstream and exact2503/407b1458 mocks,11 parser tests and3 negative PE cases pass.
 Package/ZIP are ignored under `data/uefi-probe/`; raw captures must also remain
-private. No USB was connected; physical capture, unlock and performance are pending.
+private. The USB is now staged as FAT32/UEFI_PROBE after explicit user approval;
+all14 restored files passed independent SHA256 checks. Physical capture, unlock
+and performance remain pending. [Staging proof](verification/rtx3060-uefi-usb-stage-20261025.json).
 
 Repository organization: private `windows-llm-nvidia`, sanitized
 `windows-llm-nvidia-public`; retired source/documentation is indexed in

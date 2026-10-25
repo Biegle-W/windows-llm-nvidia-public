@@ -5,6 +5,13 @@ Target host: Gigabyte RTX 3060 12 GB, PCI `10de:2503`, subsystem `1458:407b`,
 ASUS TX GAMING B760M WIFI / BIOS1836 / i5-13600KF. The EFI also inventories other
 NVIDIA display devices; detail reads require exactly one unambiguous target.
 
+Deployment update, October25: the user-authorized USB was quick-formatted from
+exFAT to FAT32, labelled `UEFI_PROBE`, and all14 probe files restored from a
+verified private backup. An independent SHA256 check passed for every restored
+file, including the fallback EFI. [Sanitized staging record](verification/rtx3060-uefi-usb-stage-20261025.json).
+The first physical UEFI capture is still pending. This did not change Windows
+boot entries, the system disk, driver settings or GPU state.
+
 ## Prepare the USB
 
 The prepared local folder is `data/uefi-probe/rtx3060-readonly/`; the adjacent ZIP

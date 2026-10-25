@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-25",
+  "stage": "ready_for_first_physical_probe_boot",
+  "filesystem": "FAT32",
+  "volume_label": "UEFI_PROBE",
+  "restored_files": 14,
+  "independent_all_file_sha256_check": "passed",
+  "efi_sha256": "ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a",
+  "root_fallback_efi_present": true,
+  "root_marker_directory_present": true,
+  "format_authorized_by_user": true,
+  "system_disk_modified": false,
+  "windows_boot_settings_changed_by_helper": false,
+  "physical_uefi_probe_boot_tested": false,
+  "gpu_unlock_performed": false,
+  "private_raw_inventory_and_backup_gitignored": true
+}
