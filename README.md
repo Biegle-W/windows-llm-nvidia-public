@@ -17,15 +17,26 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**Automatic internal unlock VERIFIED, October 25:** corrected EFI RUN0001 passed
+**Latest repeat-boot result and repair, October 25:** RUN0003 returned to the
+previous 70520074/5 startup pair, so the zero-only payload refused before touching
+the GPU. Current FP16/BF16 are stock-like at 26.879/26.838TFLOPS. A new two-pair
+EFI is installed: it accepts exactly 0/0 or 70520074/5 as complete pairs, each
+backed by a successful physical unlock. Mixed, unknown and already-unlocked pairs
+remain rejected; other preflight checks and the transaction remain active.
+13 evidence, 23 actual startup-check and 14 automatic-entry tests pass; all29
+installed files verified, partitions/boot entries/logs preserved, U: removed.
+**The new payload needs another restart and log/compute check.**
+[Repeat finding, correction and limits](reports/RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md).
+
+**Historical zero-state success, RUN0001:** corrected EFI RUN0001 passed
 preflight, ran once without U, completed one FLR with safe cleanup, restored the
 display and started Windows. The same compute executable measures FP16 50.534
 TFLOPS (+88.3% vs saved stock) and BF16 50.620 TFLOPS (+89.0%); FP32 is unchanged
 within the short-run variation. GPU StatusOK/error0; no NVIDIA Error/Critical
 events were found since boot, including after the test. USB is not needed for
 this internal startup path. [Boot logs, measurements and limits](reports/RTX3060-AUTOMATIC-UNLOCK-SUCCESS-20261025.md).
-This validates one corrected automatic boot; repeated boots, sleep/resume and
-updates remain untested. Keep the six-second Esc gate and F8 Windows fallback.
+That validated one zero-state automatic boot. RUN0003 subsequently refused;
+the new paired payload above awaits testing. Sleep/resume and updates remain untested. Keep the six-second Esc gate and F8 Windows fallback.
 
 **Original automatic build, historical first-boot refusal:**
 Its RUN0000 logs show a strict startup-state mismatch: the saved initial SS0/SS1
@@ -57,7 +68,7 @@ the original Windows Boot Manager second. Original partitions and the Windows
 boot entry passed preservation checks; temporary U: was removed. The actual-partition
 build passes 14 automatic/source scenarios; the corrected installer passes 20
 policy/state/resume checks. A first state-writing failure was audited and recovered
-without a second shrink. No VBIOS flash or reboot was initiated. **Corrected RUN0001 has now verified automatic unlock and Windows compute performance.**
+without a second shrink. No VBIOS flash or reboot was initiated. **RUN0001 verified a zero-state unlock; RUN0003 later refused. The paired replacement awaits testing.**
 F8 -> Windows Boot Manager bypasses the unlock. Do not install the preview build.
 Do not rerun the unlock in the current boot. The preparation paragraphs below
 describe earlier stages, not the latest hardware result.

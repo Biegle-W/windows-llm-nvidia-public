@@ -1,5 +1,11 @@
 # RTX 3060 automatic internal unlock verified — October 25, 2026
 
+**Later repeat-boot finding:** RUN0003 returned to the original nonzero startup
+pair and the zero-only profile refused. Windows is stock again. A
+[two-pair correction](RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md) is now installed,
+with physical verification pending. The earlier RUN0001 success remains valid
+for that boot and does not establish repeat reliability.
+
 **The corrected internal EFI unlocked the RTX 3060 automatically and handed off
 to Windows successfully.** RUN0001 records automatic start and a successful
 transaction; Windows compute throughput confirms the unlocked state.

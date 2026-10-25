@@ -78,6 +78,27 @@ class StartupEvidenceTests(unittest.TestCase):
         self.capture['CaptureDirectory']=str(builder.ROOT/'reports')
         with self.assertRaises(RuntimeError): self.call()
 
+    def test_two_observed_complete_pairs(self):
+        zero,_=self.call()
+        path=builder.ROOT/'data/uefi-probe/internal-startup/paired-startup-repeat-evidence.private.json'
+        header,proof=builder.observed_paired_profile(zero,path)
+        self.assertIn('GuCapturedStartupSelectorsMatch',header)
+        self.assertEqual(proof['allowed_initial_pairs'],[['00000000','00000000'],['70520074','00000005']])
+
+    def test_paired_capture_wrong_run(self):
+        zero,_=self.call()
+        real=builder.ROOT/'data/uefi-probe/internal-startup/paired-startup-repeat-evidence.private.json'
+        repeat=json.loads(real.read_text(encoding='utf-8'));repeat['LogRun']='RUN0004'
+        path=self.folder/'bad-repeat.json';path.write_text(json.dumps(repeat),encoding='utf-8')
+        with self.assertRaises(RuntimeError): builder.observed_paired_profile(zero,path)
+
+    def test_paired_capture_wrong_hash(self):
+        zero,_=self.call()
+        real=builder.ROOT/'data/uefi-probe/internal-startup/paired-startup-repeat-evidence.private.json'
+        repeat=json.loads(real.read_text(encoding='utf-8'));repeat['Logs'][0]['Sha256']='0'*64
+        path=self.folder/'bad-repeat.json';path.write_text(json.dumps(repeat),encoding='utf-8')
+        with self.assertRaises(RuntimeError): builder.observed_paired_profile(zero,path)
+
 
 if __name__=='__main__':
     unittest.main()

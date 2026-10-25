@@ -1,24 +1,26 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
-LATEST: corrected automatic internal unlock VERIFIED in RUN0001:
-[physical automatic result](RTX3060-AUTOMATIC-UNLOCK-SUCCESS-20261025.md).
-Automatic start, complete preflight/PROM check, one successful transaction/FLR,
-quiesced1/maps0/retained0/fault0/safe1, display restored, 9216-pixel readback with
-zero mismatches, Windows handoff without reset. RTX3060 OK/error0; zero NVIDIA
-Error/Critical events found this boot after the short compute verification.
-FP16 50.534TFLOPS (+88.3% stock), BF16 50.620TFLOPS (+89.0%), FP32 8.587TFLOPS.
-Driver610.88/170W unchanged; post-test44C. EFI SHA256 remains
-f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca.
-Private installed state is automatic-internal-unlock-verified with
-AutoInternalBootVerified=true. Capture metadata is
-`data/uefi-probe/internal-startup/automatic-corrected-boot-capture.private.json`;
-new raw logs and compute JSON stay ignored. Original automatic-first-boot-capture
-metadata/RUN0000 must remain immutable for the builder's startup evidence.
-U: removed; no payload/boot/partition changes or second unlock during verification.
-Do not rerun unlock in this Windows session. One corrected automatic boot is
-validated; repeated boots, sleep/resume, updates and future3080Ti remain untested.
-F8 -> Windows Boot Manager bypasses; six-second Esc cancellation retained.
-Earlier failure and installation notes below are historical.
+LATEST: repeat RUN0003 refused the zero-only selector guard; paired replacement installed.
+[Repeat diagnosis and update](RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md).
+Current Windows is stock (FP16 26.879/BF16 26.838TFLOPS), GPU OK/error0, no NVIDIA
+Error/Critical events found at inspection. RUN0003 touched0, no transaction/FLR.
+Its 70520074/5 pair is the exact pre-state of the successful manual RUN01; the
+successful automatic RUN0001 used0/0. New code accepts only those complete pairs,
+rejecting mixed, unknown and unlocked states. Only ColdCheck's initial-selector
+predicate changes; reversing that edit must reproduce pinned app source. Firmware
+transaction, display adaptation and other checks retained. Tests:13 provenance,
+23 actual ColdCheck,14 automatic-entry/internal-source scenarios plus PE checks.
+All29 installed files verified, boot entries/order/partitions/logs preserved, U: removed.
+New EFI SHA256 a57b0621ea87dd53c0a50aceca8de2467f2f4c3da1580f1fee230af6b8844394.
+Private build `data/uefi-probe/internal-startup/paired-startup-v1/`; backup
+`paired-startup-install-backup-v1/`; immutable RUN0003 evidence is
+`paired-startup-repeat-evidence.private.json` under that state root. Keep original
+RUN0000 and successful RUN0001 capture metadata intact for builds.
+AutoInternalBootVerified=false for this new payload. Next restart without USB:
+inspect the next internal run and repeat compute before declaring success.
+No runtime unlock/reboot initiated. F8 -> Windows Boot Manager bypasses;
+six-second Esc gate retained. Cold/warm cause and new payload repeat reliability
+are not established. Earlier successes/failures below remain historical.
 
 Original automatic-build first verification FAILED to apply the unlock:
 [logs, compute results and diagnosis](RTX3060-AUTOMATIC-FIRST-BOOT-20261025.md).

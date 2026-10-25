@@ -35,10 +35,12 @@ try {
     $s=Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json -AsHashtable
     $info=Get-Content -LiteralPath (Join-Path $build 'BUILD-INFO.private.json') -Raw | ConvertFrom-Json
     if($info.preview_only -or -not $info.automatic -or -not $info.host_tests_passed -or -not $info.firmware_transaction_unchanged -or
-        -not $info.hardware_tested_display_source_unchanged -or $info.host_auto_and_source_tests -ne 14 -or $info.host_actual_cold_check_tests -ne 19 -or
+        -not $info.hardware_tested_display_source_unchanged -or $info.host_auto_and_source_tests -ne 14 -or $info.host_actual_cold_check_tests -ne 23 -or
+        -not $info.coldcheck_only_initial_pair_predicate_changed -or
+        ($info.startup_profile_evidence.allowed_initial_pairs | ConvertTo-Json -Compress) -ne '[["00000000","00000000"],["70520074","00000005"]]' -or
         $info.startup_profile_evidence.fixed_initial_ss0 -ne '00000000' -or $info.startup_profile_evidence.fixed_initial_ss1 -ne '00000000' -or
         [guid]$info.internal_partition_guid -ne [guid]$s.PartitionGuid){throw 'Corrected build contract differs.'}
-    if($s.EfiSha256 -ne '7adcaa078172121a39861bf388596f161aec50ec336af57dd9f9821834cb77d8'){throw 'Expected the first automatic build; do not repeat an update blindly.'}
+    if($s.EfiSha256 -ne 'f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca'){throw 'Expected the zero-only automatic build; do not repeat an update blindly.'}
     $disk=Get-Disk -Number $s.DiskNumber
     if($disk.UniqueId -ne $s.DiskUniqueId){throw 'Original disk identity differs.'}
     $parts=@(Get-Partition -DiskNumber $s.DiskNumber)
@@ -101,8 +103,8 @@ try {
     $partsAfter=Get-Partition -DiskNumber $s.DiskNumber | Select-Object Guid,GptType,Offset,Size | Sort-Object Guid | ConvertTo-Json -Compress
     if($partsBefore -cne $partsAfter){throw 'Partition inventory changed during file update.'}
     $s.PreviousEfiSha256=$s.EfiSha256;$s.EfiSha256=$info.efi.sha256
-    $s.Status='automatic-zero-startup-installed-awaiting-boot';$s.AutoInternalBootVerified=$false
-    $s.StartupProfile='fixed zero/zero observed in RUN0000';$s.CorrectedBuildDirectory=$build
+    $s.Status='automatic-paired-startup-installed-awaiting-boot';$s.AutoInternalBootVerified=$false
+    $s.StartupProfile='exactly 0/0 or 70520074/5; complete pairs only';$s.CorrectedBuildDirectory=$build
     $s.PartitionNumber=$part.PartitionNumber
     $temporary=$statePath+'.update.pending'
     [IO.File]::WriteAllText($temporary,($s | ConvertTo-Json -Depth 8),[Text.UTF8Encoding]::new($false))

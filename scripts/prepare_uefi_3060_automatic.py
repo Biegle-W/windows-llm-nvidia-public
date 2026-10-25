@@ -133,6 +133,56 @@ def observed_zero_profile(capture_path, original_header):
                  'unlock_sha256':evidence['UNLOCK.TXT']['Sha256'],'fixed_initial_ss0':'00000000','fixed_initial_ss1':'00000000'}
 
 
+ORIGINAL_SELECTOR_CHECK = '''      ss0 != GU_INITIAL_SS0 ||
+      (GU_PROFILE_BUILD ? ss1 != GU_INITIAL_SS1 : (ss1 != 2 && ss1 != 3)) ||'''
+PAIRED_SELECTOR_CHECK = '      !GuCapturedStartupSelectorsMatch(ss0, ss1) ||'
+
+
+def verified_capture_logs(path, run, image_hash):
+    path=path.resolve()
+    if not path.is_relative_to(ROOT/'data'):
+        raise RuntimeError('Paired startup evidence escapes private data.')
+    capture=json.loads(path.read_text(encoding='utf-8-sig'))
+    if not capture.get('Success') or not capture.get('EfiHashVerified') or capture.get('LogRun')!=run or capture.get('EfiSha256')!=image_hash:
+        raise RuntimeError('Unexpected paired startup capture identity.')
+    folder=Path(capture['CaptureDirectory']).resolve()
+    if not folder.is_relative_to(ROOT/'data/uefi-probe/captures'):
+        raise RuntimeError('Paired startup logs escape private captures.')
+    rows={x['Name']:x for x in capture['Logs']};texts={}
+    for name in ('GOP.TXT','UNLOCK.TXT'):
+        file=folder/name
+        if sha(file)!=rows[name]['Sha256'] or file.stat().st_size!=rows[name]['Bytes']:
+            raise RuntimeError('Paired startup log hash/length differs.')
+        texts[name]=file.read_text(encoding='utf-8-sig')
+    return texts
+
+
+def observed_paired_profile(zero_header, repeat_path):
+    image='f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca'
+    repeat=verified_capture_logs(repeat_path,'RUN0003',image)
+    good_path=ROOT/'data/uefi-probe/internal-startup/automatic-corrected-boot-capture.private.json'
+    good=verified_capture_logs(good_path,'RUN0001',image)
+    prefix='cold state: chip=0xb76000a1 plm=0xffffff8f gfw=0x8b8f/0x3ff/0x10 WPR2_HI=0 '
+    if prefix+'SS0=0x70520074 SS1=0x5' not in repeat['UNLOCK.TXT'] or 'CANCELLED_OR_REFUSED stage=unlock-preflight status=0x8000000000000006 touched=0' not in repeat['GOP.TXT']:
+        raise RuntimeError('Expected the untouched RUN0003 refusal on the original startup pair.')
+    transaction='PATCH_TRANSACTION result=0 containment=0 started=1 quiesced=1 fault=0 retained=0 maps=0 FLR=1 safe=1'
+    if prefix+'SS0=0 SS1=0' not in good['UNLOCK.TXT'] or transaction not in good['UNLOCK.TXT'] or 'AUTO_START: all preflight checks passed' not in good['GOP.TXT']:
+        raise RuntimeError('Missing successful zero-pair automatic execution evidence.')
+    manual_path=ROOT/'data/uefi-probe/captures/20261025-UNLOCK-RUN01/UNLOCK.TXT'
+    manual=manual_path.read_text(encoding='utf-8-sig')
+    success=json.loads((ROOT/'reports/verification/rtx3060-windows-unlock-success-20261025.json').read_text(encoding='utf-8'))
+    if success['transaction_result']!=0 or not success['compute_improvement_observed_in_windows'] or prefix+'SS0=0x70520074 SS1=0x5' not in manual or transaction not in manual:
+        raise RuntimeError('Missing successful original-pair manual execution evidence.')
+    header=zero_header+'''\n/* Two complete, physically observed pre-unlock pairs; never mix their components. */
+static inline int GuCapturedStartupSelectorsMatch(unsigned int ss0, unsigned int ss1) {
+  return (ss0 == 0U && ss1 == 0U) || (ss0 == 0x70520074U && ss1 == 5U);
+}
+'''
+    return header,{'allowed_initial_pairs':[['00000000','00000000'],['70520074','00000005']],
+                   'repeat_capture_sha256':sha(repeat_path),'successful_zero_capture_sha256':sha(good_path),
+                   'successful_original_pair_log_sha256':sha(manual_path)}
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--partition-guid',required=True)
@@ -141,6 +191,9 @@ def main():
     parser.add_argument('--observed-zero-startup',type=Path,
                         default=ROOT/'data/uefi-probe/internal-startup/automatic-first-boot-capture.private.json',
                         help='Verified private first-boot capture (default: saved RUN0000 evidence); fixes both initial selectors to zero without bypassing checks')
+    parser.add_argument('--observed-repeat-startup',type=Path,
+                        default=ROOT/'data/uefi-probe/internal-startup/paired-startup-repeat-evidence.private.json',
+                        help='Immutable RUN0003 evidence; requires successful execution evidence for each of two exact startup pairs')
     args=parser.parse_args()
     guid=str(uuid.UUID(args.partition_guid.strip('{}')))
     output=args.output.resolve()
@@ -178,8 +231,12 @@ def main():
     startup_evidence=None
     if args.observed_zero_startup:
         profile,startup_evidence=observed_zero_profile(args.observed_zero_startup,header.read_text(encoding='utf-8'))
-        header=output/'zero-startup-board-profile.private.h'
+        profile,paired_evidence=observed_paired_profile(profile,args.observed_repeat_startup)
+        startup_evidence.update(paired_evidence)
+        header=output/'paired-startup-board-profile.private.h'
         header.write_text(profile,encoding='utf-8')
+        unlock_app=source/'src/unlock/app.c'
+        unlock_app.write_text(replace_once(unlock_app.read_text(encoding='utf-8'),ORIGINAL_SELECTOR_CHECK,PAIRED_SELECTOR_CHECK),encoding='utf-8')
     # Adapt only the CPU-host fixture to an internal disk path and four-digit logs.
     fixture=source/'src/gop/test_io.c'; text=fixture.read_text()
     text=text.replace('USB_DEVICE_PATH usb;','HARDDRIVE_DEVICE_PATH usb;')
@@ -273,8 +330,11 @@ int main(void) {
     execute([llvm/'clang.exe',*flags,logs/'auto-test.c','src/unlock/format.c','-o',logs/'auto-test.exe'],source,env,logs/'auto-build.log')
     print(execute([logs/'auto-test.exe'],source,env,logs/'auto.log').strip(),flush=True)
     image,pe=build_efi(source,output/'build',llvm,env,FULL_SOURCES,FULL_DEFINES,header,bun)
-    for name in ('src/unlock/vendor/unlock_610.c','src/unlock/app.c','src/unlock/port.c','src/gop/leaf.c','src/gop/reset.c'):
+    for name in ('src/unlock/vendor/unlock_610.c','src/unlock/port.c','src/gop/leaf.c','src/gop/reset.c'):
         if sha(source/name)!=sha(original/name): raise RuntimeError('A transaction/safety source changed: '+name)
+    restored=replace_once((source/'src/unlock/app.c').read_text(encoding='utf-8'),PAIRED_SELECTOR_CHECK,ORIGINAL_SELECTOR_CHECK)
+    if restored!=(original/'src/unlock/app.c').read_text(encoding='utf-8'):
+        raise RuntimeError('Unlock app changed beyond the reviewed coupled-pair predicate.')
     if sha(source/'src/gop/full.c')!=sha(tested/'full-single.c'):
         raise RuntimeError('The hardware-tested display adaptation changed.')
     package=output/'package';package.mkdir()
@@ -285,7 +345,7 @@ int main(void) {
     boot=package/'EFI/LLMUnlock';boot.mkdir(parents=True)
     shutil.copy2(image,boot/'Auto3060.efi')
     correspondence=package/'AUTOMATIC-SOURCE';correspondence.mkdir()
-    for name in ('src/gop/app.c','src/unlock/app_io.c','src/unlock/boot_source.h'):
+    for name in ('src/gop/app.c','src/unlock/app.c','src/unlock/app_io.c','src/unlock/boot_source.h'):
         dst=correspondence/name;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source/name,dst)
     shutil.copy2(header,correspondence/'board-profile.private.h')
     shutil.copy2(Path(__file__),correspondence/Path(__file__).name)
@@ -296,8 +356,9 @@ int main(void) {
           'automatic_profile_changes':False,'source_volume_bound_to_exact_internal_esp':True,
           'host_auto_and_source_tests':14,'host_tests_passed':True,'physical_internal_boot_tested':False}
     if startup_evidence:
-        meta.update(startup_profile_evidence=startup_evidence,host_actual_cold_check_tests=19,
-                    startup_profile='fixed observed zero/zero; all other profile fields and ColdCheck unchanged')
+        meta.update(startup_profile_evidence=startup_evidence,host_actual_cold_check_tests=23,
+                    coldcheck_only_initial_pair_predicate_changed=True,
+                    startup_profile='exactly two observed complete startup pairs; mixed/unknown/unlocked pairs rejected')
     (output/'BUILD-INFO.private.json').write_text(json.dumps(meta,indent=2)+'\n')
     (package/'BUILD-INFO.private.json').write_text(json.dumps(meta,indent=2)+'\n')
     (package/'SHA256SUMS.txt').write_text(''.join(sha(p)+'  '+p.relative_to(package).as_posix()+'\n' for p in sorted(package.rglob('*')) if p.is_file()))

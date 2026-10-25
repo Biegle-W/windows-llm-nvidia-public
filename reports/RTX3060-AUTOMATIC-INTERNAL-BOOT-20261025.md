@@ -1,5 +1,11 @@
 # RTX 3060 automatic internal boot — October 25, 2026
 
+**Later repeat-boot finding:** RUN0003 returned to the original nonzero startup
+pair and the zero-only profile refused. Windows is stock again. A
+[two-pair correction](RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md) is now installed,
+with physical verification pending. The earlier RUN0001 success remains valid
+for that boot and does not establish repeat reliability.
+
 **Follow-up: corrected RUN0001 automatically unlocked the GPU and booted Windows.**
 FP16/BF16 are 50.534/50.620TFLOPS; logs record safe one-FLR execution and display
 restoration. [Physical verification and limits](RTX3060-AUTOMATIC-UNLOCK-SUCCESS-20261025.md).

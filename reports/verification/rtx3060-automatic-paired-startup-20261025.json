@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-25",
+  "status": "two-pair-startup-correction-installed-awaiting-physical-boot",
+  "latest_observed_boot_run": "RUN0003",
+  "latest_boot_unlock_succeeded": false,
+  "repeat_refusal_stage": "unlock-preflight",
+  "repeat_refusal_status": "0x8000000000000006",
+  "repeat_gpu_touched": false,
+  "repeat_initial_pair": [
+    "70520074",
+    "00000005"
+  ],
+  "repeat_compute_tflops": {
+    "fp32_pedantic": 8.523689000000001,
+    "fp16_tensor_fp32_accumulate": 26.878822,
+    "bf16_tensor_fp32_accumulate": 26.838176999999998
+  },
+  "gpu_status": "OK",
+  "gpu_error_code": 0,
+  "nvidia_error_critical_events_this_boot_at_inspection": 0,
+  "same_driver": "610.88",
+  "power_limit_w": 170,
+  "repeat_post_test_temperature_c": 31,
+  "new_payload_installed": true,
+  "new_payload_physical_boot_tested": false,
+  "installed_efi_sha256": "a57b0621ea87dd53c0a50aceca8de2467f2f4c3da1580f1fee230af6b8844394",
+  "installed_files_verified": 29,
+  "allowed_initial_pairs": [
+    [
+      "00000000",
+      "00000000"
+    ],
+    [
+      "70520074",
+      "00000005"
+    ]
+  ],
+  "mixed_and_unknown_pairs_rejected": true,
+  "already_unlocked_pair_rejected": true,
+  "coldcheck_change": "Only the initial selector condition calls a fixed complete-pair predicate; all other app text must match the pinned source.",
+  "firmware_transaction_unchanged": true,
+  "display_adaptation_unchanged": true,
+  "tests": {
+    "evidence": 13,
+    "actual_coldcheck": 23,
+    "automatic_entry_internal_source": 14,
+    "pe_structure": "passed"
+  },
+  "evidence_hashes": {
+    "capture_sha256": "72a86d8236a1de46a05482d4f8dd843923756f7843175caf219c10b4a4d98093",
+    "gop_sha256": "ac60bdfade424fc1d8d90a3218bf5d64359c4e9115eab333ff51c8a4f9ae92b5",
+    "unlock_sha256": "8cb17c0b9c0c0acf12fd5306eaee7f3afa1be429bc1d040e18154dce40893f9c",
+    "fixed_initial_ss0": "00000000",
+    "fixed_initial_ss1": "00000000",
+    "allowed_initial_pairs": [
+      [
+        "00000000",
+        "00000000"
+      ],
+      [
+        "70520074",
+        "00000005"
+      ]
+    ],
+    "repeat_capture_sha256": "9bcdfc007db2c65c0d68beec85c509abfc35e3b72d9a499804a573e0eef91502",
+    "successful_zero_capture_sha256": "7388c0ea7cf0b61e031e4f3c97f342f5b80eef82f3339e7d8a25a1dd4a23f400",
+    "successful_original_pair_log_sha256": "a4f14e330f29fda1e22e4568c3db6ca2510d68040e45fc4148dd3a14665896fd"
+  },
+  "repeat_logs_copied_and_hash_verified": true,
+  "repeat_log_files": [
+    {
+      "Bytes": 5263,
+      "Name": "GOP.TXT",
+      "Sha256": "1a993902c9abcb3611913968bc3de28c86ca3640024a80c1e22a8e48ed6cb550"
+    },
+    {
+      "Bytes": 1456,
+      "Name": "UNLOCK.TXT",
+      "Sha256": "6ea4dd302d7017c729f03a7eb26e0a7a0a16f33ccbab450d715f8871e683a7d9"
+    }
+  ],
+  "partitions_unchanged": true,
+  "boot_entries_order_unchanged": true,
+  "temporary_mount_removed": true,
+  "previous_payload_backed_up": true,
+  "no_runtime_unlock_or_reboot_initiated": true,
+  "one_prior_automatic_success_preserved": true,
+  "new_repeat_reliability_verified": false
+}
