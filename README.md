@@ -90,6 +90,12 @@ Qwen27B's8K-only setting was replaced in place by64K/Q8 KV in RAM; no extra prof
 
 ## Public repository maintenance
 
+Write all GitHub-facing documentation, comments, CLI messages, commit messages,
+issues and pull requests in English. Chat may remain Chinese. Preserve historical
+multilingual benchmark/test payload values using Unicode escapes rather than
+translating measured inputs or outputs. Explain fixtures in English and retain
+attribution links when using Latin-script author names.
+
 This repository is the Windows half of the former combined public distribution.
 The sanitized Windows files, reports and retired configurations were moved intact
 from its October 24, 2026 snapshot (public commit

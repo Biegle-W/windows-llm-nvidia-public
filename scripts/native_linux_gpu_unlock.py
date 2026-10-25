@@ -44,9 +44,9 @@ def native_only():
     if (platform.system() != "Linux" or
             re.search(r"microsoft|wsl", platform.release(), re.I) or
             Path("/dev/dxg").exists()):
-        raise RuntimeError("需要原生 Linux；Windows/WSL 不支持物理显卡解锁。")
+        raise RuntimeError("Native Linux is required; Windows/WSL cannot unlock the physical GPU.")
     if platform.machine() not in ("x86_64", "amd64"):
-        raise RuntimeError("此准备工具只支持 x86_64。")
+        raise RuntimeError("This preparation helper supports x86_64 only.")
 
 
 def devices(base=Path("/sys/bus/pci/devices")):
@@ -59,7 +59,7 @@ def devices(base=Path("/sys/bus/pci/devices")):
         device = read(path / "device").removeprefix("0x")
         found.append({"bdf": path.name, "device": device,
                       "supported_by_helper": device in SUPPORTED,
-                      "model": SUPPORTED.get(device, "需要单独审阅的 NVIDIA 型号")})
+                      "model": SUPPORTED.get(device, "NVIDIA model requiring separate review")})
     return found
 
 
@@ -67,12 +67,12 @@ def targets(value, cards):
     selected = value.lower().split(",")
     by_bdf = {card["bdf"]: card for card in cards}
     if len(selected) != len(set(selected)) or not selected:
-        raise RuntimeError("PCI 地址为空或重复。")
+        raise RuntimeError("PCI addresses are empty or duplicated.")
     for address in selected:
         if not BDF.fullmatch(address) or address not in by_bdf:
-            raise RuntimeError(f"不是当前机器上的 NVIDIA 显卡 PCI 地址：{address}")
+            raise RuntimeError(f"Not a current NVIDIA display-device PCI address: {address}")
         if by_bdf[address]["device"] not in SUPPORTED:
-            raise RuntimeError(f"该型号未获本工具放行：{address}；只接受 2503/2208。")
+            raise RuntimeError(f"This helper does not allow this model: {address}; only 2503/2208 are allowed.")
     return ",".join(selected)
 
 
@@ -97,21 +97,21 @@ def prerequisites():
     distro = dict(line.split("=", 1) for line in read("/etc/os-release").splitlines()
                   if "=" in line and not line.startswith("#"))
     if distro.get("ID", "").strip('"') not in ("ubuntu", "debian"):
-        raise RuntimeError("自动安装仅限 Ubuntu/Debian；其他发行版请按上游文档操作。")
+        raise RuntimeError("Automatic installation supports Ubuntu/Debian only; follow upstream for other distributions.")
     if not Path("/etc/default/grub").is_file():
-        raise RuntimeError("未发现 GRUB 配置；不自动修改其他引导器。")
+        raise RuntimeError("GRUB configuration was not found; other bootloaders are not modified automatically.")
     for tool in ("update-grub", "update-initramfs", "nvidia-smi"):
         if not shutil.which(tool):
-            raise RuntimeError(f"缺少 {tool}；先完成原生 Linux 和 NVIDIA 驱动安装。")
+            raise RuntimeError(f"Missing {tool}; finish native Linux and NVIDIA driver installation first.")
     if not devices():
-        raise RuntimeError("没有物理 NVIDIA PCI 显卡。")
+        raise RuntimeError("No physical NVIDIA PCI display device was found.")
     run("nvidia-smi", "--query-gpu=name,pci.bus_id,driver_version", "--format=csv", capture=True)
 
 
 def mutation_gate():
     prerequisites()
     if secure_boot() not in ("disabled", "not-applicable-legacy-boot"):
-        raise RuntimeError("Secure Boot 已开启或状态未知；本工具不自动签名、注册 MOK 或关闭 Secure Boot。")
+        raise RuntimeError("Secure Boot is enabled or unknown; this helper does not sign modules, enroll MOKs or disable Secure Boot.")
 
 
 def verify_source():
@@ -119,21 +119,21 @@ def verify_source():
     # exact path for these read-only Git calls, without editing global config.
     git = ("git", "-c", f"safe.directory={SOURCE}", "-C", str(SOURCE))
     if run(*git, "rev-parse", "HEAD", capture=True) != PIN:
-        raise RuntimeError("上游源码未固定到审阅版本。")
+        raise RuntimeError("Upstream source is not pinned to the reviewed revision.")
     if run(*git, "status", "--porcelain", capture=True):
-        raise RuntimeError("上游源码存在改动；不自动覆盖或安装。")
+        raise RuntimeError("Upstream source has changes; refusing automatic overwrite or installation.")
 
 
 def prepare_source():
     native_only()
     if os.geteuid() == 0:
-        raise RuntimeError("请用普通用户运行 source/install，让上游按需调用 sudo。")
+        raise RuntimeError("Run source/install as a regular user; upstream invokes sudo where needed.")
     if not SOURCE.exists():
         SOURCE.parent.mkdir(parents=True, exist_ok=True)
         run("git", "clone", "--no-checkout", UPSTREAM, str(SOURCE))
         run("git", "-C", str(SOURCE), "checkout", "--detach", PIN)
     verify_source()
-    print(f"固定源码：{SOURCE}\nHEAD={PIN}")
+    print(f"Pinned source: {SOURCE}\nHEAD={PIN}")
 
 
 def check():
@@ -144,7 +144,7 @@ def check():
                       "owned_grub_dropin": GRUB.exists()}, ensure_ascii=False, indent=2))
     prerequisites()
     print(run("nvidia-smi", "--query-gpu=name,pci.bus_id,driver_version", "--format=csv", capture=True))
-    print("检查完成；尚未安装/启用解锁。")
+    print("Checks complete; the unlock has not been installed/enabled by this check.")
 
 
 def install():
@@ -154,12 +154,12 @@ def install():
         "build-essential", "git", "python3", "dkms", "debhelper", "dh-sequence-dkms",
         "zstd", "mokutil", f"linux-headers-{platform.release()}")
     run("make", "install-deb", f"CACHE={PROJECT / 'data/cache/gpu-unlock'}", cwd=SOURCE)
-    print("安装完成；尚未添加解锁启动参数。先记录未解锁基线，再 enable。")
+    print("Installation complete; no unlock boot argument was added. Record the locked baseline before enable.")
 
 
 def owned(path):
     if path.exists() and MARKER not in path.read_text().splitlines(keepends=True)[:2]:
-        raise RuntimeError(f"已有非本工具管理的文件，停止：{path}")
+        raise RuntimeError(f"An existing file is not managed by this helper; stopping: {path}")
 
 
 def transactional_update(files, verify_image=False):
@@ -180,14 +180,14 @@ def transactional_update(files, verify_image=False):
         if verify_image:
             listing = run("lsinitramfs", f"/boot/initrd.img-{platform.release()}", capture=True)
             if not re.search(r"(?:^|/)gpu_unlock\.ko(?:\.(?:xz|gz|zst))?$", listing, re.M):
-                raise RuntimeError("当前启动镜像未包含 gpu_unlock 模块。")
+                raise RuntimeError("The current boot image does not contain the gpu_unlock module.")
             if "scripts/init-top/00-local-llm-gpu-unlock" not in listing.splitlines():
-                raise RuntimeError("当前启动镜像未包含提前加载脚本。")
+                raise RuntimeError("The current boot image does not contain the early loader.")
             for firmware in run("modinfo", "-F", "firmware", "gpu_unlock", capture=True).splitlines():
                 if not any(re.fullmatch(r"(?:usr/)?lib/firmware/" + re.escape(firmware) +
                                        r"(?:\.(?:xz|gz|zst))?", line)
                            for line in listing.splitlines()):
-                    raise RuntimeError(f"启动镜像缺少固件：{firmware}")
+                    raise RuntimeError(f"Boot image is missing firmware: {firmware}")
         run("update-grub")
     except Exception:
         for path, previous in old.items():
@@ -196,12 +196,12 @@ def transactional_update(files, verify_image=False):
             else:
                 path.write_bytes(previous[0])
                 path.chmod(previous[1])
-        print("生成失败，已恢复原配置；尝试恢复启动镜像。不要立即重启。", file=sys.stderr)
+        print("Generation failed; original configuration restored. Attempting image recovery. Do not reboot yet.", file=sys.stderr)
         for command in (("update-initramfs", "-u", "-k", "all"), ("update-grub",)):
             try:
                 run(*command)
             except subprocess.CalledProcessError:
-                print(f"恢复仍失败，请先修复：{' '.join(command)}", file=sys.stderr)
+                print(f"Recovery still failed; repair this first: {' '.join(command)}", file=sys.stderr)
         raise
 
 
@@ -223,43 +223,43 @@ def boot_files(selection):
 def enable(value):
     mutation_gate()
     if os.geteuid() != 0:
-        raise RuntimeError("enable 需要 sudo。")
+        raise RuntimeError("enable requires sudo.")
     selection = targets(value, devices())
     # Check installed version and reviewed source; post-boot proof is still required.
     version = run("modinfo", "-F", "version", "gpu_unlock", capture=True)
     if version != "1.0.0":
-        raise RuntimeError("当前内核没有预期的 gpu_unlock 1.0.0；先 install。")
+        raise RuntimeError("The current kernel lacks the expected gpu_unlock 1.0.0; run install first.")
     verify_source()
     for path in (Path("/etc/default/grub"), *Path("/etc/default/grub.d").glob("*.cfg")):
         if path != GRUB and "gpu_unlock.targets=" in path.read_text():
-            raise RuntimeError(f"已有解锁参数，请先人工合并：{path}")
+            raise RuntimeError(f"An unlock argument already exists; reconcile it manually first: {path}")
     transactional_update(boot_files(selection), verify_image=True)
-    print("已为选定 PCI 地址生成下次启动配置。请自行完整关机再开机；当前运行状态未改变。")
+    print("Next-boot configuration generated for the selected PCI addresses. Fully power off and start again yourself; current runtime state is unchanged.")
 
 
 def disable():
     # Recovery must still work with the card removed or Secure Boot re-enabled.
     native_only()
     if os.geteuid() != 0:
-        raise RuntimeError("disable 需要 sudo。")
+        raise RuntimeError("disable requires sudo.")
     transactional_update({GRUB: None, HOOK: None, EARLY: None})
-    print("已移除本工具的解锁配置。请完整关机再开机恢复；软件包保留供复用。")
+    print("Removed this helper's unlock configuration. Fully power off and start again to restore state; packages remain installed.")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("check", "source", "install", "enable", "disable"))
-    parser.add_argument("--targets", help="从 check 复制原生 Linux 的准确 PCI 地址，以逗号分隔；不接受 all")
+    parser.add_argument("--targets", help="Exact native Linux PCI addresses from check, comma-separated; all is not accepted")
     args = parser.parse_args()
     if args.action == "enable" and not args.targets:
-        parser.error("enable 必须明确指定 --targets")
+        parser.error("enable requires an explicit --targets argument")
     try:
         if args.action == "enable":
             enable(args.targets)
         else:
             {"check": check, "source": prepare_source, "install": install, "disable": disable}[args.action]()
     except (RuntimeError, OSError, subprocess.CalledProcessError) as error:
-        print(f"停止：{error}", file=sys.stderr)
+        print(f"Stopped: {error}", file=sys.stderr)
         return 1
     return 0
 

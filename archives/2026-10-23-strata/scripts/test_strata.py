@@ -56,7 +56,7 @@ for name, prompt in (
     assert message.get('content'), f'{name}: empty answer'
 
 chinese = chat('generation-chinese', [{'role': 'user', 'content':
-    '先用阿拉伯数字给出 8 × 7 的结果，再用两句中文解释显存和系统内存的区别。'}], max_tokens=128)
+    '\u5148\u7528\u963f\u62c9\u4f2f\u6570\u5b57\u7ed9\u51fa 8 × 7 \u7684\u7ed3\u679c，\u518d\u7528\u4e24\u53e5\u4e2d\u6587\u89e3\u91ca\u663e\u5b58\u548c\u7cfb\u7edf\u5185\u5b58\u7684\u533a\u522b。'}], max_tokens=128)
 chinese_text = chinese.get('content') or ''
 assert any('\u4e00' <= char <= '\u9fff' for char in chinese_text), 'No Chinese text returned'
 assert '56' in chinese_text, 'Simple calculation failed'

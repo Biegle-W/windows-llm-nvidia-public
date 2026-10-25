@@ -21,7 +21,7 @@ import strata_tokenizer as ST
 from benchmark_strata_drives import Monitor, disk_snapshot, disk_delta, gpu_snapshot
 
 PROMPTS = (*cal.PROMPTS,
-           '用中文详细解释本地大语言模型的显存、系统内存和专家卸载，至少写八段。')
+           '\u7528\u4e2d\u6587\u8be6\u7ec6\u89e3\u91ca\u672c\u5730\u5927\u8bed\u8a00\u6a21\u578b\u7684\u663e\u5b58、\u7cfb\u7edf\u5185\u5b58\u548c\u4e13\u5bb6\u5378\u8f7d，\u81f3\u5c11\u5199\u516b\u6bb5。')
 
 
 def main():
