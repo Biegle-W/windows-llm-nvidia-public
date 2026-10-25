@@ -1,5 +1,11 @@
 # Automatic RTX 3060 zero-startup profile correction — October 25, 2026
 
+**Follow-up: corrected RUN0001 automatically unlocked the GPU and booted Windows.**
+FP16/BF16 are 50.534/50.620TFLOPS; logs record safe one-FLR execution and display
+restoration. [Physical verification and limits](RTX3060-AUTOMATIC-UNLOCK-SUCCESS-20261025.md).
+The preparation/pending-test statements below describe the earlier installation
+stage; they are preserved as history, not the latest status.
+
 **The corrected automatic EFI is installed and hash-verified. Its physical boot
 test is pending.** The observed Windows compute state remains stock until a
 successful subsequent unlock; no runtime unlock or reboot was initiated here.

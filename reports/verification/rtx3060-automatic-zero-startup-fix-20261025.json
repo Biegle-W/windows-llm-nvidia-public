@@ -1,10 +1,10 @@
 {
   "date": "2026-10-25",
-  "status": "corrected-zero-startup-efi-installed-awaiting-physical-boot",
+  "status": "corrected-zero-startup-efi-physically-verified",
   "installed": true,
-  "physical_corrected_boot_tested": false,
-  "automatic_unlock_success_verified": false,
-  "current_compute_state": "stock, per first automatic-boot check; no runtime unlock attempted",
+  "physical_corrected_boot_tested": true,
+  "automatic_unlock_success_verified": true,
+  "current_compute_state": "unlocked, confirmed in RUN0001 Windows boot",
   "previous_efi_sha256": "7adcaa078172121a39861bf388596f161aec50ec336af57dd9f9821834cb77d8",
   "installed_efi_sha256": "f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca",
   "fixed_initial_selectors": {

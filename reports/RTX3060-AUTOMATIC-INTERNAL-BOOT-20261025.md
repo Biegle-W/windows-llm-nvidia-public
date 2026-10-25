@@ -1,5 +1,11 @@
 # RTX 3060 automatic internal boot — October 25, 2026
 
+**Follow-up: corrected RUN0001 automatically unlocked the GPU and booted Windows.**
+FP16/BF16 are 50.534/50.620TFLOPS; logs record safe one-FLR execution and display
+restoration. [Physical verification and limits](RTX3060-AUTOMATIC-UNLOCK-SUCCESS-20261025.md).
+The preparation/pending-test statements below describe the earlier installation
+stage; they are preserved as history, not the latest status.
+
 The automatic EFI build and installer policy tests pass. Installation uses a
 512MiB shrink of C: to create a dedicated FAT32 EFI system partition. The
 [current installation/verification status](verification/rtx3060-automatic-internal-boot-20261025.json)

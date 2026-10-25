@@ -1,21 +1,26 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
-LATEST: corrected automatic zero-startup EFI installed, awaiting physical boot:
-[fix and validation](RTX3060-AUTOMATIC-ZERO-STARTUP-FIX-20261025.md).
-Only initial SS0/SS1 constants change to0/0 from hash-verified RUN0000 evidence;
-manual profile, ColdCheck, other guards and firmware transaction remain unchanged.
-10 evidence/19 actual ColdCheck/14 automatic-entry tests and PE checks pass; 8
-updater path checks pass. All 28 installed manifest files verified, previous EFI
-backed up, firmware entries/order/partitions/RUN0000 unchanged, U: removed.
-New EFI SHA256 f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca.
-Private build: `data/uefi-probe/internal-startup/zero-startup-v4/`; update backup:
-`zero-startup-install-backup-v2/` under the same private state directory.
-Next user restart without USB should create RUN0001. Inspect logs and repeat
-compute check before marking success; current Windows remains stock. No reboot
-or runtime unlock was initiated. F8 -> Windows Boot Manager bypasses the app.
-The failure record below describes the prior build, not a test of this correction.
+LATEST: corrected automatic internal unlock VERIFIED in RUN0001:
+[physical automatic result](RTX3060-AUTOMATIC-UNLOCK-SUCCESS-20261025.md).
+Automatic start, complete preflight/PROM check, one successful transaction/FLR,
+quiesced1/maps0/retained0/fault0/safe1, display restored, 9216-pixel readback with
+zero mismatches, Windows handoff without reset. RTX3060 OK/error0; zero NVIDIA
+Error/Critical events found this boot after the short compute verification.
+FP16 50.534TFLOPS (+88.3% stock), BF16 50.620TFLOPS (+89.0%), FP32 8.587TFLOPS.
+Driver610.88/170W unchanged; post-test44C. EFI SHA256 remains
+f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca.
+Private installed state is automatic-internal-unlock-verified with
+AutoInternalBootVerified=true. Capture metadata is
+`data/uefi-probe/internal-startup/automatic-corrected-boot-capture.private.json`;
+new raw logs and compute JSON stay ignored. Original automatic-first-boot-capture
+metadata/RUN0000 must remain immutable for the builder's startup evidence.
+U: removed; no payload/boot/partition changes or second unlock during verification.
+Do not rerun unlock in this Windows session. One corrected automatic boot is
+validated; repeated boots, sleep/resume, updates and future3080Ti remain untested.
+F8 -> Windows Boot Manager bypasses; six-second Esc cancellation retained.
+Earlier failure and installation notes below are historical.
 
-Latest first automatic-boot verification FAILED to apply the unlock:
+Original automatic-build first verification FAILED to apply the unlock:
 [logs, compute results and diagnosis](RTX3060-AUTOMATIC-FIRST-BOOT-20261025.md).
 The internal EFI executed RUN0000 but refused unlock-preflight with EFI_NOT_READY,
 touched0, before automatic start/transaction/FLR. Captured initial SS0/SS1 were

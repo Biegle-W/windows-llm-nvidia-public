@@ -17,21 +17,22 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**Corrected automatic startup profile installed, October 25:** the new EFI uses
-exact SS0/SS1=0/0 from the verified RUN0000 capture. Only those two initial constants
-changed; ColdCheck, the firmware transaction and other preflight checks remain.
-10 provenance, 19 actual startup-check and 14 automatic-flow tests pass; all 28
-installed files are hash-verified. Boot entries, partition layout and prior logs
-are preserved; U: removed. **Restart without USB, then verify the next log and
-compute throughput. The corrected build has not yet been tested in a physical boot.**
-[Correction, validation and recovery](reports/RTX3060-AUTOMATIC-ZERO-STARTUP-FIX-20261025.md).
+**Automatic internal unlock VERIFIED, October 25:** corrected EFI RUN0001 passed
+preflight, ran once without U, completed one FLR with safe cleanup, restored the
+display and started Windows. The same compute executable measures FP16 50.534
+TFLOPS (+88.3% vs saved stock) and BF16 50.620 TFLOPS (+89.0%); FP32 is unchanged
+within the short-run variation. GPU StatusOK/error0; no NVIDIA Error/Critical
+events were found since boot, including after the test. USB is not needed for
+this internal startup path. [Boot logs, measurements and limits](reports/RTX3060-AUTOMATIC-UNLOCK-SUCCESS-20261025.md).
+This validates one corrected automatic boot; repeated boots, sleep/resume and
+updates remain untested. Keep the six-second Esc gate and F8 Windows fallback.
 
-**First automatic boot, October 25: the internal EFI ran but refused before unlocking.**
+**Original automatic build, historical first-boot refusal:**
 Its RUN0000 logs show a strict startup-state mismatch: the saved initial SS0/SS1
 values differ from this boot's zero/zero values. No unlock transaction or FLR ran.
 Current FP16/BF16 are stock-like at 26.79/26.81 TFLOPS; GPU StatusOK/error0 and
 no NVIDIA Error/Critical events were found this boot. [Evidence and next step](reports/RTX3060-AUTOMATIC-FIRST-BOOT-20261025.md).
-The original build was not successful; the corrected build above awaits testing. The earlier LLM speed results below
+The original build failed; corrected RUN0001 has now succeeded as recorded above. The earlier LLM speed results below
 were measured in the prior successful manual-unlock boot. No boot payload or
 startup checks were changed during this verification.
 
@@ -56,7 +57,7 @@ the original Windows Boot Manager second. Original partitions and the Windows
 boot entry passed preservation checks; temporary U: was removed. The actual-partition
 build passes 14 automatic/source scenarios; the corrected installer passes 20
 policy/state/resume checks. A first state-writing failure was audited and recovered
-without a second shrink. No VBIOS flash or reboot was initiated. **The original build refused preflight; the corrected zero-state build awaits its boot test.**
+without a second shrink. No VBIOS flash or reboot was initiated. **Corrected RUN0001 has now verified automatic unlock and Windows compute performance.**
 F8 -> Windows Boot Manager bypasses the unlock. Do not install the preview build.
 Do not rerun the unlock in the current boot. The preparation paragraphs below
 describe earlier stages, not the latest hardware result.
