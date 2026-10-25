@@ -31,13 +31,16 @@ trial completed one FLR, safe DMA cleanup, display recovery and Windows handoff.
 The unchanged-driver/170W short GEMM comparison measured FP16 26.84->50.72TFLOPS
 (+89.0%) and BF16 26.79->50.59TFLOPS (+88.9%); FP32 was approximately unchanged.
 The Windows GPU reports StatusOK/error0. [Physical result and measurement limits](reports/RTX3060-WINDOWS-UNLOCK-RESULT-20261025.md).
-The USB remains manual-only; no persistent boot installation or VBIOS flash was
-made. Unlock persistence and repeat-boot reliability remain untested; short LLM measurements are above.
-An [automatic internal-boot package and installer](reports/RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md)
-are now prepared, with14 automatic/source and13 installer-policy checks passing.
-The existing ESP has61MiB free; the81MiB payload needs a separate512MiB FAT32
-ESP. Creating it by shrinking C:512MiB awaits explicit user approval; no partition
-or permanent firmware boot order has changed. Do not install the preview build.
+The manual USB remains preserved. The [automatic internal boot installation](reports/RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md)
+is now complete after explicit approval: C: shrank by exactly 512 MiB, a dedicated
+FAT32 ESP holds 27 hash-verified payload files, and the unlock entry is first with
+the original Windows Boot Manager second. Original partitions and the Windows
+boot entry passed preservation checks; temporary U: was removed. The actual-partition
+build passes 14 automatic/source scenarios; the corrected installer passes 20
+policy/state/resume checks. A first state-writing failure was audited and recovered
+without a second shrink. No VBIOS flash or reboot was initiated. **First physical
+automatic boot remains untested: restart without USB, then inspect the new logs.**
+F8 -> Windows Boot Manager bypasses the unlock. Do not install the preview build.
 Do not rerun the unlock in the current boot. The preparation paragraphs below
 describe earlier stages, not the latest hardware result.
 

@@ -11,18 +11,23 @@ nvlddmkm Error/Critical events found this boot. No profile/runtime/boot changes.
 Recommended future experiment: full-GPU LFM2.5-2.6B BF16 or Qwen3.5-4B 16-bit,
 separately measuring prefill and decode; candidates are not installed.
 
-Automatic internal boot is prepared but not installed: [design, recovery and OS-update behavior](RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md).
-`prepare_uefi_3060_automatic.py` and `Install-RTX3060AutomaticUnlock.ps1` pass14
-host automatic/source cases and13 installer policy checks. Preview under ignored
-`data/uefi-probe/internal-startup/preview-v2/` is bound to a synthetic partition
-GUID and MUST NOT be installed. Existing ESP free space is64106496 bytes, too
-small for firmware assets. Explicit approval is pending for shrinking C: by
-536870912 bytes and creating a new512MiB FAT32 ESP; no partition/boot order has
-changed. After approval, run the installer elevated with Mode Install and
-AllowResizeCBy512MiB. It compiles against the actual new ESP GUID and verifies
-files before promoting a separate firmware entry, preserving Windows Boot Manager
-as fallback. State/backups are private under `data/uefi-probe/internal-startup/`.
-The tested manual USB and current unlocked Windows boot remain unchanged.
+Automatic internal boot is installed, awaiting first physical boot:
+[installation, recovery and OS-update behavior](RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md).
+The user explicitly approved the 512 MiB C: shrink and dedicated FAT32 ESP.
+Exactly 536870912 bytes were released once; original partition identities and
+unrelated sizes are preserved. The actual-GUID automatic EFI and all 27 payload
+files pass hash checks; unlock first, original Windows Boot Manager second.
+Original Windows entry is unchanged; Secure Boot/Fast Startup off; U: removed.
+Private state and BCD/partition backups remain under
+`data/uefi-probe/internal-startup/`. The first attempt stopped on a PowerShell
+null-to-empty-path state-write bug after shrinking C. A read-only audit confirmed
+no new partition/entry; corrected state writes and guarded Mode Resume completed
+the installation without another shrink. Installer now passes 20 policy/state/
+resume checks; actual EFI build passes 14 automatic/internal-source cases.
+No reboot or second unlock was initiated. Next: user restarts without USB;
+inspect internal RTX-UNLOCK logs and verify GPU/compute afterward. Do not mark
+physical automatic boot verified yet. F8 -> Windows Boot Manager bypasses the
+application; six-second Esc cancellation is retained. Preview must not be used.
 
 **Latest October25 result: first physical unlock succeeded in Windows.**
 [Execution and identical-executable comparison](RTX3060-WINDOWS-UNLOCK-RESULT-20261025.md).
@@ -34,8 +39,8 @@ no nvlddmkm Error/Critical events since this boot were found at inspection.
 At unchanged170W, the same short CUDA GEMM executable measures FP16
 26.835->50.724TFLOPS (+89.0%), BF16 26.788->50.591 (+88.9%), FP32 8.643->8.540.
 This is one boot and one short sample per arm; no INT8, broad numerical,
-long-run, repeat-boot or sleep/resume validation. USB remains manual-only with no
-ESP/BCD/boot-order/driver/VBIOS change. Do not rerun unlock in this boot. Preserve
+long-run, repeat-boot or sleep/resume validation. That manual trial made no ESP/BCD/boot-order/driver/VBIOS change;
+the later internal installation is recorded above. Do not rerun unlock in this boot. Preserve
 prior build/profile flags as historical; record physical validation separately.
 Earlier preparation notes below precede this successful attempt.
 

@@ -11,7 +11,38 @@ The base [manual hardware trial succeeded](RTX3060-WINDOWS-UNLOCK-RESULT-2026102
 with about89% higher FP16/BF16 Tensor GEMM throughput. Automatic internal boot is
 a separate integration step and needs a subsequent physical boot check.
 
-## Prepared installation
+## Installed status — awaiting first physical boot
+
+The user approved the partition change and installation. C: was reduced by
+exactly 536870912 bytes once. A new 512 MiB FAT32 ESP now holds the actual-partition
+automatic EFI and its firmware payload. Independent administrator verification
+confirmed all 27 manifest files and EFI SHA256
+`7adcaa078172121a39861bf388596f161aec50ec336af57dd9f9821834cb77d8`,
+original partition identities/unrelated sizes, unchanged Windows boot entry,
+unlock-first/Windows-second priority, Fast Startup/Secure Boot off, and removal
+of the temporary U: mount. The new ESP has 446058496 bytes free.
+
+The first installation attempt completed the approved shrink, then stopped on
+a state-write bug: PowerShell passed an empty backup filename instead of a .NET
+null to `File.Replace`. Its recovery restored the original firmware order. A
+separate read-only audit confirmed the exact shrink, original four partitions,
+and absence of a new unlock entry. The corrected writer uses `NullString.Value`.
+The new guarded `-Mode Resume -AllowResizeCBy512MiB` accepts only this shrink-only
+state, checks the original disk/partition inventory and boot entry/order, verifies
+the released extent is empty, and does not call Resize-Partition again. It then
+completed the approved installation. Both attempts and backups remain private.
+The 20 installer checks include first/replacement state writes and unsafe-resume
+rejection; the actual-partition EFI build passed 14 automatic/source cases.
+
+**No restart or unlock replay was initiated.** The user must restart without USB,
+then the next agent should inspect the new internal `RTX-UNLOCK/RUNnnnn` logs and
+verify Windows GPU health and the same compute test. First automatic internal
+boot, repeat-boot reliability and update compatibility are not yet validated.
+F8 -> Windows Boot Manager bypasses the application if needed. The six-second
+Esc cancellation remains in the automatic application. Keep the manual USB intact.
+
+## Installation procedure
+
 
 `scripts/Install-RTX3060AutomaticUnlock.ps1` defaults to Plan. Install requires
 administrator rights and the explicit `-AllowResizeCBy512MiB` switch. The plan is:
@@ -60,8 +91,8 @@ long-term log housekeeping may eventually be needed.
 The automatic gate/internal-source replay has14 host scenarios, including
 automatic execution without input, Esc, missing/failed input, Secure Boot,
 preflight/log/transaction failure, more than100 existing logs, wrong partition,
-USB, wrong disk signature/type and malformed path. The installer has13 policy
-checks covering firmware ordering, format-target ownership and copy-path bounds.
+USB, wrong disk signature/type and malformed path. The installer has 20 policy/state/resume checks covering firmware ordering,
+format-target ownership, copy-path bounds, atomic state updates and shrink-only recovery.
 The EFI also passes AMD64/subsystem10/entrypoint/NX/ASLR/relocation checks with
 zero imports. These are software checks; the internal startup remains untested
 until a new physical boot.

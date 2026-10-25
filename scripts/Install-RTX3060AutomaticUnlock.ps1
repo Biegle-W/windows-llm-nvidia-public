@@ -3,7 +3,7 @@
 # no Windows bootloader file is replaced and the original entry is retained.
 [CmdletBinding()]
 param(
-    [ValidateSet('Plan','Install','Disable','SelfTest')][string]$Mode = 'Plan',
+    [ValidateSet('Plan','Install','Resume','Disable','SelfTest')][string]$Mode = 'Plan',
     [switch]$AllowResizeCBy512MiB
 )
 $ErrorActionPreference = 'Stop'
@@ -19,7 +19,7 @@ $powerKey = 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Power'
 function Save-State($Value) {
     $temporary = $statePath + '.pending'
     [IO.File]::WriteAllText($temporary,($Value | ConvertTo-Json -Depth 8),[Text.UTF8Encoding]::new($false))
-    if (Test-Path -LiteralPath $statePath) { [IO.File]::Replace($temporary,$statePath,$null) }
+    if (Test-Path -LiteralPath $statePath) { [IO.File]::Replace($temporary,$statePath,[System.Management.Automation.Language.NullString]::Value) }
     else { [IO.File]::Move($temporary,$statePath) }
 }
 function Bcd([string[]]$Arguments) {
@@ -52,6 +52,23 @@ function Manifest-Target([string]$Root,[string]$Relative) {
     if (-not $target.StartsWith($base,[StringComparison]::OrdinalIgnoreCase)) { throw 'Package destination escapes its owned root.' }
     return $target
 }
+function Assert-ShrunkResume($State,$C,$Current,$Original) {
+    if ($State.Status -notin @('prepared','c-shrunk','installation-failed-windows-order-restored') -or
+        $State.PartitionGuid -or $State.PartitionNumber -or $State.EntryId -or
+        $State.COriginalSize-$State.CTargetSize -ne $newSize -or
+        $C.Size -ne $State.CTargetSize -or $C.Offset+$C.Size -ne $State.NewOffset -or
+        @($Current).Count -ne @($Original).Count) { throw 'Interrupted-install state is not eligible for a shrink-only resume.' }
+    foreach ($old in $Original) {
+        $now=@($Current | Where-Object PartitionNumber -eq $old.PartitionNumber)
+        if ($now.Count -ne 1 -or $now[0].Guid -ne $old.Guid -or $now[0].GptType -ne $old.GptType -or
+            $now[0].Offset -ne $old.Offset -or
+            ($old.PartitionNumber -eq $C.PartitionNumber -and ($old.Size -ne $State.COriginalSize -or $now[0].Size -ne $State.CTargetSize)) -or
+            ($old.PartitionNumber -ne $C.PartitionNumber -and $now[0].Size -ne $old.Size)) { throw 'Original partition differs during resume.' }
+    }
+    foreach ($part in $Current) {
+        if ($part.Offset -lt $State.NewOffset+$newSize -and $part.Offset+$part.Size -gt $State.NewOffset) { throw 'Approved released extent is occupied.' }
+    }
+}
 if ($Mode -eq 'SelfTest') {
     $id = '{11111111-1111-4111-8111-111111111111}'
     $other = '{22222222-2222-4222-8222-222222222222}'
@@ -70,7 +87,29 @@ if ($Mode -eq 'SelfTest') {
         $rejected=$false;try { $null=Manifest-Target 'U:\' $badPath } catch { $rejected=$true };if (-not $rejected) { throw 'Unsafe package path accepted.' }
     }
     if ((Manifest-Target 'U:\' 'EFI/LLMUnlock/Auto3060.efi') -ne 'U:\EFI\LLMUnlock\Auto3060.efi') { throw 'Valid path failed.' }
-    'PASS 13 installation policy checks; no partition or boot mutation'
+    $savedStatePath=$statePath
+    $statePath=Join-Path ([IO.Path]::GetTempPath()) ('rtx3060-state-'+[guid]::NewGuid().ToString('N')+'.json')
+    try {
+        Save-State @{Status='first'}
+        if ((Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json).Status -ne 'first') { throw 'Initial state write failed.' }
+        Save-State @{Status='second'}
+        if ((Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json).Status -ne 'second') { throw 'Atomic state replacement failed.' }
+    } finally {
+        foreach ($testFile in @($statePath,($statePath+'.pending'))) { if (Test-Path -LiteralPath $testFile) { Remove-Item -LiteralPath $testFile } }
+        $statePath=$savedStatePath
+    }
+    $originalC=[pscustomobject]@{PartitionNumber=3;Guid=$other;GptType='basic';Offset=1048576;Size=4*$newSize}
+    $shrunkC=[pscustomobject]@{PartitionNumber=3;Guid=$other;GptType='basic';Offset=1048576;Size=3*$newSize}
+    $resumeState=@{Status='prepared';COriginalSize=4*$newSize;CTargetSize=3*$newSize;NewOffset=1048576+3*$newSize;PartitionGuid=$null;PartitionNumber=$null;EntryId=$null}
+    Assert-ShrunkResume $resumeState $shrunkC @($shrunkC) @($originalC)
+    foreach ($field in @('PartitionGuid','EntryId')) {
+        $badState=$resumeState.Clone();$badState[$field]=$id
+        $rejected=$false;try { Assert-ShrunkResume $badState $shrunkC @($shrunkC) @($originalC) } catch { $rejected=$true };if (-not $rejected) { throw 'Unsafe resume accepted.' }
+    }
+    $rejected=$false;try { Assert-ShrunkResume $resumeState $originalC @($originalC) @($originalC) } catch { $rejected=$true };if (-not $rejected) { throw 'Resume could repeat an uncompleted shrink.' }
+    $occupied=[pscustomobject]@{PartitionNumber=5;Guid=$id;GptType='esp';Offset=$resumeState.NewOffset;Size=$newSize}
+    $rejected=$false;try { Assert-ShrunkResume $resumeState $shrunkC @($shrunkC,$occupied) @($originalC,$occupied) } catch { $rejected=$true };if (-not $rejected) { throw 'Occupied resume extent accepted.' }
+    'PASS 20 installation policy/state/resume checks; no partition or boot mutation'
     return
 }
 if ($Mode -eq 'Plan') {
@@ -93,38 +132,52 @@ if ($Mode -eq 'Disable') {
     return
 }
 if (-not $AllowResizeCBy512MiB) { throw 'Installation requires explicit -AllowResizeCBy512MiB authorization.' }
-if (Test-Path -LiteralPath $statePath) { throw 'Installation state already exists; inspect it instead of repeating partition creation.' }
+$isResume=($Mode -eq 'Resume')
+if (-not $isResume -and (Test-Path -LiteralPath $statePath)) { throw 'Installation state already exists; inspect it instead of repeating partition creation.' }
+if ($isResume) { $state=Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json -AsHashtable }
 if (Test-Path 'U:\') { throw 'U: is occupied; no changes made.' }
 $expected=Get-Content -LiteralPath (Join-Path $stateRoot 'platform.private.json') -Raw | ConvertFrom-Json
 $c=Get-Partition -DriveLetter C
 $disk=Get-Disk -Number $c.DiskNumber
-if ($c.DiskNumber -ne 0 -or $disk.UniqueId -ne $expected.disk.UniqueId -or $disk.BusType -ne 'NVMe' -or $disk.PartitionStyle -ne 'GPT' -or $c.Size -ne $expected.cSize) { throw 'System-disk inventory changed; no changes made.' }
-$security=Get-BitLockerVolume -MountPoint C:
+$expectedCSize=if ($isResume) { $state.CTargetSize } else { $expected.cSize }
+if ($c.DiskNumber -ne 0 -or $disk.UniqueId -ne $expected.disk.UniqueId -or $disk.BusType -ne 'NVMe' -or $disk.PartitionStyle -ne 'GPT' -or $c.Size -ne $expectedCSize) { throw 'System-disk inventory changed; no changes made.' }
+$security=Get-BitLockerVolume -MountPoint C:\
 if ((Confirm-SecureBootUEFI) -or $security.VolumeStatus -ne 'FullyDecrypted' -or $security.ProtectionStatus -ne 'Off') { throw 'Unexpected Secure Boot/encryption state; no changes made.' }
-$supported=Get-PartitionSupportedSize -DriveLetter C
-$targetSize=[int64]$c.Size-$newSize
-if ($targetSize -lt $supported.SizeMin) { throw 'The 512 MiB shrink is not supported.' }
-$oldPartitions=@(Get-Partition -DiskNumber 0)
+$targetSize=if ($isResume) { [int64]$state.CTargetSize } else { [int64]$c.Size-$newSize }
+if (-not $isResume) {
+    $supported=Get-PartitionSupportedSize -DriveLetter C
+    if ($targetSize -lt $supported.SizeMin) { throw 'The 512 MiB shrink is not supported.' }
+}
+$backup=Join-Path $stateRoot 'installation-backup'
+$oldPartitions=if ($isResume) { @(Get-Content -LiteralPath (Join-Path $backup 'partitions-before.private.json') -Raw | ConvertFrom-Json) } else { @(Get-Partition -DiskNumber 0) }
 $oldGuids=@($oldPartitions.Guid)
 $newOffset=[int64]$c.Offset+$targetSize
 $fwBefore=Bcd @('/enum','{fwbootmgr}')
 if ($fwBefore -match '(?m)^bootsequence\s+') { throw 'A one-time firmware boot is already scheduled; preserve it.' }
 $orderBefore=@(Boot-Order $fwBefore)
 $bootmgrBefore=Bcd @('/enum','{bootmgr}')
-$backup=Join-Path $stateRoot 'installation-backup'
-if (Test-Path -LiteralPath $backup) { throw 'Installation backup already exists.' }
-New-Item -ItemType Directory -Path $backup | Out-Null
-$fwBefore | Set-Content -LiteralPath (Join-Path $backup 'fwbootmgr-before.private.txt') -Encoding utf8
-$bootmgrBefore | Set-Content -LiteralPath (Join-Path $backup 'bootmgr-before.private.txt') -Encoding utf8
-Bcd @('/enum','firmware','/v') | Set-Content -LiteralPath (Join-Path $backup 'firmware-before.private.txt') -Encoding utf8
-$null=Bcd @('/export',(Join-Path $backup 'BCD-before.private'))
-$oldPartitions | Select-Object DiskNumber,PartitionNumber,Guid,GptType,Offset,Size | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $backup 'partitions-before.private.json') -Encoding utf8
-$hiberBefore=Get-ItemPropertyValue -LiteralPath $powerKey -Name HiberbootEnabled -ErrorAction SilentlyContinue
-$state=[ordered]@{Status='prepared';DiskNumber=0;DiskUniqueId=$disk.UniqueId;COriginalSize=$c.Size;CTargetSize=$targetSize;NewOffset=$newOffset;PartitionBytes=$newSize;PartitionGuid=$null;PartitionNumber=$null;EntryId=$null;BootOrderBefore=$orderBefore;EfiPath=$entryPath;EfiSha256=$null;HiberbootBefore=$hiberBefore;AutoInternalBootVerified=$false}
-Save-State $state
+if ($isResume) {
+    if ($state.DiskUniqueId -ne $disk.UniqueId -or $state.COriginalSize -ne $expected.cSize -or
+        ($orderBefore -join ',') -ne ($state.BootOrderBefore -join ',')) { throw 'Original disk/boot state differs during resume.' }
+    $savedWindows=Get-Content -LiteralPath (Join-Path $backup 'bootmgr-before.private.txt') -Raw
+    if ($bootmgrBefore.TrimEnd() -cne $savedWindows.TrimEnd()) { throw 'Original Windows entry changed during resume.' }
+    Assert-ShrunkResume $state $c @(Get-Partition -DiskNumber 0) $oldPartitions
+    $hiberBefore=$state.HiberbootBefore
+} else {
+    if (Test-Path -LiteralPath $backup) { throw 'Installation backup already exists.' }
+    New-Item -ItemType Directory -Path $backup | Out-Null
+    $fwBefore | Set-Content -LiteralPath (Join-Path $backup 'fwbootmgr-before.private.txt') -Encoding utf8
+    $bootmgrBefore | Set-Content -LiteralPath (Join-Path $backup 'bootmgr-before.private.txt') -Encoding utf8
+    Bcd @('/enum','firmware','/v') | Set-Content -LiteralPath (Join-Path $backup 'firmware-before.private.txt') -Encoding utf8
+    $null=Bcd @('/export',(Join-Path $backup 'BCD-before.private'))
+    $oldPartitions | Select-Object DiskNumber,PartitionNumber,Guid,GptType,Offset,Size | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $backup 'partitions-before.private.json') -Encoding utf8
+    $hiberBefore=Get-ItemPropertyValue -LiteralPath $powerKey -Name HiberbootEnabled -ErrorAction SilentlyContinue
+    $state=[ordered]@{Status='prepared';DiskNumber=0;DiskUniqueId=$disk.UniqueId;COriginalSize=$c.Size;CTargetSize=$targetSize;NewOffset=$newOffset;PartitionBytes=$newSize;PartitionGuid=$null;PartitionNumber=$null;EntryId=$null;BootOrderBefore=$orderBefore;EfiPath=$entryPath;EfiSha256=$null;HiberbootBefore=$hiberBefore;AutoInternalBootVerified=$false}
+    Save-State $state
+}
 $mounted=$false
 try {
-    Resize-Partition -DriveLetter C -Size $targetSize
+    if (-not $isResume) { Resize-Partition -DriveLetter C -Size $targetSize }
     $state.Status='c-shrunk';Save-State $state
     $part=New-Partition -DiskNumber 0 -Offset $newOffset -Size $newSize -GptType $espType -DriveLetter U
     Assert-NewPartition $part 0 $newOffset $oldGuids
