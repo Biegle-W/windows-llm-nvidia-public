@@ -17,6 +17,15 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
+**3080 Ti unlock toolkit prepared, October 25:** separate board and display-
+ownership diagnostic ZIPs, a guarded baseline launcher and an offline PROM/
+firmware auditor are ready. Both archives pass hash checks; six new setup tests
+and wrong-card rejection checks pass. Run **Capture RTX3080Ti Baseline.cmd** once
+the new card is installed, then collect its own diagnostic captures. The exact-
+board3080Ti unlock image cannot be generated yet because that hardware data is
+not available. Windows-first boot and the verified3060 restore path remain.
+[Ready packages, commands and completion steps](reports/RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
+
 **GPU swap prepared, October 25:** Windows Boot Manager is first for the incoming
 RTX3080Ti. The verified3060 unlock entry/payload are preserved but bypassed by
 default. CUDA now accepts exactly one RTX3060 or RTX3080Ti with12GB or more;

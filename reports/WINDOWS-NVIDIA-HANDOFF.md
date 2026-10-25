@@ -1,5 +1,23 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
+LATEST3080Ti unlock preparation: [toolkit workflow](RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
+rtx3080ti_setup.py prepare produced data/uefi-probe/rtx3080ti-unlock-setup/
+with01-board-probe.zip and02-ownership-probe.zip; these are distinct USB fallback
+images, never merge them. Hashes: board ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a;
+ownership58f4d6beb444d423a8509dd4d1cdbb7a2e10a425e51ae2e65f2cceaa011342b8.
+Ownership has no unlock linked and no firmware assets; grouped tree/entry and
+2208 fixture tests pass. Six setup guard tests pass. Real3060 inventory/capture
+refused before baseline compute/profile output. Capture RTX3080Ti Baseline.cmd
+is ready for the card's first Windows boot; it records identity and pre-attempt
+GEMM without power changes or app termination. audit mode imports strict2208/GA102
+REPORT/PROM and optional read-only ownership log; generates a private exact-board
+header and calls pure offline FWSEC/signature/DMA/layout checks. It never installs
+or executes firmware and keeps approval/compatibility flags false. Review this
+new board's display topology/driver roles before building its separate guarded
+manual unlock. Current3060 is still installed; no USB connected, no3080Ti data
+available and no3080Ti unlock image built. Windows-first boot unchanged; original
+3060 EFI/restore and separate Linux AMD system preserved.
+
 LATEST GPU SWAP PREPARATION: Windows Boot Manager first;3060 unlock retained but
 bypassed by default. [Swap instructions](WINDOWS-3060-3080TI-SWAP-20261025.md).
 The next user shutdown/swap installs an unknown-board3080Ti. Verify Windows/driver,

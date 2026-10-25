@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-25",
+  "status": "3080ti-diagnostics-baseline-and-offline-audit-toolkit-prepared",
+  "currently_installed_gpu": "RTX 3060",
+  "rtx3080ti_physically_present": false,
+  "usb_present_or_staged": false,
+  "windows_first_boot_policy_retained": true,
+  "3060_profile_and_restore_command_preserved": true,
+  "setup_path": "data/uefi-probe/rtx3080ti-unlock-setup/",
+  "packages": [
+    {
+      "name": "01-board-probe.zip",
+      "mode": "read-only PCI/register/ROM/PROM capture",
+      "efi_sha256": "ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a",
+      "manifest_files_verified": 13
+    },
+    {
+      "name": "02-ownership-probe.zip",
+      "mode": "GC_TREE_ONLY read-only ownership capture",
+      "efi_sha256": "58f4d6beb444d423a8509dd4d1cdbb7a2e10a425e51ae2e65f2cceaa011342b8",
+      "manifest_files_verified": 11,
+      "unlock_code_linked": false,
+      "firmware_assets_included": false
+    }
+  ],
+  "zip_contents_match_manifests": true,
+  "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
+  "host_tests": [
+    "gop-cycle (includes tree and tree-entry)",
+    "2208 target-selection entry fixture"
+  ],
+  "pe_verification_passed": true,
+  "new_setup_guard_unit_tests": 6,
+  "actual_installed_3060_refused_before_baseline_compute": true,
+  "actual_saved_3060_capture_refused_before_profile_creation": true,
+  "baseline_launcher": "Capture RTX3080Ti Baseline.cmd",
+  "offline_capture_auditor": "scripts/rtx3080ti_setup.py audit",
+  "physical_3080ti_baseline_recorded": false,
+  "physical_3080ti_capture_audited": false,
+  "3080ti_unlock_image_built": false,
+  "3080ti_firmware_executed": false,
+  "3080ti_automatic_boot_installed": false,
+  "boot_or_partition_changes_this_preparation": false,
+  "linux_amd_changed": false,
+  "remaining_dependency": "Install 3080 Ti, collect baseline and both read-only captures, then review the exact board/display policy before building its manual unlock."
+}
