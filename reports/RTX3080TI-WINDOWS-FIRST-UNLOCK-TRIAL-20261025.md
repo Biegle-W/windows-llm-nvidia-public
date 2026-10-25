@@ -1,5 +1,11 @@
 # RTX 3080 Ti first Windows unlock trial — October 25, 2026
 
+**Result update:** manual RUN01 succeeded, with safe transaction/display logs,
+Windows observation and FP16/BF16 compute improvements of80.3%/84.7%.
+[Physical result and limits](RTX3080TI-WINDOWS-UNLOCK-RESULT-20261025.md).
+The text below preserves the pre-trial design and instructions. Do not rerun the
+unlock in the current Windows/firmware session. Automatic3080Ti startup is not installed.
+
 This is a fixed-board, manual-only experiment for the installed RTX3080Ti12GB,
 device2208/subsystem10de:1535, BDF0000:01:00.0, VBIOS94.02.71.00.01.
 Both read-only captures passed. No3080Ti unlock has run yet. Host tests cannot

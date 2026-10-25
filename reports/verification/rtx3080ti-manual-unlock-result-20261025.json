@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-25",
+  "status": "manual-run01-success-current-windows-compute-verified",
+  "hardware": {
+    "gpu": "RTX 3080 Ti 12GB",
+    "device": "2208",
+    "subsystem": "10de:1535",
+    "vbios": "94.02.71.00.01",
+    "driver": "610.88",
+    "power_limit_w": 350
+  },
+  "manual_efi_sha256": "c13c39eb98bae5b836c80e1a4e5d7f84c05ad910f35b5b62f2ad97311052fab4",
+  "run": "RUN01",
+  "manual_u_confirmed": true,
+  "live_prom_hash_matched": true,
+  "initial_selectors": {
+    "ss0": "51144015",
+    "ss1": "1"
+  },
+  "final_selectors": {
+    "ss0": "88888888",
+    "ss1": "8"
+  },
+  "transaction": {
+    "result": 0,
+    "containment": 0,
+    "started": true,
+    "quiesced": true,
+    "fault": false,
+    "retained": 0,
+    "maps": 0,
+    "flr_count": 1,
+    "safe": true
+  },
+  "display": {
+    "status": 0,
+    "touched": true,
+    "restored": true,
+    "readback_pixels": 9216,
+    "readback_mismatches": 0,
+    "separate_user_visual_confirmation_received": false
+  },
+  "windows": {
+    "handoff_intent_local": "2026-10-25 18:02:41",
+    "boot_time_local": "2026-10-25T18:02:44.5000000-04:00",
+    "timezone": "America/New_York",
+    "handoff_reboot_requested": false,
+    "current_os_observed": true
+  },
+  "compute": {
+    "same_executable_sha256": "aa8cca683335ee33ab000829b0aa47eceb7de04281eec39d3d36103b2338916e",
+    "n": 4096,
+    "warmup_seconds": 2,
+    "samples": 30,
+    "cuda_runtime": 13030,
+    "cublas": 130600,
+    "comparisons": [
+      {
+        "mode": "fp32_pedantic",
+        "before_tflops": 25.682687,
+        "after_tflops": 25.700669,
+        "difference_percent": 0.07001603843086457,
+        "reference_checks_passed": true
+      },
+      {
+        "mode": "fp16_tensor_fp32_accumulate",
+        "before_tflops": 70.34990300000001,
+        "after_tflops": 126.85985400000001,
+        "difference_percent": 80.32697784956433,
+        "reference_checks_passed": true
+      },
+      {
+        "mode": "bf16_tensor_fp32_accumulate",
+        "before_tflops": 70.36316099999999,
+        "after_tflops": 129.957548,
+        "difference_percent": 84.69543743209604,
+        "reference_checks_passed": true
+      }
+    ]
+  },
+  "post_compute_health": {
+    "gpu_status": "OK",
+    "device_error_code": 0,
+    "nvidia_error_critical_events_found_this_boot": 0,
+    "temperature_c": 37,
+    "vram_free_mib": 10858
+  },
+  "private_log_sha256": {
+    "GOP.TXT": "66b9a9f7104e2ac5fb2e1995c5dc365187249fb58e3b3a7e5dfbf26548ced78c",
+    "UNLOCK.TXT": "cfbb8d543b240490667aad737f21a43cd4bcae45fb32b6ae4a3db20bafd8594f"
+  },
+  "private_compute_sha256": "9038367eafa7d9305fb2500449879f3508f3a823f21e1763f450e36fb6f0407b",
+  "automatic_3080ti_startup_installed": false,
+  "internal_boot_settings_changed": false,
+  "driver_or_power_setting_changed": false,
+  "original_3060_setup_preserved": true,
+  "limits": [
+    "One manual hardware boot and short matrix benchmark comparison across Windows sessions.",
+    "Endpoint reference checks do not establish comprehensive numerical correctness or long-duration stability.",
+    "Repeated boots, sleep/resume, updates and post-unlock LLM throughput remain unvalidated."
+  ]
+}

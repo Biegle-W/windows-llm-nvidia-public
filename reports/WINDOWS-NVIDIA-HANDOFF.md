@@ -1,6 +1,23 @@
 # Windows NVIDIA handoff — 25 October 2026
 
-LATEST manual3080Ti trial READY: [first-trial workflow](RTX3080TI-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
+LATEST manual3080Ti RUN01 SUCCESS: [verified result](RTX3080TI-WINDOWS-UNLOCK-RESULT-20261025.md).
+Current Windows boot18:02:44.5 America/New_York follows logged18:02:41 handoff.
+MANUAL_U confirmed, fixed board/PROM/51144015+1 initial state matched. One FLR,
+transaction result0/containment0/started1/quiesced1/fault0/retained0/maps0/safe1,
+SS0=88888888/SS1=8 preserved through display recovery and output. FULL_FINAL0 /
+touched1/restored1,9216-pixel readback zero mismatches, reboot0 Windows handoff.
+Current same-executable GEMM FP32 25.700669/FP16 126.859854/BF16 129.957548TFLOPS;
+versus saved3080Ti baseline +0.07%/+80.33%/+84.70%. Three reference checks pass.
+GPU OK/error0,37C/10858MiB free, zero NVIDIA Error/Critical events this boot after
+compute; driver610.88/350W unchanged. USB EFI remains c13c...fab4.
+Raw log copy data/uefi-probe/3080ti-usb/captures-20261025-181102-fd129b01389b4e22837518c2e0e68593/RTX-UNLOCK/RUN01/;
+compute data/uefi-probe/3080ti-usb/unlocked-compute-run01.private.json;
+health manual-run01-health.private.json in same state directory. Original baseline
+unchanged. No3080Ti automatic startup installed and no boot/driver/model/power
+change during verification. Do not rerun unlock in current session. Repeated
+boots/sleep/resume/updates/stability and post-unlock LLM speed unvalidated.
+
+Historical manual3080Ti trial preparation: [first-trial workflow](RTX3080TI-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
 Ownership RUN00 captured17:42 local, complete4 handles/5 roles/10 active edges,
 no detach/touched. Copied/hash verified under
 data/uefi-probe/3080ti-usb/captures-20261025-174554-1be0a845b90d45c889cfcd1653a49ef5/.

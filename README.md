@@ -18,7 +18,17 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**RTX3080Ti manual unlock ready, October25:** both read-only captures passed.
+**RTX3080Ti manual unlock verified, RUN01:** logs show U confirmed, one successful
+transaction/FLR, safe cleanup, restored display with9216 matching pixels and
+Windows handoff. Same-executable FP16 70.350 ->126.860TFLOPS (+80.3%), BF16
+70.363 ->129.958TFLOPS (+84.7%); FP32 essentially unchanged. All three compute
+reference checks pass. GPU OK/error0, no NVIDIA Error/Critical events found this
+boot after compute; driver610.88/350W unchanged. **Automatic3080Ti startup is not
+installed**; do not rerun an unlock in this firmware session. Post-unlock LLM
+speeds and repeated starts/sleep/resume remain untested. [Execution evidence,
+measurements and limits](reports/RTX3080TI-WINDOWS-UNLOCK-RESULT-20261025.md).
+
+**Historical RTX3080Ti manual trial preparation, October25:** both read-only captures passed.
 The exact-board manual candidate is staged on Kingston D:, with all24 package
 files independently verified and both captures preserved. Eight upstream suites,
 31 display/22 simulated unlock/26 driver-policy/19 ColdCheck/eight manual-gate

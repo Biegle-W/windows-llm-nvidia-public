@@ -1,9 +1,10 @@
 # Windows RTX 3080 Ti unlock preparation — October 25, 2026
 
-**Latest:** both captures are complete, reviewed and preserved. The exact-board
-manual unlock image is built/tested/staged, with24 USB file hashes verified.
-Follow the [first manual trial instructions](RTX3080TI-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
-No3080Ti unlock has executed. Diagnostic setup history follows below.
+**Latest:** [manual RUN01 succeeded and compute verification passed](RTX3080TI-WINDOWS-UNLOCK-RESULT-20261025.md).
+FP16/BF16 increased80.3%/84.7% in the retained short GEMM; safe cleanup and
+display/Windows recovery are recorded. Automatic3080Ti startup is not installed.
+Do not rerun the unlock in the current session. Diagnostic/pre-trial setup
+history follows below; its pending-state descriptions are historical.
 
 **Current installed card:** RTX3080Ti12GB, PCI2208, subsystem10de:1535,
 BDF0000:01:00.0, VBIOS94.02.71.00.01, driver610.88/350W. Its pre-attempt
