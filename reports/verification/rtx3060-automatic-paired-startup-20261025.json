@@ -1,8 +1,8 @@
 {
   "date": "2026-10-25",
-  "status": "two-pair-startup-correction-installed-awaiting-physical-boot",
-  "latest_observed_boot_run": "RUN0003",
-  "latest_boot_unlock_succeeded": false,
+  "status": "paired-startup-automatic-unlock-physically-verified",
+  "latest_observed_boot_run": "RUN0004",
+  "latest_boot_unlock_succeeded": true,
   "repeat_refusal_stage": "unlock-preflight",
   "repeat_refusal_status": "0x8000000000000006",
   "repeat_gpu_touched": false,
@@ -22,7 +22,7 @@
   "power_limit_w": 170,
   "repeat_post_test_temperature_c": 31,
   "new_payload_installed": true,
-  "new_payload_physical_boot_tested": false,
+  "new_payload_physical_boot_tested": true,
   "installed_efi_sha256": "a57b0621ea87dd53c0a50aceca8de2467f2f4c3da1580f1fee230af6b8844394",
   "installed_files_verified": 29,
   "allowed_initial_pairs": [
@@ -85,5 +85,64 @@
   "previous_payload_backed_up": true,
   "no_runtime_unlock_or_reboot_initiated": true,
   "one_prior_automatic_success_preserved": true,
-  "new_repeat_reliability_verified": false
+  "new_repeat_reliability_verified": false,
+  "paired_payload_successful_boots_observed": 1,
+  "latest_initial_pair": [
+    "70520074",
+    "00000005"
+  ],
+  "latest_transaction_result": 0,
+  "latest_flr_count": 1,
+  "latest_safe_handoff": true,
+  "latest_dma_maps_at_handoff": 0,
+  "latest_fault": false,
+  "latest_retained_resources": false,
+  "latest_display_restored": true,
+  "latest_framebuffer_pixels_checked": 9216,
+  "latest_framebuffer_mismatches": 0,
+  "latest_windows_handoff_without_second_reboot": true,
+  "latest_windows_gpu_status": "OK",
+  "latest_windows_gpu_error_code": 0,
+  "latest_nvidia_errors_after_compute": 0,
+  "latest_post_test_temperature_c": 42,
+  "latest_boot_logs_copied_hash_verified": true,
+  "latest_boot_log_files": [
+    {
+      "Sha256": "7f220f1d478e77711ae1d6aabce356ff982f9485d620d3502a7ce4e6a04b94ab",
+      "Name": "GOP.TXT",
+      "Bytes": 21155
+    },
+    {
+      "Sha256": "f1ce2df49e5d7449c8612aab30fa38dc63f555c288cd2b904876d574dd67dfe9",
+      "Name": "UNLOCK.TXT",
+      "Bytes": 13589
+    }
+  ],
+  "latest_compute_benchmarks": [
+    {
+      "mode": "fp32_pedantic",
+      "stock_tflops": 8.642602,
+      "paired_unlocked_tflops": 8.777968000000001,
+      "difference_percent": 1.5662644189793795,
+      "median_ms": 15.657264,
+      "reference_checked": true
+    },
+    {
+      "mode": "fp16_tensor_fp32_accumulate",
+      "stock_tflops": 26.835493999999997,
+      "paired_unlocked_tflops": 50.45868,
+      "difference_percent": 88.02962971354282,
+      "median_ms": 2.723792,
+      "reference_checked": true
+    },
+    {
+      "mode": "bf16_tensor_fp32_accumulate",
+      "stock_tflops": 26.788294999999998,
+      "paired_unlocked_tflops": 50.791946,
+      "difference_percent": 89.60499725719761,
+      "median_ms": 2.70592,
+      "reference_checked": true
+    }
+  ],
+  "current_windows_compute_state": "unlocked"
 }

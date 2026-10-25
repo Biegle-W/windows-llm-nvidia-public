@@ -1,26 +1,24 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
-LATEST: repeat RUN0003 refused the zero-only selector guard; paired replacement installed.
-[Repeat diagnosis and update](RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md).
-Current Windows is stock (FP16 26.879/BF16 26.838TFLOPS), GPU OK/error0, no NVIDIA
-Error/Critical events found at inspection. RUN0003 touched0, no transaction/FLR.
-Its 70520074/5 pair is the exact pre-state of the successful manual RUN01; the
-successful automatic RUN0001 used0/0. New code accepts only those complete pairs,
-rejecting mixed, unknown and unlocked states. Only ColdCheck's initial-selector
-predicate changes; reversing that edit must reproduce pinned app source. Firmware
-transaction, display adaptation and other checks retained. Tests:13 provenance,
-23 actual ColdCheck,14 automatic-entry/internal-source scenarios plus PE checks.
-All29 installed files verified, boot entries/order/partitions/logs preserved, U: removed.
-New EFI SHA256 a57b0621ea87dd53c0a50aceca8de2467f2f4c3da1580f1fee230af6b8844394.
-Private build `data/uefi-probe/internal-startup/paired-startup-v1/`; backup
-`paired-startup-install-backup-v1/`; immutable RUN0003 evidence is
-`paired-startup-repeat-evidence.private.json` under that state root. Keep original
-RUN0000 and successful RUN0001 capture metadata intact for builds.
-AutoInternalBootVerified=false for this new payload. Next restart without USB:
-inspect the next internal run and repeat compute before declaring success.
-No runtime unlock/reboot initiated. F8 -> Windows Boot Manager bypasses;
-six-second Esc gate retained. Cold/warm cause and new payload repeat reliability
-are not established. Earlier successes/failures below remain historical.
+LATEST: paired automatic payload verified successful in RUN0004:
+[physical paired-profile result](RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md).
+It accepted initial70520074/5, passed complete preflight/live PROM, AUTO_START,
+one transaction/FLR with result0/quiesced1/maps0/retained0/fault0/safe1, display
+restored and9216-pixel zero-mismatch readback; Windows handoff without another reset.
+FP16 50.459/BF16 50.792TFLOPS (+88.0%/+89.6% stock), FP32 8.778TFLOPS.
+Driver610.88/170W unchanged, GPU OK/error0, zero NVIDIA Error/Critical events found
+since boot after compute; post-test42C. Logs copied/hash-verified; U: removed.
+EFI SHA256 a57b0621ea87dd53c0a50aceca8de2467f2f4c3da1580f1fee230af6b8844394.
+Private status automatic-paired-startup-verified, AutoInternalBootVerified=true,
+VerifiedAutomaticRun=RUN0004. Capture metadata automatic-paired-boot-capture.private.json
+under data/uefi-probe/internal-startup/. Keep prior RUN0000/RUN0001/RUN0003
+metadata immutable for reproducible builds. No payload/boot/partition changes or
+second runtime unlock during verification. Do not rerun unlock in this session.
+One paired-payload nonzero-branch boot is validated; paired-binary zero-branch
+physical execution, repeated starts, sleep/resume and updates remain untested.
+Earlier zero-only RUN0001 and manual RUN01 successes remain valid for those boots;
+RUN0003 failed under the superseded zero-only binary. F8 Windows fallback and
+six-second Esc gate retained. Earlier notes below are historical.
 
 Original automatic-build first verification FAILED to apply the unlock:
 [logs, compute results and diagnosis](RTX3060-AUTOMATIC-FIRST-BOOT-20261025.md).

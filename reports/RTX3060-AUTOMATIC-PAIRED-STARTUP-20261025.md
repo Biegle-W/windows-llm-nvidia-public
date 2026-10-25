@@ -1,8 +1,27 @@
 # RTX 3060 repeat-boot finding and paired startup correction — October 25, 2026
 
-**The zero-only EFI refused on RUN0003. A two-pair correction is now installed,
-hash-verified and awaiting a physical boot test.** Current Windows compute remains
-stock; no runtime unlock or reboot was initiated during this repair.
+**The paired startup EFI is physically verified in RUN0004.** It accepted the
+70520074/5 startup pair, passed preflight/PROM checks, ran automatically once,
+completed one FLR with quiesced1/maps0/retained0/fault0/safe1, restored the display,
+passed9216-pixel readback with zero mismatches and handed off to Windows without
+a second reboot. Captured logs were copied and hash-verified; EFI hash matches
+the installed paired build. Windows boot time was13:01:18 on October25,2026,
+America/New_York. RTX3060 StatusOK/error0; no NVIDIA Error/Critical events found
+since boot after the benchmark. Driver610.88/170W unchanged; post-test42C.
+
+| Same executable | Saved stock TFLOPS | Paired automatic TFLOPS | Difference |
+|---|---:|---:|---:|
+| FP32 pedantic | 8.643 | 8.778 | +1.6% |
+| FP16 Tensor / FP32 accumulate | 26.835 | 50.459 | +88.0% |
+| BF16 Tensor / FP32 accumulate | 26.788 | 50.792 | +89.6% |
+
+The4096-square/2-second-warmup/30-sample benchmark's endpoint checks pass. No LLM
+benchmark was rerun. Temporary U: was removed; no boot/partition/payload changes
+or second runtime unlock were made during verification. This validates one boot
+of the paired build with the nonzero pair. Its zero branch has CPU tests and a
+prior successful automatic zero-only boot, but has not yet been physically
+observed under this paired binary. Repeated starts, sleep/resume and updates
+remain unvalidated. Earlier failure and installation details follow.
 
 RUN0001 had automatically unlocked from initial SS0/SS1=0/0 and delivered about
 50.6TFLOPS. At the later Windows boot, 10:42:26 America/New_York, RUN0003 instead
@@ -51,8 +70,8 @@ Immutable repeated-startup evidence: `paired-startup-repeat-evidence.private.jso
 under that private state root. Keep original first-boot and successful RUN0001
 capture metadata intact for future reproducible builds.
 
-Next: restart without USB, inspect the next run and repeat compute verification.
-Do not label the new two-pair payload physically successful until then. F8 ->
+RUN0004 completes the first paired-payload boot verification. Keep checking new
+logs if future startup behavior changes; long-term repeat reliability is not established. F8 ->
 Windows Boot Manager bypasses it; the six-second Esc gate remains. No second
 unlock should be executed in the current Windows session.
 

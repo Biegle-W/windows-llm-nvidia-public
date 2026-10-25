@@ -1,5 +1,10 @@
 # RTX 3060 automatic internal boot — October 25, 2026
 
+**Latest follow-up:** the paired replacement succeeded in RUN0004 with
+FP16/BF16 50.459/50.792TFLOPS and a safe one-FLR Windows handoff.
+[Paired physical result](RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md).
+Pending-test/failure statements below describe superseded payloads or earlier stages.
+
 **Later repeat-boot finding:** RUN0003 returned to the original nonzero startup
 pair and the zero-only profile refused. Windows is stock again. A
 [two-pair correction](RTX3060-AUTOMATIC-PAIRED-STARTUP-20261025.md) is now installed,
