@@ -104,11 +104,43 @@ def log_names(text,app=False):
     return text
 
 
+def observed_zero_profile(capture_path, original_header):
+    """Change only the two fixed initial selectors using hash-verified board evidence."""
+    capture_path=capture_path.resolve()
+    if not capture_path.is_relative_to(ROOT/'data'):
+        raise RuntimeError('Startup evidence must remain in private project data.')
+    capture=json.loads(capture_path.read_text(encoding='utf-8-sig'))
+    if not capture.get('Success') or not capture.get('EfiHashVerified') or capture.get('LogRun')!='RUN0000' or capture.get('EfiSha256')!='7adcaa078172121a39861bf388596f161aec50ec336af57dd9f9821834cb77d8':
+        raise RuntimeError('Expected the verified first automatic-boot capture.')
+    folder=Path(capture['CaptureDirectory']).resolve()
+    if not folder.is_relative_to(ROOT/'data/uefi-probe/captures'):
+        raise RuntimeError('Boot-log evidence escapes private captures.')
+    evidence={row['Name']:row for row in capture['Logs']}
+    texts={}
+    for name in ('GOP.TXT','UNLOCK.TXT'):
+        path=folder/name
+        if sha(path)!=evidence[name]['Sha256'] or path.stat().st_size!=evidence[name]['Bytes']:
+            raise RuntimeError('Captured boot-log hash or length changed.')
+        texts[name]=path.read_text(encoding='utf-8-sig')
+    if 'CANCELLED_OR_REFUSED stage=unlock-preflight status=0x8000000000000006 touched=0' not in texts['GOP.TXT'] or 'AUTO_START' in texts['GOP.TXT']:
+        raise RuntimeError('Expected an untouched startup preflight refusal.')
+    cold='cold state: chip=0xb76000a1 plm=0xffffff8f gfw=0x8b8f/0x3ff/0x10 WPR2_HI=0 SS0=0 SS1=0'
+    if texts['UNLOCK.TXT'].splitlines().count(cold)!=1 or 'PATCH_PREFLIGHT status=0x8000000000000006 profile=1 pci=0x250310de subsystem=0x407b1458' not in texts['UNLOCK.TXT']:
+        raise RuntimeError('Observed board/startup state differs from the reviewed zero-selector capture.')
+    text=replace_once(original_header,'#define GU_INITIAL_SS0 0x70520074U','#define GU_INITIAL_SS0 0x00000000U')
+    text=replace_once(text,'#define GU_INITIAL_SS1 0x00000005U','#define GU_INITIAL_SS1 0x00000000U')
+    return text,{'capture_sha256':sha(capture_path),'gop_sha256':evidence['GOP.TXT']['Sha256'],
+                 'unlock_sha256':evidence['UNLOCK.TXT']['Sha256'],'fixed_initial_ss0':'00000000','fixed_initial_ss1':'00000000'}
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--partition-guid',required=True)
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--preview',action='store_true')
+    parser.add_argument('--observed-zero-startup',type=Path,
+                        default=ROOT/'data/uefi-probe/internal-startup/automatic-first-boot-capture.private.json',
+                        help='Verified private first-boot capture (default: saved RUN0000 evidence); fixes both initial selectors to zero without bypassing checks')
     args=parser.parse_args()
     guid=str(uuid.UUID(args.partition_guid.strip('{}')))
     output=args.output.resolve()
@@ -143,6 +175,11 @@ def main():
     io=source/'src/unlock/app_io.c';io.write_text(log_names(io.read_text()),encoding='utf-8')
     (source/'src/unlock/boot_source.h').write_text(boot_header(guid))
     header=ROOT/'data/uefi-probe/windows3060-unlock-20261025-v2/private-board-profile.h'
+    startup_evidence=None
+    if args.observed_zero_startup:
+        profile,startup_evidence=observed_zero_profile(args.observed_zero_startup,header.read_text(encoding='utf-8'))
+        header=output/'zero-startup-board-profile.private.h'
+        header.write_text(profile,encoding='utf-8')
     # Adapt only the CPU-host fixture to an internal disk path and four-digit logs.
     fixture=source/'src/gop/test_io.c'; text=fixture.read_text()
     text=text.replace('USB_DEVICE_PATH usb;','HARDDRIVE_DEVICE_PATH usb;')
@@ -171,6 +208,18 @@ def main():
         '  UsbPath.end.Type = END_DEVICE_PATH_TYPE;')
     fixture.write_text(text)
     logs=output/'checks';logs.mkdir()
+    if startup_evidence:
+        # Compile the actual unchanged ColdCheck body, not a reimplementation of its conditions.
+        app_text=(source/'src/unlock/app.c').read_text(encoding='utf-8')
+        begin=app_text.index('static EFI_STATUS ColdCheck(VOID) {')
+        end=app_text.index('\nstatic EFI_STATUS PromCheck(VOID)',begin)
+        (logs/'cold-check-under-test.h').write_text(app_text[begin:end]+'\n',encoding='utf-8')
+        cold_flags=['-std=c11','-O1','-Wall','-Wextra','-Werror','-Wno-unused-function',
+                    '-I',str(source),'-I',str(logs),'-I','deps/edk2/MdePkg/Include',
+                    '-I','deps/edk2/MdePkg/Include/X64','-include',str(header)]
+        execute([llvm/'clang.exe',*cold_flags,ROOT/'scripts/uefi_cold_profile_test.c',
+                 'src/unlock/vendor/gfw_eval.c','-o',logs/'cold-test.exe'],source,env,logs/'cold-build.log')
+        print(execute([logs/'cold-test.exe'],source,env,logs/'cold.log').strip(),flush=True)
     test='''/* GPL-2.0-only. Real automatic entry and gate, mocked device/OS actions. */
 #define SSD_FLOW_MAIN UnusedSsdTests
 #include "test_ssd_flow.c"
@@ -238,6 +287,7 @@ int main(void) {
     correspondence=package/'AUTOMATIC-SOURCE';correspondence.mkdir()
     for name in ('src/gop/app.c','src/unlock/app_io.c','src/unlock/boot_source.h'):
         dst=correspondence/name;dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source/name,dst)
+    shutil.copy2(header,correspondence/'board-profile.private.h')
     shutil.copy2(Path(__file__),correspondence/Path(__file__).name)
     shutil.copy2(ROOT/'reports/RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md',package/'START-HERE.md')
     meta={'source_commit':PIN,'efi':pe,'internal_partition_guid':guid,'preview_only':args.preview,
@@ -245,6 +295,9 @@ int main(void) {
           'firmware_transaction_unchanged':True,'hardware_tested_display_source_unchanged':True,
           'automatic_profile_changes':False,'source_volume_bound_to_exact_internal_esp':True,
           'host_auto_and_source_tests':14,'host_tests_passed':True,'physical_internal_boot_tested':False}
+    if startup_evidence:
+        meta.update(startup_profile_evidence=startup_evidence,host_actual_cold_check_tests=19,
+                    startup_profile='fixed observed zero/zero; all other profile fields and ColdCheck unchanged')
     (output/'BUILD-INFO.private.json').write_text(json.dumps(meta,indent=2)+'\n')
     (package/'BUILD-INFO.private.json').write_text(json.dumps(meta,indent=2)+'\n')
     (package/'SHA256SUMS.txt').write_text(''.join(sha(p)+'  '+p.relative_to(package).as_posix()+'\n' for p in sorted(package.rglob('*')) if p.is_file()))

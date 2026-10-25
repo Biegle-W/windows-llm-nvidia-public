@@ -1,5 +1,20 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
+LATEST: corrected automatic zero-startup EFI installed, awaiting physical boot:
+[fix and validation](RTX3060-AUTOMATIC-ZERO-STARTUP-FIX-20261025.md).
+Only initial SS0/SS1 constants change to0/0 from hash-verified RUN0000 evidence;
+manual profile, ColdCheck, other guards and firmware transaction remain unchanged.
+10 evidence/19 actual ColdCheck/14 automatic-entry tests and PE checks pass; 8
+updater path checks pass. All 28 installed manifest files verified, previous EFI
+backed up, firmware entries/order/partitions/RUN0000 unchanged, U: removed.
+New EFI SHA256 f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca.
+Private build: `data/uefi-probe/internal-startup/zero-startup-v4/`; update backup:
+`zero-startup-install-backup-v2/` under the same private state directory.
+Next user restart without USB should create RUN0001. Inspect logs and repeat
+compute check before marking success; current Windows remains stock. No reboot
+or runtime unlock was initiated. F8 -> Windows Boot Manager bypasses the app.
+The failure record below describes the prior build, not a test of this correction.
+
 Latest first automatic-boot verification FAILED to apply the unlock:
 [logs, compute results and diagnosis](RTX3060-AUTOMATIC-FIRST-BOOT-20261025.md).
 The internal EFI executed RUN0000 but refused unlock-preflight with EFI_NOT_READY,

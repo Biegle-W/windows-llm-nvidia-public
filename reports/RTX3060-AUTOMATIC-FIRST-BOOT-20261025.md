@@ -1,5 +1,9 @@
 # RTX 3060 first automatic boot verification — October 25, 2026
 
+Follow-up: a [corrected zero-state automatic profile](RTX3060-AUTOMATIC-ZERO-STARTUP-FIX-20261025.md)
+is now installed and awaiting its own boot test. This report preserves the original
+RUN0000 failure and stock compute measurements.
+
 **The internal EFI ran, but the unlock did not execute. Windows currently has
 stock FP16/BF16 throughput.** The new internal `RUN0000` log records refusal at
 `unlock-preflight`, status `0x8000000000000006` (EFI_NOT_READY), `touched=0`.

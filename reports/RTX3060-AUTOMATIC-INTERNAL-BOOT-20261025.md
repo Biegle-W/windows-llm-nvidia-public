@@ -11,6 +11,14 @@ The base [manual hardware trial succeeded](RTX3060-WINDOWS-UNLOCK-RESULT-2026102
 with about89% higher FP16/BF16 Tensor GEMM throughput. Automatic internal boot is
 a separate integration step and needs a subsequent physical boot check.
 
+## Corrected startup profile installed — next boot pending
+
+The [zero-startup correction](RTX3060-AUTOMATIC-ZERO-STARTUP-FIX-20261025.md) is now
+installed with 28 verified files. It changes only the two fixed initial selector
+constants to the observed zero/zero pair and preserves all other checks. The
+corrected build still needs a physical boot and compute verification. The first
+boot refusal below belongs to the superseded original automatic EFI.
+
 ## First physical boot result: unlock refused
 
 The internal EFI executed RUN0000 but stopped at unlock-preflight on a mismatch

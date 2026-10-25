@@ -1,6 +1,6 @@
 {
   "date": "2026-10-25",
-  "status": "automatic-entry-executed-unlock-preflight-refused",
+  "status": "corrected-zero-startup-efi-installed-awaiting-physical-boot",
   "installed": true,
   "physical_automatic_internal_boot_tested": true,
   "manual_hardware_unlock_previously_verified": true,
@@ -24,8 +24,8 @@
   "explicit_partition_approval_received": true,
   "actual_c_shrink_bytes": 536870912,
   "new_esp_bytes": 536870912,
-  "installed_files_hash_verified": 27,
-  "installed_efi_sha256": "7adcaa078172121a39861bf388596f161aec50ec336af57dd9f9821834cb77d8",
+  "installed_files_hash_verified": 28,
+  "installed_efi_sha256": "f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca",
   "new_esp_free_bytes": 446058496,
   "preview_installed": false,
   "original_partition_identity_and_unrelated_sizes_preserved": true,
@@ -48,5 +48,9 @@
   "first_boot_preflight_status": "0x8000000000000006",
   "first_boot_gpu_touched": false,
   "first_boot_log_run": "RUN0000",
-  "startup_profile_correction_pending": true
+  "startup_profile_correction_pending": false,
+  "corrected_profile_installed": true,
+  "corrected_profile_physical_boot_tested": false,
+  "corrected_initial_ss0": "00000000",
+  "corrected_initial_ss1": "00000000"
 }

@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-25",
+  "status": "corrected-zero-startup-efi-installed-awaiting-physical-boot",
+  "installed": true,
+  "physical_corrected_boot_tested": false,
+  "automatic_unlock_success_verified": false,
+  "current_compute_state": "stock, per first automatic-boot check; no runtime unlock attempted",
+  "previous_efi_sha256": "7adcaa078172121a39861bf388596f161aec50ec336af57dd9f9821834cb77d8",
+  "installed_efi_sha256": "f837ed1db52138125fe530460a546f9f9fdda122d76b13ef862a7036524516ca",
+  "fixed_initial_selectors": {
+    "ss0": "00000000",
+    "ss1": "00000000"
+  },
+  "profile_constant_changes": 2,
+  "original_manual_profile_preserved": true,
+  "firmware_transaction_source_unchanged": true,
+  "coldcheck_source_unchanged": true,
+  "hardware_tested_display_source_unchanged": true,
+  "evidence_log_hashes": {
+    "capture_sha256": "72a86d8236a1de46a05482d4f8dd843923756f7843175caf219c10b4a4d98093",
+    "gop_sha256": "ac60bdfade424fc1d8d90a3218bf5d64359c4e9115eab333ff51c8a4f9ae92b5",
+    "unlock_sha256": "8cb17c0b9c0c0acf12fd5306eaee7f3afa1be429bc1d040e18154dce40893f9c",
+    "fixed_initial_ss0": "00000000",
+    "fixed_initial_ss1": "00000000"
+  },
+  "tests": {
+    "provenance": 10,
+    "actual_cold_check": 19,
+    "automatic_and_internal_source": 14,
+    "updater_paths": 8,
+    "pe_structure": "passed"
+  },
+  "installed_files_hash_verified": 28,
+  "partitions_unchanged": true,
+  "firmware_entries_and_order_unchanged": true,
+  "original_run0000_preserved": true,
+  "previous_payload_backed_up": true,
+  "temporary_mount_removed": true,
+  "reboot_initiated": false,
+  "gpu_unlock_attempted_in_current_session": false,
+  "first_update_attempt": "Rolled back on mount-dependent BCDEdit display text; second update compared equivalent mount states and succeeded."
+}
