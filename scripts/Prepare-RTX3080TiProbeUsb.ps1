@@ -1,8 +1,10 @@
-# Stage verified read-only diagnostics; never format a drive or install an unlock.
+# Stage verified diagnostics or an explicitly selected manual candidate; never execute firmware or change boot settings.
 [CmdletBinding()]
 param(
-    [ValidateSet('Board','Ownership','Collect','SelfTest')][string]$Mode='Board',
-    [ValidatePattern('^[D-Zd-z]$')][string]$DriveLetter
+    [ValidateSet('Board','Ownership','Collect','Manual','SelfTest')][string]$Mode='Board',
+    [ValidatePattern('^[D-Zd-z]$')][string]$DriveLetter,
+    [string]$ManualPackage,
+    [string]$ExpectedManualSha256
 )
 $ErrorActionPreference='Stop'
 $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
@@ -55,6 +57,18 @@ function Ensure-Parent([string]$Path) {
     $parent=Split-Path -Parent $Path
     if(-not (Test-Path -LiteralPath $parent -PathType Container)){New-Item -ItemType Directory -Path $parent -Force | Out-Null}
 }
+function Assert-ManualInfo($Info,[string]$Expected) {
+    if($Expected -notmatch '^[0-9a-f]{64}$' -or $Info.efi.sha256 -cne $Expected -or
+       $Info.source_commit -ne '5c076dc4ee7fa369639669fa591ac74d8f6dfcd8' -or
+       $Info.mode -ne 'fixed rtx3080ti single-child AMI manual experiment' -or
+       $Info.manual_u_required -ne $true -or $Info.automatic_execution -ne $false -or
+       $Info.mock_flag_in_efi -ne $false -or $Info.physical_unlock_tested -ne $false -or
+       $Info.display_children -ne 1 -or $Info.driver_roles -ne 5 -or $Info.firmware_assets_verified -ne 5){throw 'Manual package policy or reviewed EFI hash differs.'}
+}
+function Assert-ManualPrerequisites($Info,[datetimeoffset]$Now) {
+    $age=($Now-[datetimeoffset]::Parse($Info.CheckedAtUtc,[Globalization.CultureInfo]::InvariantCulture)).TotalMinutes
+    if(-not $Info.Success -or $Info.SecureBootEnabled -ne $false -or $Info.BitlockerVolumeStatus -ne 'FullyDecrypted' -or $Info.BitlockerProtection -ne 'Off' -or -not $Info.WindowsFirst -or -not $Info.Verified3060EfiPreserved -or $age -gt 60 -or $age -lt -5){throw 'Fresh manual-platform prerequisite verification is required.'}
+}
 function Assert-Card([string]$Text) {
     $rows=@($Text.Trim() -split '\r?\n')
     $fields=@($rows[0].Split(',') | ForEach-Object {$_.Trim()})
@@ -74,7 +88,21 @@ if($Mode -eq 'SelfTest') {
     foreach($tag in @('9000001a','9000101a','9000f01a')){if(-not [ProbeUsbReparse]::IsCloudTag([Convert]::ToUInt32($tag,16))){throw 'Cloud placeholder tag refused.'}}
     foreach($tag in @('a000000c','a0000003','80000017')){if([ProbeUsbReparse]::IsCloudTag([Convert]::ToUInt32($tag,16))){throw 'Link or unknown reparse tag accepted.'}}
     Ensure-Parent (Join-Path ([IO.Path]::GetPathRoot($root)) 'probe-usb-parent-policy-fixture.txt')
-    'PASS 22 USB/card/path/cloud-tag/root-parent policy checks; no USB or GPU changes.'
+    $hash='a'*64
+    $manual=@{efi=@{sha256=$hash};source_commit='5c076dc4ee7fa369639669fa591ac74d8f6dfcd8';mode='fixed rtx3080ti single-child AMI manual experiment';manual_u_required=$true;automatic_execution=$false;mock_flag_in_efi=$false;physical_unlock_tested=$false;display_children=1;driver_roles=5;firmware_assets_verified=5}
+    Assert-ManualInfo $manual $hash
+    foreach($field in @('automatic_execution','mock_flag_in_efi','physical_unlock_tested','manual_u_required','display_children','driver_roles','firmware_assets_verified','mode','source_commit')){
+        $bad=$manual.Clone();$bad[$field]=if($manual[$field] -is [bool]){-not $manual[$field]}else{'invalid'}
+        $rejected=$false;try{Assert-ManualInfo $bad $hash}catch{$rejected=$true};if(-not $rejected){throw 'Unsafe manual package metadata accepted.'}
+    }
+    foreach($badHash in @(('b'*64),'invalid')){$rejected=$false;try{Assert-ManualInfo $manual $badHash}catch{$rejected=$true};if(-not $rejected){throw 'Unreviewed EFI hash accepted.'}}
+    $now=[datetimeoffset]::Parse('2026-10-25T22:00:00Z')
+    $prereq=@{Success=$true;SecureBootEnabled=$false;BitlockerVolumeStatus='FullyDecrypted';BitlockerProtection='Off';WindowsFirst=$true;Verified3060EfiPreserved=$true;CheckedAtUtc='2026-10-25T21:59:00Z'}
+    Assert-ManualPrerequisites $prereq $now
+    $prereq.CheckedAtUtc='2026-10-25T17:59:00-04:00';Assert-ManualPrerequisites $prereq $now
+    foreach($time in @('2026-10-25T20:59:00Z','2026-10-25T22:06:00Z')){$bad=$prereq.Clone();$bad.CheckedAtUtc=$time;$rejected=$false;try{Assert-ManualPrerequisites $bad $now}catch{$rejected=$true};if(-not $rejected){throw 'Stale/future prerequisites accepted.'}}
+    $bad=$prereq.Clone();$bad.WindowsFirst=$false;$rejected=$false;try{Assert-ManualPrerequisites $bad $now}catch{$rejected=$true};if(-not $rejected){throw 'Changed boot policy accepted.'}
+    'PASS 39 USB/card/path/manual-package/prerequisite policy checks; no USB or GPU changes.'
     return
 }
 $inventory=(& nvidia-smi --query-gpu=name,pci.bus_id,pci.device_id,pci.sub_device_id,vbios_version,memory.total --format=csv,noheader,nounits | Out-String)
@@ -109,9 +137,21 @@ if($Mode -eq 'Collect') {
     Write-Output 'Old 3060 runs may be included. Audit only a report with actual 2208/10de:1535 identity.'
     return
 }
-$packageName=if($Mode -eq 'Board'){'01-board-probe'}else{'02-ownership-probe'}
-$expected=if($Mode -eq 'Board'){'ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a'}else{'58f4d6beb444d423a8509dd4d1cdbb7a2e10a425e51ae2e65f2cceaa011342b8'}
-$package=Join-Path $root ('data\uefi-probe\rtx3080ti-unlock-setup\'+$packageName)
+if($Mode -eq 'Manual') {
+    if(-not $ManualPackage){throw 'Manual staging requires the reviewed package path and expected EFI SHA256.'}
+    $package=[IO.Path]::GetFullPath($ManualPackage)
+    $allowed=[IO.Path]::GetFullPath((Join-Path $root 'data')).TrimEnd([char]92)+'\'
+    if(-not $package.StartsWith($allowed,[StringComparison]::OrdinalIgnoreCase)){throw 'Manual package must be below private project data.'}
+    $info=Get-Content -LiteralPath (Join-Path $package 'BUILD-INFO.json') -Raw | ConvertFrom-Json
+    Assert-ManualInfo $info $ExpectedManualSha256
+    $expected=$ExpectedManualSha256
+    $prereq=Get-Content -LiteralPath (Join-Path $private 'manual-platform-prerequisites.private.json') -Raw | ConvertFrom-Json
+    Assert-ManualPrerequisites $prereq ([datetimeoffset]::UtcNow)
+} else {
+    $packageName=if($Mode -eq 'Board'){'01-board-probe'}else{'02-ownership-probe'}
+    $expected=if($Mode -eq 'Board'){'ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a'}else{'58f4d6beb444d423a8509dd4d1cdbb7a2e10a425e51ae2e65f2cceaa011342b8'}
+    $package=Join-Path $root ('data\uefi-probe\rtx3080ti-unlock-setup\'+$packageName)
+}
 $manifest=Join-Path $package 'SHA256SUMS.txt'
 if((Get-FileHash -LiteralPath (Join-Path $package 'EFI\BOOT\BOOTX64.EFI')).Hash.ToLowerInvariant() -ne $expected){throw 'Read-only EFI hash differs.'}
 $entries=@(foreach($line in Get-Content -LiteralPath $manifest){
@@ -140,7 +180,7 @@ $record | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $recordPath -Encodi
 # Recheck disk identity immediately before writing; do not follow a swapped drive letter.
 $now=Get-Partition -DriveLetter $usb.Volume.DriveLetter
 if($now.Guid -ne $usb.Partition.Guid -or $now.DiskNumber -ne $usb.Disk.Number -or $now.Offset -ne $usb.Partition.Offset -or $now.Size -ne $usb.Partition.Size -or (Get-Disk -Number $now.DiskNumber).UniqueId -ne $usb.Disk.UniqueId){throw 'USB identity changed.'}
-foreach($e in $entries){
+foreach($e in ($entries | Sort-Object @{Expression={if($_.Relative -eq 'EFI/BOOT/BOOTX64.EFI'){1}else{0}}})){
     $target=Safe-Child $usbRoot $e.Relative
     Ensure-Parent $target
     Copy-Item -LiteralPath $e.Source -Destination $target -Force
@@ -148,6 +188,9 @@ foreach($e in $entries){
 }
 $record.Success=$true;$record.VerifiedFiles=$entries.Count
 $record | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $recordPath -Encoding utf8
-Write-Output ($Mode+' read-only probe staged; '+$entries.Count+' file hashes verified. Existing files backed up under '+$backup)
-Write-Output 'Restart manually, press F8 and choose UEFI USB. After capture returns, choose Windows Boot Manager.'
+Write-Output ($Mode+' package staged; '+$entries.Count+' file hashes verified. Existing files backed up under '+$backup)
+if($Mode -eq 'Manual') {
+    Write-Output 'Manual unlock candidate: full shutdown, F8 -> UEFI USB; press U only after preflight. Esc/30 seconds cancels.'
+    Write-Output 'After U, allow up to 10 minutes for Windows to start directly; do not rerun the unlock in the same firmware session.'
+} else {Write-Output 'Restart manually, press F8 and choose UEFI USB. After capture returns, choose Windows Boot Manager.'}
 Write-Output 'Do not select RTX 3060 Automatic Unlock with the 3080 Ti installed.'

@@ -1,6 +1,34 @@
 # Windows NVIDIA handoff — 25 October 2026
 
-LATEST current-card unlock preparation: new root Board/Ownership/Collect launchers
+LATEST manual3080Ti trial READY: [first-trial workflow](RTX3080TI-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
+Ownership RUN00 captured17:42 local, complete4 handles/5 roles/10 active edges,
+no detach/touched. Copied/hash verified under
+data/uefi-probe/3080ti-usb/captures-20261025-174554-1be0a845b90d45c889cfcd1653a49ef5/.
+Its NVIDIA GOP differs:193248bytes/version0x6000d/startRVA0x774/stop0x698;
+all five roles bind this actual capture. Fixed board PROM/SS0=51144015/SS1=1,
+no zero-state exception. Builder scripts/prepare_uefi_3080ti_manual.py produces
+data/uefi-probe/windows3080ti-manual-20261025-v3/single-child/manual-unlock-candidate/.
+Shared3060 display builder now accepts an explicit separately guarded3080Ti target;
+default3060 adaptation still reproduces saved validated C exactly. Transaction
+sources unchanged, no mock/automatic/SSD flags in EFI. EFI SHA256
+c13c39eb98bae5b836c80e1a4e5d7f84c05ad910f35b5b62f2ad97311052fab4.
+Eight upstream suites,31 display/22 simulated transaction/26 metadata/19 actual
+ColdCheck/eight manual-gate cases, nine synthetic ownership tests, seven setup
+tests and39 PowerShell5.1/7.6 staging/prerequisite checks pass. Five pinned assets
+and PE verified. Failed v1/v2 build folders preserved and never staged.
+Fresh elevated checks in data/uefi-probe/3080ti-usb/manual-platform-prerequisites.private.json:
+SecureBoot false, C FullyDecrypted/ProtectionOff, Windows first, original3060
+EFI a57b...4394 hash preserved; U: removed. Staging timezone parsing fixed/tested.
+Current USB is the MANUAL unlock candidate, all24 files independently verified;
+both original capture RUN00 folders retained. Backup before-manual-* records
+collisions; EFI copied last. User must full-shutdown/F8 ->UEFI Kingston, press U
+once only after preflight; Esc/30sec cancels. After U allow10min for direct Windows
+handoff. If stopped/no Windows, full power off, removeUSB, boot Windows normally;
+do not replay in the same firmware session. Next read new GOP.TXT/UNLOCK.TXT and
+same-executable compute/health before claiming success or configuring automatic
+startup. No3080Ti unlock has executed; no internal boot/driver/power changes.
+
+Historical capture preparation: new root Board/Ownership/Collect launchers
 call scripts/Prepare-RTX3080TiProbeUsb.ps1. Exact current Windows identity2208 /
 10de:1535 /BDF01:00.0 /VBIOS94.02.71.00.01 /12288MiB is checked before USB work.
 USB must be FAT32, non-system, busUSB; ambiguous/missing drives refused. Paths,

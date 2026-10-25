@@ -1,24 +1,31 @@
 # Windows RTX 3080 Ti unlock preparation — October 25, 2026
 
+**Latest:** both captures are complete, reviewed and preserved. The exact-board
+manual unlock image is built/tested/staged, with24 USB file hashes verified.
+Follow the [first manual trial instructions](RTX3080TI-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
+No3080Ti unlock has executed. Diagnostic setup history follows below.
+
 **Current installed card:** RTX3080Ti12GB, PCI2208, subsystem10de:1535,
 BDF0000:01:00.0, VBIOS94.02.71.00.01, driver610.88/350W. Its pre-attempt
 baseline and all four LLM checks are now [recorded](RTX3080TI-VS-3060-20261025.md).
 Secure Boot registry state is0/off. The Kingston USB on D: is now FAT32, labeled
 RTX3080TI. Physical board-probe RUN00 passed and is privately preserved; the
-read-only ownership probe is now staged with12 file hashes independently verified.
-The ownership capture and display-policy review remain pending.
-No3080Ti unlock has been attempted or built.
+read-only ownership probe was subsequently staged with12 file hashes independently
+verified. Its RUN00 is now captured and reviewed: the same one-child chain with
+this card's different NVIDIA GOP metadata. The USB now holds the manual candidate.
+No3080Ti hardware unlock has been attempted.
 
 **Toolkit prepared and verified:** both diagnostic archives match their manifests
 (13 board-probe and11 ownership-probe files). The ownership binary passes PE
 checks, the pinned grouped ownership tests and an explicit2208 entry fixture.
 Seven setup guard tests pass, including exact installed subsystem/BDF rejection;
-22 USB/card/path/cloud-tag/root-parent policy checks pass on Windows PowerShell5.1
+39 USB/card/path/manual-package/prerequisite policy checks pass on Windows PowerShell5.1
 and7.6. The actual3060
 inventory and real saved3060 capture were previously refused before benchmark
 execution/profile creation. The current board stager refuses the disconnected
 USB state without writing files. A successful physical USB staging now passes all
-14 file checks. No unlock image or boot change was made.
+14 file checks for that diagnostic stage. The manual image is now built/staged
+as described in the linked first-trial report; internal boot settings are unchanged.
 [Sanitized preparation evidence](verification/rtx3080ti-windows-unlock-setup-20261025.json).
 
 This setup prepares the diagnostics and offline checks needed to build a separate
@@ -27,11 +34,10 @@ Boot Manager stays first; the working3060 EFI and restore command are preserved.
 
 ## Ready-to-run diagnostics
 
-**Current next step:** the ownership probe is staged. Restart manually,
-press **F8**, select **UEFI Kingston / RTX3080TI**, let the probe finish, then
-choose **Windows Boot Manager**. Do not select RTX3060 Automatic Unlock.
-Report back after booting Windows so `RTX-UNLOCK/RUNnn/GOP.TXT` can be collected
-and reviewed before building any manual unlock.
+**Current next step:** follow the [full shutdown/F8/U procedure and fallback](RTX3080TI-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
+Press U only after its preflight; Esc/30 seconds cancels. It should start Windows
+directly after a successful transaction. Do not rerun it in the same firmware
+session or select RTX3060 Automatic Unlock. Then report the result for log review.
 
 ## Physical board RUN00 result
 
@@ -56,7 +62,9 @@ The board capture remains intact both locally and on the USB after switching
 packages. The ownership stager backed up every collision, and all12 current
 ownership package files including its manifest were independently checked.
 GPU StatusOK/error0 and zero nvlddmkm Error/Critical events found since this
-Windows boot. The next ownership image has no unlock code or firmware assets.
+Windows boot. The ownership image used for the second diagnostic boot had no
+unlock code or firmware assets. Its completed capture now supports the separately
+staged manual candidate described in the first-trial report.
 
 ## USB preparation history
 
@@ -88,7 +96,9 @@ explicitly to the PowerShell helper):
    current-card captures before building a manual unlock.
 
 The USB staging helper is `scripts/Prepare-RTX3080TiProbeUsb.ps1`, with modes
-`Board`, `Ownership`, `Collect`, `SelfTest` and optional `-DriveLetter X`.
+`Board`, `Ownership`, `Collect`, `Manual`, `SelfTest` and optional `-DriveLetter X`.
+Manual additionally requires an explicit private package path, reviewed EFI hash
+and fresh administrator prerequisite evidence; it copies the EFI last.
 It never formats, changes BCD, repartitions, reboots or executes an unlock.
 Staging backups and private USB identity records are under
 `data/uefi-probe/3080ti-usb/before-*/`. Neither packaged diagnostic image is an
@@ -104,8 +114,8 @@ The local setup directory is `data/uefi-probe/rtx3080ti-unlock-setup/`:
 These are two separate USB boot packages with different `EFI/BOOT/BOOTX64.EFI`
 files. Use separate FAT32 USB drives, or preserve the first capture and switch
 packages deliberately between runs. Do not merge them or replace the3060 USB's
-fallback file silently. The current Kingston now boots the ownership package;
-the first board RUN00 remains under RTX30-PROBE. Each package writes new run directories and returns
+fallback file silently. The Kingston now boots the manual candidate, while both
+diagnostic RUN00 folders remain preserved. The read-only packages write new runs and return
 to firmware. Use F8 to boot it, then Windows Boot Manager afterward if necessary.
 The ownership probe uses `RTX-UNLOCK/RUNnn/GOP.TXT`; the board probe uses
 `RTX30-PROBE/RUNnn/REPORT.TXT`, `PROM.BIN` and optional ROM/inventory files.
@@ -151,11 +161,10 @@ display recovery, Windows handoff and compute benefit before automatic startup
 is configured for this new card. The future automatic profile should use only
 complete initial-selector pairs observed and validated on the3080Ti itself.
 
-The physical card, baseline, PROM and first preboot register state are now
-available. The ownership tree still needs its separate read-only boot and review,
-so no card-specific3080Ti unlock EFI is built or installed at this stage. A
-generic GA102 label cannot supply those missing inputs. This is a hardware-data
-dependency. Boot the now-staged ownership probe and collect its capture to continue.
+The physical card, baseline, PROM, first preboot state and reviewed ownership tree
+are now available. The separate card-specific manual candidate is built/tested
+and staged on USB; its first hardware transaction and Windows recovery remain
+unvalidated. Automatic startup is not configured for the3080Ti.
 
 For a return to the original3060, use `Restore RTX3060 Unlock.cmd` and its exact
 identity/hash checks. This setup does not affect the separate Linux AMD system.

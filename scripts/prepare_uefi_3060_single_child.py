@@ -23,11 +23,17 @@ def replace_once(text, old, new):
     return text.replace(old, new, 1)
 
 
-def read_tree(path):
+def board_pair(identity, subsystem):
+    if (identity,subsystem) not in (('250310de','407b1458'),('220810de','153510de')):
+        raise RuntimeError('Only the separately captured original 3060 or installed 3080 Ti is supported.')
+
+
+def read_tree(path, identity='250310de', subsystem='407b1458'):
+    board_pair(identity,subsystem)
     text = path.read_text(encoding="ascii")
     if ("TREE_END status=0 complete=1 visited=4 queued=4 drivers=5" not in text or
             not text.endswith("TREE_RESULT status=0 touched=0\n") or
-            "config_before[00]=250310de" not in text or "config_before[2c]=407b1458" not in text):
+            f"config_before[00]={identity}" not in text or f"config_before[2c]={subsystem}" not in text):
         raise RuntimeError("Incomplete or unexpected physical ownership capture.")
     edges = []
     for h, protocol, attr, count, agent, child in re.findall(
@@ -85,7 +91,8 @@ def read_tree(path):
     return drivers
 
 
-def adapt_full(text, drivers):
+def adapt_full(text, drivers, identity='250310de', subsystem='407b1458'):
+    board_pair(identity,subsystem)
     # This is a separate exact-board implementation, not a relaxation of the
     # upstream two-child path. Every unexpected second child remains a refusal.
     text=replace_once(text,'#include "full.h"','#include "full.h"\n#include "single-driver-policy.h"')
@@ -93,7 +100,7 @@ def adapt_full(text, drivers):
                       'return *a && !*b ? EFI_SUCCESS : EFI_UNSUPPORTED;')
     text=replace_once(text,'for (UINTN i = 0; i < 4; i++) {','for (UINTN i = 0; i < 3; i++) {')
     text=replace_once(text,'  memset(p, 0, sizeof(*p));\n  EFI_STATUS s = GcLeafPrepare',
-        '  if (c->identity != 0x250310deU || c->subsystem != 0x407b1458U ||\n'
+        f'  if (c->identity != 0x{identity}U || c->subsystem != 0x{subsystem}U ||\n'
         '      c->location[0] || c->location[1] != 1 || c->location[2] || c->location[3])\n'
         '    return EFI_UNSUPPORTED;\n  memset(p, 0, sizeof(*p));\n  EFI_STATUS s = GcLeafPrepare')
     text=replace_once(text,'  if (a != p->leaf.physical && b != p->leaf.physical) return EFI_UNSUPPORTED;\n  p->sibling = a == p->leaf.physical ? b : a;',
@@ -136,6 +143,8 @@ def main():
     parser.add_argument('--tree',type=Path,required=True)
     parser.add_argument('--prepared',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--target',choices=('rtx3060','rtx3080ti'),default='rtx3060')
+    parser.add_argument('--capture',type=Path,help='Required exact-board diagnostic profile for the 3080 Ti; never defaults to 3060 evidence')
     args=parser.parse_args()
     source=ROOT/'runtimes/rtx30-uefi-probe-source'
     llvm=ROOT/'runtimes/uefi-probe-tools/llvm-20.1.8/bin'
@@ -153,14 +162,24 @@ def main():
     # Revalidate original capture and profile header rather than trusting build metadata.
     sys.path.insert(0,str(source/'tools'))
     from check_profile import check,header
-    profile=check(ROOT/'data/uefi-probe/captures/20261025-RUN00/diagnostic-profile.json',experimental=True)
+    if args.target=='rtx3080ti':
+        if args.capture is None:raise RuntimeError('3080 Ti requires its own explicit diagnostic profile.')
+        from rtx3080ti_setup import require_installed_board
+        profile=check(args.capture,experimental=True);require_installed_board(profile)
+        identity,subsystem='220810de','153510de'
+        instructions=ROOT/'reports/RTX3080TI-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md'
+    else:
+        if args.capture is not None:raise RuntimeError('The original 3060 build uses its preserved capture only.')
+        profile=check(ROOT/'data/uefi-probe/captures/20261025-RUN00/diagnostic-profile.json',experimental=True)
+        identity,subsystem='250310de','407b1458'
+        instructions=ROOT/'reports/RTX3060-WINDOWS-FIRST-UNLOCK-TRIAL.md'
     if (prepared/'private-board-profile.h').read_text()!=header(profile):
         raise RuntimeError('Prerequisite fixed profile header changed.')
     for row in (prepared/'manual-unlock-candidate/SHA256SUMS.txt').read_text().splitlines():
         digest,name=row.split('  ',1)
         if sha(prepared/'manual-unlock-candidate'/name)!=digest:
             raise RuntimeError('Prerequisite package changed.')
-    drivers=read_tree(args.tree)
+    drivers=read_tree(args.tree,identity,subsystem)
     output.mkdir(parents=True); logs=output/'checks'; logs.mkdir()
     policy='''/* GPL-2.0-only. Fixed metadata from the physical ownership capture. */
 #pragma once
@@ -175,7 +194,7 @@ static BOOLEAN GuSingleDriver(UINTN role, UINTN size, UINT32 version, UINTN star
 ''' % tuple(','.join(str(d[k]) for d in drivers) for k in ('bytes','version','start_offset','stop_offset'))
     (output/'single-driver-policy.h').write_text(policy)
     original=(source/'src/gop/full.c').read_text()
-    full=adapt_full(original,drivers); patched=output/'full-single.c'; patched.write_text(full)
+    full=adapt_full(original,drivers,identity,subsystem); patched=output/'full-single.c'; patched.write_text(full)
     (output/'single-child.patch').write_text(''.join(difflib.unified_diff(original.splitlines(True),full.splitlines(True),fromfile='upstream/src/gop/full.c',tofile='local/full-single.c')))
     fixture=(source/'src/gop/test_full.c').read_text()
     fixture=replace_once(fixture,'    Add(e, n, VENDOR, Current(EDID), EFI_OPEN_PROTOCOL_BY_CHILD_CONTROLLER);\n','')
@@ -187,7 +206,7 @@ static BOOLEAN GuSingleDriver(UINTN role, UINTN size, UINT32 version, UINTN star
     fixture=replace_once(fixture,'assert(n == 2 && children[0] == PHYS && children[1] == EDID);','assert(n == 1 && children[0] == PHYS);')
     fixture=replace_once(fixture,'  Exclusive = NewHandles = Recreate = Quiet = FailResetWrite',
                         '  EdidS = InjectSecondChild = FALSE;\n  Context.location[1] = 1;\n  Exclusive = NewHandles = Recreate = Quiet = FailResetWrite')
-    fixture=fixture.replace('0x220310deU','0x250310deU').replace('0x20007377U','0x407b1458U')
+    fixture=fixture.replace('0x220310deU','0x'+identity+'U').replace('0x20007377U','0x'+subsystem+'U')
     fixture=fixture.replace('role=sibling_edid','role=intermediate_text')
     (output/'test_full_single.c').write_text(fixture)
     patch_fixture=(source/'src/gop/test_patch.c').read_text().replace('#include "test_full.c"','#include "test_full_single.c"')
@@ -253,13 +272,14 @@ static BOOLEAN GuSingleDriver(UINTN role, UINTN size, UINT32 version, UINTN star
     image,pe=build_efi(source,output/'build',llvm,build_env,sources,FULL_DEFINES,header_path,bun)
     package=output/'manual-unlock-candidate'
     shutil.copytree(prepared/'manual-unlock-candidate',package)
+    (package/'EFI/BOOT').mkdir(parents=True,exist_ok=True)
     shutil.copy2(image,package/'EFI/BOOT/BOOTX64.EFI')
     local=package/'LOCAL-PORT'; local.mkdir()
     for name in ('full-single.c','single-driver-policy.h','single-child.patch'):
         shutil.copy2(output/name,local/name)
     shutil.copy2(Path(__file__),local/Path(__file__).name)
-    shutil.copy2(ROOT/'reports/RTX3060-WINDOWS-FIRST-UNLOCK-TRIAL.md',package/'START-HERE.md')
-    info={'source_commit':PIN,'mode':'fixed 3060 single-child AMI manual experiment',
+    shutil.copy2(instructions,package/'START-HERE.md')
+    info={'source_commit':PIN,'mode':'fixed '+args.target+' single-child AMI manual experiment',
           'upstream_checkout_changed':False,'display_source_override':True,'transaction_source_changed':False,
           'ownership_tree_complete':True,'display_children':1,'driver_roles':5,'driver_metadata':drivers,
           'driver_code_hashes_captured':False,'driver_method_offsets_checked_in_efi':True,

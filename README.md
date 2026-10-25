@@ -18,7 +18,20 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**Installed3080Ti unlock capture preparation:** new **Prepare RTX3080Ti Board
+**RTX3080Ti manual unlock ready, October25:** both read-only captures passed.
+The exact-board manual candidate is staged on Kingston D:, with all24 package
+files independently verified and both captures preserved. Eight upstream suites,
+31 display/22 simulated unlock/26 driver-policy/19 ColdCheck/eight manual-gate
+cases pass; nine ownership tests and39 staging checks pass. Fresh Secure Boot-off,
+FullyDecrypted/BitLocker-off, Windows-first and preserved3060 EFI checks pass.
+The new image uses its own193248-byte/version0x6000d GOP metadata and fixed
+51144015/1 initial selectors; no3060 selector exceptions are reused. **No3080Ti
+unlock has run.** Next full shutdown ->F8 ->UEFI Kingston, then **U once after
+preflight**. Esc/30 seconds cancels. After U allow up to10 minutes for Windows
+to start directly; do not rerun the unlock in the same boot. [First-trial steps,
+fallback and validation](reports/RTX3080TI-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
+
+**Historical capture preparation:** new **Prepare RTX3080Ti Board
 Probe.cmd**, **Prepare RTX3080Ti Ownership Probe.cmd** and **Collect RTX3080Ti
 Captures.cmd** handle the next two read-only USB boots. Staging checks the exact
 2208/10de:1535/BDF01:00.0/VBIOS identity, requires a non-system FAT32 USB, verifies

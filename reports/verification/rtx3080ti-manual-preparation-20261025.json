@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-25",
+  "status": "manual-candidate-staged-first-hardware-trial-pending",
+  "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
+  "target": {
+    "vendorId": "10de",
+    "deviceId": "2208",
+    "subsystemVendorId": "10de",
+    "subsystemDeviceId": "1535",
+    "pciAddress": "0000:01:00.0",
+    "architecture": "GA102",
+    "architectureVerified": false
+  },
+  "efi": {
+    "path": "BOOTX64.EFI",
+    "bytes": 93696,
+    "sha256": "c13c39eb98bae5b836c80e1a4e5d7f84c05ad910f35b5b62f2ad97311052fab4",
+    "machine": "AMD64",
+    "subsystem": 10,
+    "entry": "efi_main",
+    "entry_rva": 4096,
+    "imports": 0,
+    "iat": 0,
+    "delay_imports": 0,
+    "nx": true,
+    "dynamic_base": true
+  },
+  "manual_u_required": true,
+  "cancel_timeout_seconds": 30,
+  "automatic_execution": false,
+  "automatic_startup_installed": false,
+  "unlock_executed": false,
+  "physical_unlock_tested": false,
+  "initial_selectors": {
+    "ss0": "51144015",
+    "ss1": "1"
+  },
+  "zero_or_other_initial_selectors_allowed": false,
+  "display": {
+    "handles": 4,
+    "active_ownership_edges": 10,
+    "display_children": 1,
+    "driver_roles": 5,
+    "driver_metadata": [
+      {
+        "version": 393229,
+        "bytes": 193248,
+        "code_type": 3,
+        "start_offset": 1908,
+        "stop_offset": 1688
+      },
+      {
+        "version": 17,
+        "bytes": 8576,
+        "code_type": 3,
+        "start_offset": 1712,
+        "stop_offset": 2188
+      },
+      {
+        "version": 16,
+        "bytes": 15296,
+        "code_type": 3,
+        "start_offset": 2116,
+        "stop_offset": 2860
+      },
+      {
+        "version": 16,
+        "bytes": 27360,
+        "code_type": 3,
+        "start_offset": 3948,
+        "stop_offset": 4172
+      },
+      {
+        "version": 1,
+        "bytes": 36864,
+        "code_type": 5,
+        "start_offset": 4996,
+        "stop_offset": 5332
+      }
+    ],
+    "driver_code_hashes_captured": false,
+    "driver_method_offsets_checked_in_efi": true
+  },
+  "tests": {
+    "upstream_host_suites": 8,
+    "display_replay_cases": 31,
+    "simulated_unlock_rejoin_cases": 22,
+    "driver_policy_cases": 26,
+    "actual_unchanged_cold_check_cases": 19,
+    "manual_entry_gate_cases": 8,
+    "wrong_bdf_and_extra_child_refused": true,
+    "hardware_driver_checks_preprocessed": true,
+    "ownership_policy_unit_tests": 9,
+    "setup_unit_tests": 7,
+    "powershell_staging_policy_checks": 39,
+    "powershell_versions": [
+      "5.1",
+      "7.6"
+    ],
+    "original_3060_display_source_reproduced": true
+  },
+  "firmware_assets_verified": 5,
+  "firmware_transaction_source_changed": false,
+  "cold_check_source_changed": false,
+  "mock_flag_in_efi": false,
+  "usb": {
+    "file_system": "FAT32",
+    "label": "RTX3080TI",
+    "mode": "manual unlock candidate",
+    "files_independently_hash_verified": 24,
+    "both_diagnostic_runs_preserved": true,
+    "prior_capture_files_hash_verified": 5,
+    "collisions_backed_up": true,
+    "efi_copied_last": true
+  },
+  "platform": {
+    "secure_boot_enabled": false,
+    "bitlocker_volume_status": "FullyDecrypted",
+    "bitlocker_protection": "Off",
+    "windows_first": true,
+    "verified_3060_efi_preserved": true,
+    "internal_boot_settings_changed": false,
+    "internal_partitions_changed": false
+  },
+  "health": {
+    "gpu_status": "OK",
+    "device_error_code": 0,
+    "nvlddmkm_error_critical_events_found_this_boot": 0
+  },
+  "private_evidence_sha256": {
+    "build_info": "34774b5a757e53be97dec3c09f72a88133d7d690a4c830362e17e776f4028c19",
+    "ownership_capture": "e2be91a8ff93312c5a620402586e9d24d5d0ff443f8d8b2caa6edda8c7ddd512",
+    "profile_input": "3a95fbb876070af5c1f5a293d40c8f4f37302548bcb7492c73f90d48d61f7dad"
+  },
+  "limits": [
+    "Host mocks are not a successful hardware unlock or actual display recovery.",
+    "Driver metadata/offset checks do not establish cryptographic driver-code identity.",
+    "First manual hardware transaction, Windows handoff and compute/health verification remain pending."
+  ]
+}
