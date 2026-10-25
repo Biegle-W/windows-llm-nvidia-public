@@ -1,0 +1,206 @@
+{
+  "date": "2026-10-25",
+  "hardware": {
+    "gpu": "RTX 3060 12GB",
+    "cpu": "i5-13600KF",
+    "ram_gib": 15.76,
+    "driver": "610.88",
+    "power_limit_w": 170
+  },
+  "runtime": "llama.cpp b11630 CUDA13.4 (6868a52cb)",
+  "method": {
+    "runner": "scripts/test_models.py",
+    "speed_only": true,
+    "temperature": 0.1,
+    "seed": 42,
+    "max_tokens": 128,
+    "samples": 2,
+    "cache_prompt": false,
+    "sequential_workers": true,
+    "profiles_unchanged": true,
+    "cpu_q8_kv": true
+  },
+  "comparison": "Historical locked October23 versus current unlocked October25; not a controlled same-day A/B/A. Percentages are observations, not isolated causal unlock gains.",
+  "profiles": [
+    {
+      "id": "Ornith-1.5-35B-A3B-IQ2_S",
+      "context_allocated": 131072,
+      "locked_20261023_decode_tps": [
+        26.55112953104433,
+        26.70634065304363
+      ],
+      "unlocked_20261025_decode_tps": [
+        28.371037772350792,
+        28.31233724586055
+      ],
+      "locked_mean_tps": 26.628735092043982,
+      "unlocked_mean_tps": 28.34168750910567,
+      "historical_mean_difference_percent": 6.432721686331533,
+      "unlocked_short_prompt_tps": [
+        184.93190267958622,
+        169.7498664988029
+      ],
+      "short_prompt_tokens": [
+        48,
+        48
+      ],
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true
+      },
+      "placement_matches_baseline": true,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7985.17
+        },
+        "cpu_model_buffers_mib": [
+          2499.81
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "private_result_sha256": "65c782e0ed58c871a37c1ece19db34797ac5b370b64ee84c24c9229553ba809e",
+      "reasoning_only_at_cap": false
+    },
+    {
+      "id": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+      "context_allocated": 131072,
+      "locked_20261023_decode_tps": [
+        64.75178143877439,
+        64.35570564004284
+      ],
+      "unlocked_20261025_decode_tps": [
+        66.12368878547444,
+        64.455324593462
+      ],
+      "locked_mean_tps": 64.55374353940861,
+      "unlocked_mean_tps": 65.28950668946823,
+      "historical_mean_difference_percent": 1.1397683692975003,
+      "unlocked_short_prompt_tps": [
+        215.96717298970555,
+        226.4743480055159
+      ],
+      "short_prompt_tokens": [
+        45,
+        45
+      ],
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true
+      },
+      "placement_matches_baseline": true,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7220.91
+        },
+        "cpu_model_buffers_mib": [
+          1520.58
+        ],
+        "offloaded_layers": "offloaded 41/41 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "private_result_sha256": "edaa8fba50cf4a3a819cbe4490b328ad79a1d2b681abce2464400e03b8e637a3",
+      "reasoning_only_at_cap": true
+    },
+    {
+      "id": "Qwen3.8-35B-A3B-IQ2_M",
+      "context_allocated": 65536,
+      "locked_20261023_decode_tps": [
+        26.602045341196366,
+        26.532308726601688
+      ],
+      "unlocked_20261025_decode_tps": [
+        29.6415242745412,
+        29.251457505693672
+      ],
+      "locked_mean_tps": 26.56717703389903,
+      "unlocked_mean_tps": 29.44649089011744,
+      "historical_mean_difference_percent": 10.837861518160086,
+      "unlocked_short_prompt_tps": [
+        163.1193863992415,
+        153.9798992073243
+      ],
+      "short_prompt_tokens": [
+        48,
+        48
+      ],
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true
+      },
+      "placement_matches_baseline": true,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 8145.88
+        },
+        "cpu_model_buffers_mib": [
+          2953.75
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "private_result_sha256": "551414e0ef0b13cba4b365dbeda3afd282f49d46b558c9c3eed6a8c5c9c71481",
+      "reasoning_only_at_cap": false
+    },
+    {
+      "id": "Qwen3.8-27B-UD-IQ3_XXS",
+      "context_allocated": 65536,
+      "locked_20261023_decode_tps": [
+        6.7515824353595795,
+        6.71458980438708
+      ],
+      "unlocked_20261025_decode_tps": [
+        6.575240791012857,
+        6.608125267577041
+      ],
+      "locked_mean_tps": 6.733086119873329,
+      "unlocked_mean_tps": 6.591683029294948,
+      "historical_mean_difference_percent": -2.1001230054226716,
+      "unlocked_short_prompt_tps": [
+        104.40706574817452,
+        113.57586512866017
+      ],
+      "short_prompt_tokens": [
+        48,
+        48
+      ],
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true
+      },
+      "placement_matches_baseline": true,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7960.59
+        },
+        "cpu_model_buffers_mib": [
+          2060.6
+        ],
+        "offloaded_layers": "offloaded 51/66 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "private_result_sha256": "99f5b1067c0a41d54681f02ff411be8c49af65d9529082f0c8b303c221bd03f6",
+      "reasoning_only_at_cap": false
+    }
+  ],
+  "post_test": {
+    "workers_exited": true,
+    "gpu_temperature_c": 45,
+    "vram_free_mib": 11124,
+    "nvlddmkm_error_or_critical_events_this_boot_found": 0
+  },
+  "limits": [
+    "Only short chat/streaming/speed checks rerun; full context, tools and long prompt not retested.",
+    "LFM samples contain reasoning tokens and no visible final answer.",
+    "Sampling/placement/runtime matched; desktop memory, thermal and background conditions were not controlled across days.",
+    "No model weights, production profiles, drivers or boot configuration changed."
+  ]
+}

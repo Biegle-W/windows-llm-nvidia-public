@@ -1,5 +1,16 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
+Latest October 25 LLM tests: [results and model research](RTX3060-UNLOCKED-LLM-20261025.md).
+Unchanged profiles passed short chat/streaming and two 128-token temperature 0.1
+speed samples. Means: Ornith 28.34, LFM 65.29, Empero 29.45, Qwen27B 6.59 tok/s.
+Historical differences from October 23 locked results are +6.4%, +1.1%, +10.8%, -2.1%.
+All model placements match saved baselines. These are not controlled causal unlock
+gains; LFM speed is reasoning-only. No full-window, tool or long-prompt rerun.
+Curated JSON is public-safe; raw outputs remain ignored. Workers exited; no
+nvlddmkm Error/Critical events found this boot. No profile/runtime/boot changes.
+Recommended future experiment: full-GPU LFM2.5-2.6B BF16 or Qwen3.5-4B 16-bit,
+separately measuring prefill and decode; candidates are not installed.
+
 Automatic internal boot is prepared but not installed: [design, recovery and OS-update behavior](RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md).
 `prepare_uefi_3060_automatic.py` and `Install-RTX3060AutomaticUnlock.ps1` pass14
 host automatic/source cases and13 installer policy checks. Preview under ignored
@@ -22,7 +33,7 @@ starts without a reset. Driver610.88 recognizes the3060 with StatusOK/error0;
 no nvlddmkm Error/Critical events since this boot were found at inspection.
 At unchanged170W, the same short CUDA GEMM executable measures FP16
 26.835->50.724TFLOPS (+89.0%), BF16 26.788->50.591 (+88.9%), FP32 8.643->8.540.
-This is one boot and one short sample per arm; no LLM, INT8, broad numerical,
+This is one boot and one short sample per arm; no INT8, broad numerical,
 long-run, repeat-boot or sleep/resume validation. USB remains manual-only with no
 ESP/BCD/boot-order/driver/VBIOS change. Do not rerun unlock in this boot. Preserve
 prior build/profile flags as historical; record physical validation separately.

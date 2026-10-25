@@ -17,13 +17,22 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
+**LLM tests after unlocking, October 25:** all four existing profiles passed short
+chat, streaming and two 128-token speed samples with matched sampling and unchanged
+weight placement. Mean generation: Ornith 28.34 t/s, LFM 65.29 t/s (reasoning-only),
+Empero 29.45 t/s and Qwen27B 6.59 t/s. Against saved October 23 locked means these are
++6.4%, +1.1%, +10.8% and -2.1%; this historical comparison does not isolate unlock
+causality. [Methods, limits and models that can use FP16/BF16 throughput](reports/RTX3060-UNLOCKED-LLM-20261025.md).
+Small full-GPU 16-bit models and supported W4A16 kernels are research candidates;
+no new model or backend was installed and all production profiles remain unchanged.
+
 **Successful Windows unlock, October25:** the first manual single-child3060
 trial completed one FLR, safe DMA cleanup, display recovery and Windows handoff.
 The unchanged-driver/170W short GEMM comparison measured FP16 26.84->50.72TFLOPS
 (+89.0%) and BF16 26.79->50.59TFLOPS (+88.9%); FP32 was approximately unchanged.
 The Windows GPU reports StatusOK/error0. [Physical result and measurement limits](reports/RTX3060-WINDOWS-UNLOCK-RESULT-20261025.md).
 The USB remains manual-only; no persistent boot installation or VBIOS flash was
-made. Unlock persistence, repeat-boot reliability and LLM speed gains are untested.
+made. Unlock persistence and repeat-boot reliability remain untested; short LLM measurements are above.
 An [automatic internal-boot package and installer](reports/RTX3060-AUTOMATIC-INTERNAL-BOOT-20261025.md)
 are now prepared, with14 automatic/source and13 installer-policy checks passing.
 The existing ESP has61MiB free; the81MiB payload needs a separate512MiB FAT32
