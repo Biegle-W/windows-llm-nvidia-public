@@ -4,12 +4,18 @@ LATEST current-card unlock preparation: new root Board/Ownership/Collect launche
 call scripts/Prepare-RTX3080TiProbeUsb.ps1. Exact current Windows identity2208 /
 10de:1535 /BDF01:00.0 /VBIOS94.02.71.00.01 /12288MiB is checked before USB work.
 USB must be FAT32, non-system, busUSB; ambiguous/missing drives refused. Paths,
-hashes and reparse points checked, all collisions backed up before staging,
+hashes and reparse tags checked, all collisions backed up before staging,
 disk/partition identity rechecked before writes; old capture directories retained.
-15 PowerShell5.1 policy tests pass;7 Python setup tests pass. Actual disconnected
+22 PowerShell5.1/7.6 policy tests pass;7 Python setup tests pass. Actual disconnected
 USB refused without staging. Both package ZIPs independently verified13/11 files.
-Registry Secure Boot0/off. No USB currently present; PROM/register/GOP captures
-still needed. Audit now binds subsystem10de:1535/address0000:01:00.0 and ownership
+Registry Secure Boot0/off. Kingston D: was exFAT with recordings; user explicitly
+authorized format without backup. Now FAT32/RTX3080TI, board probe staged and all14
+files hash verified. OneDrive cloud-tag handling and existing drive-root parent
+creation fixed after real staging refusals; symbolic links/junctions/unknown tags
+remain refused. Next user manually boots F8 ->UEFI Kingston, lets board probe
+finish, then Windows Boot Manager. Collect/review board run before staging the
+ownership probe for its separate boot. PROM/register/GOP captures still needed.
+Audit now binds subsystem10de:1535/address0000:01:00.0 and ownership
 config_before[2c]=153510de, refusing other3080Ti boards/slots. No firmware executed
 or built, no BCD/partition change or automatic reboot. Backups/copies stay under
 ignored data/uefi-probe/3080ti-usb/. Follow [USB workflow](RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).

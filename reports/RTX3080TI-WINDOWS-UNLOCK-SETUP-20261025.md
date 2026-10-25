@@ -3,17 +3,21 @@
 **Current installed card:** RTX3080Ti12GB, PCI2208, subsystem10de:1535,
 BDF0000:01:00.0, VBIOS94.02.71.00.01, driver610.88/350W. Its pre-attempt
 baseline and all four LLM checks are now [recorded](RTX3080TI-VS-3060-20261025.md).
-Secure Boot registry state is0/off. No USB is connected, so physical PROM/register
-and ownership captures remain pending. No3080Ti unlock has been attempted or built.
+Secure Boot registry state is0/off. The Kingston USB on D: is now FAT32, labeled
+RTX3080TI, with the read-only board probe staged and14 file hashes independently
+verified. Physical PROM/register and ownership captures remain pending.
+No3080Ti unlock has been attempted or built.
 
 **Toolkit prepared and verified:** both diagnostic archives match their manifests
 (13 board-probe and11 ownership-probe files). The ownership binary passes PE
 checks, the pinned grouped ownership tests and an explicit2208 entry fixture.
 Seven setup guard tests pass, including exact installed subsystem/BDF rejection;
-15 USB/card/path policy checks pass on Windows PowerShell5.1. The actual3060
+22 USB/card/path/cloud-tag/root-parent policy checks pass on Windows PowerShell5.1
+and7.6. The actual3060
 inventory and real saved3060 capture were previously refused before benchmark
 execution/profile creation. The current board stager refuses the disconnected
-USB state without writing files. No unlock image or boot change was made.
+USB state without writing files. A successful physical USB staging now passes all
+14 file checks. No unlock image or boot change was made.
 [Sanitized preparation evidence](verification/rtx3080ti-windows-unlock-setup-20261025.json).
 
 This setup prepares the diagnostics and offline checks needed to build a separate
@@ -22,7 +26,21 @@ Boot Manager stays first; the working3060 EFI and restore command are preserved.
 
 ## Ready-to-run diagnostics
 
-Connect the FAT32 Kingston USB. No formatting is needed if it retains FAT32.
+**Current next step:** the board probe is already staged. Restart manually,
+press **F8**, select **UEFI Kingston / RTX3080TI**, let the probe finish, then
+choose **Windows Boot Manager**. Do not select RTX3060 Automatic Unlock.
+Report back after booting Windows so the new capture can be collected/reviewed.
+
+The Kingston was initially exFAT with camera recordings. The user explicitly
+authorized discarding them without backup; it was formatted FAT32 on the exact
+verified non-system USB. No recording backup was made. The first staging attempt
+refused OneDrive cloud-placeholder attributes, and the next exposed a Windows
+PowerShell drive-root directory-creation issue. Both were fixed: only documented
+cloud tag variants are accepted, redirecting/unknown tags remain refused, and
+existing drive-root parents are reused. The final stage and independent USB
+manifest comparison succeed. The reusable staging helper itself never formats.
+
+If staging again later, connect the FAT32 Kingston USB. No further formatting is needed.
 Use these root launchers, with only one USB connected (or pass a drive letter
 explicitly to the PowerShell helper):
 
@@ -57,8 +75,8 @@ The local setup directory is `data/uefi-probe/rtx3080ti-unlock-setup/`:
 These are two separate USB boot packages with different `EFI/BOOT/BOOTX64.EFI`
 files. Use separate FAT32 USB drives, or preserve the first capture and switch
 packages deliberately between runs. Do not merge them or replace the3060 USB's
-fallback file silently. No USB is currently connected; none is formatted or
-staged by this preparation. Each package writes new run directories and returns
+fallback file silently. The current Kingston holds only the new board-probe
+package after the explicitly authorized format. Each package writes new run directories and returns
 to firmware. Use F8 to boot it, then Windows Boot Manager afterward if necessary.
 The ownership probe uses `RTX-UNLOCK/RUNnn/GOP.TXT`; the board probe uses
 `RTX30-PROBE/RUNnn/REPORT.TXT`, `PROM.BIN` and optional ROM/inventory files.

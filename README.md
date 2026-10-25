@@ -23,10 +23,14 @@ Probe.cmd**, **Prepare RTX3080Ti Ownership Probe.cmd** and **Collect RTX3080Ti
 Captures.cmd** handle the next two read-only USB boots. Staging checks the exact
 2208/10de:1535/BDF01:00.0/VBIOS identity, requires a non-system FAT32 USB, verifies
 hashes and backs up every colliding file without formatting or deleting old runs.
-15 staging policy checks and7 setup tests pass; both diagnostic archives remain
-hash verified. The offline auditor now rejects other subsystems/slots. Secure
-Boot is off, but no USB is connected: captures and the actual unlock image remain
-pending. [Boot and collection steps](reports/RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
+22 staging policy checks and7 setup tests pass; both diagnostic archives remain
+hash verified. OneDrive cloud placeholders are accepted while symbolic links,
+junctions and unknown reparse tags remain refused. The offline auditor rejects
+other subsystems/slots. After explicit authorization to discard its recordings,
+Kingston D: was formatted FAT32/RTX3080TI and the board probe staged with14 files
+hash verified. Secure Boot is off; next manually boot F8 ->UEFI Kingston USB,
+then return through Windows Boot Manager. PROM/ownership captures and the actual
+unlock image remain pending. [Boot and collection steps](reports/RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
 
 **RTX3080Ti installed and tested, October25:** all four unchanged profiles pass
 short chat, streaming and two128-token samples. Mean generation: Ornith30.72t/s,

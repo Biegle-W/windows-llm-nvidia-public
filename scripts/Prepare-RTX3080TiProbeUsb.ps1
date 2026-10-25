@@ -7,6 +7,35 @@ param(
 $ErrorActionPreference='Stop'
 $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $private=Join-Path $root 'data\uefi-probe\3080ti-usb'
+if(-not ('ProbeUsbReparse' -as [type])) {
+    Add-Type -TypeDefinition @'
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+public static class ProbeUsbReparse {
+    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
+    private struct FindData {
+        public uint Attributes;
+        public System.Runtime.InteropServices.ComTypes.FILETIME Creation, Access, Write;
+        public uint SizeHigh, SizeLow, Tag, Reserved;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst=260)] public string Name;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst=14)] public string Alternate;
+    }
+    [DllImport("kernel32.dll", CharSet=CharSet.Unicode, SetLastError=true)]
+    private static extern IntPtr FindFirstFileW(string name, out FindData data);
+    [DllImport("kernel32.dll", SetLastError=true)]
+    private static extern bool FindClose(IntPtr handle);
+    public static bool IsCloudTag(uint tag) { return (tag & 0xffff0fffu) == 0x9000001au; }
+    public static bool IsCloudPlaceholder(string path) {
+        FindData data;
+        IntPtr handle=FindFirstFileW(path, out data);
+        if(handle == new IntPtr(-1)) throw new Win32Exception();
+        try { return IsCloudTag(data.Tag); }
+        finally { FindClose(handle); }
+    }
+}
+'@
+}
 function Safe-Child([string]$Base,[string]$Relative) {
     if(-not $Relative -or [IO.Path]::IsPathRooted($Relative) -or $Relative -match '[:\r\n]' -or ($Relative -split '[\\/]') -contains '..'){throw 'Unsafe package path.'}
     $prefix=[IO.Path]::GetFullPath($Base).TrimEnd([char]92)+'\'
@@ -14,13 +43,17 @@ function Safe-Child([string]$Base,[string]$Relative) {
     if(-not $path.StartsWith($prefix,[StringComparison]::OrdinalIgnoreCase)){throw 'Path escapes its root.'}
     $cursor=$path
     while($cursor.Length -ge $prefix.Length){
-        if((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'Reparse points are not permitted in package paths.'}
+        if((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) -and -not [ProbeUsbReparse]::IsCloudPlaceholder($cursor)){throw 'Only OneDrive cloud-placeholder reparse tags are permitted; links and other tags are refused.'}
         $cursor=Split-Path -Parent $cursor
     }
     return $path
 }
 function Assert-Usb($Disk,$Volume) {
     if($Disk.BusType -ne 'USB' -or $Disk.IsBoot -or $Disk.IsSystem -or $Volume.FileSystem -ne 'FAT32' -or $Volume.DriveLetter -notmatch '^[D-Z]$'){throw 'Use a non-system FAT32 USB volume with a drive letter. Nothing was formatted.'}
+}
+function Ensure-Parent([string]$Path) {
+    $parent=Split-Path -Parent $Path
+    if(-not (Test-Path -LiteralPath $parent -PathType Container)){New-Item -ItemType Directory -Path $parent -Force | Out-Null}
 }
 function Assert-Card([string]$Text) {
     $rows=@($Text.Trim() -split '\r?\n')
@@ -38,7 +71,10 @@ if($Mode -eq 'SelfTest') {
     $rejected=$false;try{Assert-Usb $disk ([pscustomobject]@{FileSystem='NTFS';DriveLetter='D'})}catch{$rejected=$true};if(-not $rejected){throw 'NTFS accepted.'}
     foreach($bad in @('../file','C:\Windows\file','/EFI/file','EFI/../../file')){$rejected=$false;try{$null=Safe-Child $root $bad}catch{$rejected=$true};if(-not $rejected){throw 'Unsafe path accepted.'}}
     if((Safe-Child $root 'EFI/BOOT/BOOTX64.EFI') -ne (Join-Path $root 'EFI\BOOT\BOOTX64.EFI')){throw 'Valid path failed.'}
-    'PASS 15 USB/card/path policy checks; no USB or GPU changes.'
+    foreach($tag in @('9000001a','9000101a','9000f01a')){if(-not [ProbeUsbReparse]::IsCloudTag([Convert]::ToUInt32($tag,16))){throw 'Cloud placeholder tag refused.'}}
+    foreach($tag in @('a000000c','a0000003','80000017')){if([ProbeUsbReparse]::IsCloudTag([Convert]::ToUInt32($tag,16))){throw 'Link or unknown reparse tag accepted.'}}
+    Ensure-Parent (Join-Path ([IO.Path]::GetPathRoot($root)) 'probe-usb-parent-policy-fixture.txt')
+    'PASS 22 USB/card/path/cloud-tag/root-parent policy checks; no USB or GPU changes.'
     return
 }
 $inventory=(& nvidia-smi --query-gpu=name,pci.bus_id,pci.device_id,pci.sub_device_id,vbios_version,memory.total --format=csv,noheader,nounits | Out-String)
@@ -63,7 +99,7 @@ if($Mode -eq 'Collect') {
             foreach($file in Get-ChildItem -LiteralPath $source -Recurse -File -Force){
                 $relative=$file.FullName.Substring($usbRoot.Length)
                 $sourceFile=Safe-Child $usbRoot $relative;$target=Safe-Child $out $relative
-                New-Item -ItemType Directory -Path (Split-Path -Parent $target) -Force | Out-Null
+                Ensure-Parent $target
                 Copy-Item -LiteralPath $sourceFile -Destination $target
                 if((Get-FileHash -LiteralPath $sourceFile).Hash -ne (Get-FileHash -LiteralPath $target).Hash){throw 'Capture copy differs.'}
             }
@@ -93,7 +129,7 @@ foreach($e in $entries){
     if(Test-Path -LiteralPath $e.Target){
         if(-not (Test-Path -LiteralPath $e.Target -PathType Leaf)){throw 'A destination is not a file.'}
         $saved=Safe-Child $backup $e.Relative
-        New-Item -ItemType Directory -Path (Split-Path -Parent $saved) -Force | Out-Null
+        Ensure-Parent $saved
         Copy-Item -LiteralPath $e.Target -Destination $saved
         if((Get-FileHash -LiteralPath $e.Target).Hash -ne (Get-FileHash -LiteralPath $saved).Hash){throw 'USB backup differs; staging refused.'}
     }
@@ -106,7 +142,7 @@ $now=Get-Partition -DriveLetter $usb.Volume.DriveLetter
 if($now.Guid -ne $usb.Partition.Guid -or $now.DiskNumber -ne $usb.Disk.Number -or $now.Offset -ne $usb.Partition.Offset -or $now.Size -ne $usb.Partition.Size -or (Get-Disk -Number $now.DiskNumber).UniqueId -ne $usb.Disk.UniqueId){throw 'USB identity changed.'}
 foreach($e in $entries){
     $target=Safe-Child $usbRoot $e.Relative
-    New-Item -ItemType Directory -Path (Split-Path -Parent $target) -Force | Out-Null
+    Ensure-Parent $target
     Copy-Item -LiteralPath $e.Source -Destination $target -Force
     if((Get-FileHash -LiteralPath $target).Hash.ToLowerInvariant() -ne $e.Digest){throw 'USB staging verification failed. Restore the backed-up files before booting.'}
 }
