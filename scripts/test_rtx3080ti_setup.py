@@ -1,7 +1,7 @@
 """Guard tests; do not execute firmware or use physical GPU memory."""
 import copy
 import unittest
-from rtx3080ti_setup import inventory, require_3080_profile
+from rtx3080ti_setup import inventory, require_3080_profile, require_installed_board
 
 VALID='NVIDIA GeForce RTX 3080 Ti, 00000000:01:00.0, 0x220810DE, 0x12341458, 94.02.example, 12288, 350, 610.88, GPU-test'
 
@@ -33,6 +33,15 @@ class SetupGuardTests(unittest.TestCase):
         for field in profile['validation']:
             wrong=copy.deepcopy(profile);wrong['validation'][field]=not wrong['validation'][field]
             with self.assertRaises(RuntimeError):require_3080_profile(wrong)
+
+    def test_installed_board_binding(self):
+        profile={'target':{'vendorId':'10de','deviceId':'2208','architecture':'GA102',
+            'subsystemVendorId':'10de','subsystemDeviceId':'1535','pciAddress':'0000:01:00.0'},
+            'validation':{'probeComplete':True,'unlockApproved':False,'firmwareCompatible':False,'hardwareTested':False}}
+        require_installed_board(profile)
+        for field,value in (('subsystemVendorId','1458'),('subsystemDeviceId','1234'),('pciAddress','0000:02:00.0')):
+            wrong=copy.deepcopy(profile);wrong['target'][field]=value
+            with self.assertRaises(RuntimeError):require_installed_board(wrong)
 
 
 if __name__=='__main__':unittest.main()

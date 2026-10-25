@@ -18,6 +18,16 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
+**Installed3080Ti unlock capture preparation:** new **Prepare RTX3080Ti Board
+Probe.cmd**, **Prepare RTX3080Ti Ownership Probe.cmd** and **Collect RTX3080Ti
+Captures.cmd** handle the next two read-only USB boots. Staging checks the exact
+2208/10de:1535/BDF01:00.0/VBIOS identity, requires a non-system FAT32 USB, verifies
+hashes and backs up every colliding file without formatting or deleting old runs.
+15 staging policy checks and7 setup tests pass; both diagnostic archives remain
+hash verified. The offline auditor now rejects other subsystems/slots. Secure
+Boot is off, but no USB is connected: captures and the actual unlock image remain
+pending. [Boot and collection steps](reports/RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
+
 **RTX3080Ti installed and tested, October25:** all four unchanged profiles pass
 short chat, streaming and two128-token samples. Mean generation: Ornith30.72t/s,
 LFM78.35t/s, Empero30.00t/s and Qwen27B6.21t/s. Versus the saved unlocked3060

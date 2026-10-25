@@ -56,6 +56,13 @@ def require_3080_profile(profile):
             raise RuntimeError('Keep independent compatibility/approval flags false during diagnostic preparation.')
 
 
+def require_installed_board(profile):
+    require_3080_profile(profile)
+    t=profile['target']
+    if (t.get('subsystemVendorId'),t.get('subsystemDeviceId'),t.get('pciAddress'))!=('10de','1535','0000:01:00.0'):
+        raise RuntimeError('This audit is bound to the installed 2208/10de:1535 board at 0000:01:00.0; other boards or slots require separate review.')
+
+
 def manifest(package):
     files=[f for f in sorted(package.rglob('*')) if f.is_file() and f.name!='SHA256SUMS.txt']
     (package/'SHA256SUMS.txt').write_text(''.join(sha(f)+'  '+f.relative_to(package).as_posix()+'\n' for f in files),encoding='ascii')
@@ -135,20 +142,20 @@ def audit(capture,path,ownership_log):
     sys.path.insert(0,str(SOURCE/'tools'))
     parser=importlib.import_module('probe_profile');checker=importlib.import_module('check_profile')
     # Parse and reject wrong-card input before copying or creating output.
-    profile=parser.generate(capture/'REPORT.TXT',capture/'PROM.BIN');require_3080_profile(profile)
+    profile=parser.generate(capture/'REPORT.TXT',capture/'PROM.BIN');require_installed_board(profile)
     out=new_output(path);raw=out/'capture';raw.mkdir()
     for name in ('REPORT.TXT','PROM.BIN','ROMIMAGE.BIN','INVENTORY.TXT'):
         if (capture/name).is_file():shutil.copy2(capture/name,raw/name)
-    profile=parser.generate(raw/'REPORT.TXT',raw/'PROM.BIN');require_3080_profile(profile)
+    profile=parser.generate(raw/'REPORT.TXT',raw/'PROM.BIN');require_installed_board(profile)
     file=out/'diagnostic-profile.private.json';file.write_text(json.dumps(profile,indent=2)+'\n',encoding='utf-8')
-    checked=checker.check(file,experimental=True);require_3080_profile(checked)
+    checked=checker.check(file,experimental=True);require_installed_board(checked)
     (out/'board-profile.private.h').write_text(checker.header(checked),encoding='ascii')
     fw=inspect_firmware(SOURCE,out,LLVM,env,checked)
     (out/'offline-firmware.private.json').write_text(json.dumps(fw,indent=2)+'\n',encoding='utf-8')
     tree_captured=False
     if ownership_log:
         text=ownership_log.read_text(encoding='utf-8-sig')
-        if 'config_before[00]=220810de' not in text or 'TREE_RESULT status=0 touched=0' not in text or not re.search(r'TREE_END status=0 complete=1 .*detach_attempted=0',text):
+        if 'config_before[00]=220810de' not in text or 'config_before[2c]=153510de' not in text or 'TREE_RESULT status=0 touched=0' not in text or not re.search(r'TREE_END status=0 complete=1 .*detach_attempted=0',text):
             raise RuntimeError('Ownership capture is incomplete, wrong-card or not read-only.')
         shutil.copy2(ownership_log,out/'ownership-GOP.private.txt');tree_captured=True
     result={'board_capture_valid':True,'offline_firmware_checks_passed':True,'display_tree_captured':tree_captured,

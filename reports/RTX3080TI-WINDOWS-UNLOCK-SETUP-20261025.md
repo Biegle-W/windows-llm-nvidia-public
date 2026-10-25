@@ -1,20 +1,52 @@
 # Windows RTX 3080 Ti unlock preparation — October 25, 2026
 
+**Current installed card:** RTX3080Ti12GB, PCI2208, subsystem10de:1535,
+BDF0000:01:00.0, VBIOS94.02.71.00.01, driver610.88/350W. Its pre-attempt
+baseline and all four LLM checks are now [recorded](RTX3080TI-VS-3060-20261025.md).
+Secure Boot registry state is0/off. No USB is connected, so physical PROM/register
+and ownership captures remain pending. No3080Ti unlock has been attempted or built.
+
 **Toolkit prepared and verified:** both diagnostic archives match their manifests
 (13 board-probe and11 ownership-probe files). The ownership binary passes PE
 checks, the pinned grouped ownership tests and an explicit2208 entry fixture.
-Six setup guard tests pass; the actual3060 inventory and real saved3060 capture
-are refused before benchmark execution/profile creation. Double-click
-**Capture RTX3080Ti Baseline.cmd** after the swap to record a fresh baseline.
-No physical3080Ti or USB is present; no unlock image or boot change was made.
+Seven setup guard tests pass, including exact installed subsystem/BDF rejection;
+15 USB/card/path policy checks pass on Windows PowerShell5.1. The actual3060
+inventory and real saved3060 capture were previously refused before benchmark
+execution/profile creation. The current board stager refuses the disconnected
+USB state without writing files. No unlock image or boot change was made.
 [Sanitized preparation evidence](verification/rtx3080ti-windows-unlock-setup-20261025.json).
 
-The RTX3060 remains installed. This setup prepares the diagnostics, baseline and
-offline checks needed to build a separate3080Ti unlock after the replacement is
-present. It does not reuse3060 PROM, selectors or display-driver metadata. Windows
+This setup prepares the diagnostics and offline checks needed to build a separate
+unlock for the installed3080Ti. It does not reuse3060 PROM, selectors or display-driver metadata. Windows
 Boot Manager stays first; the working3060 EFI and restore command are preserved.
 
 ## Ready-to-run diagnostics
+
+Connect the FAT32 Kingston USB. No formatting is needed if it retains FAT32.
+Use these root launchers, with only one USB connected (or pass a drive letter
+explicitly to the PowerShell helper):
+
+1. Run **Prepare RTX3080Ti Board Probe.cmd**. It checks the exact Windows card,
+   USB bus/non-system/FAT32 identity and every package hash, then backs up all
+   colliding files privately before staging. Existing RUN folders are retained.
+2. Restart manually, press **F8**, choose the **UEFI USB** entry. The board probe
+   records read-only PCI/register/PROM data. After it returns, choose **Windows
+   Boot Manager**. Do not select the3060 automatic unlock entry.
+3. Run **Collect RTX3080Ti Captures.cmd**. It copies/hash-checks the USB capture
+   directories into ignored `data/uefi-probe/3080ti-usb/captures-*/`. Older3060
+   captures may be included; select only this2208/subsystem1535 run for audit.
+4. Run **Prepare RTX3080Ti Ownership Probe.cmd**, boot the USB again and return
+   to Windows in the same way. This image only reads/logs display ownership.
+5. Run **Collect RTX3080Ti Captures.cmd** again, then have the agent audit both
+   current-card captures before building a manual unlock.
+
+The USB staging helper is `scripts/Prepare-RTX3080TiProbeUsb.ps1`, with modes
+`Board`, `Ownership`, `Collect`, `SelfTest` and optional `-DriveLetter X`.
+It never formats, changes BCD, repartitions, reboots or executes an unlock.
+Staging backups and private USB identity records are under
+`data/uefi-probe/3080ti-usb/before-*/`. Neither packaged diagnostic image is an
+unlock image. The copied guides inside the original ZIPs describe preparation
+before the card was installed; this maintained document supersedes that status.
 
 The local setup directory is `data/uefi-probe/rtx3080ti-unlock-setup/`:
 
@@ -72,11 +104,12 @@ display recovery, Windows handoff and compute benefit before automatic startup
 is configured for this new card. The future automatic profile should use only
 complete initial-selector pairs observed and validated on the3080Ti itself.
 
-The physical card, PROM, cold state and ownership tree are not available yet,
-so no card-specific3080Ti unlock EFI is built or installed at this stage. A
+The physical card is present and its baseline is saved, but PROM, cold state
+and ownership tree are not available yet, so no card-specific3080Ti unlock EFI
+is built or installed at this stage. A
 generic GA102 label cannot supply those missing inputs. This is a hardware-data
-dependency, not another approval request. After the swap, tell the agent the
-3080Ti is installed; the prepared commands and packages are ready to continue.
+dependency. Connect the FAT32 USB and collect the two read-only captures with
+the prepared launchers to continue.
 
 For a return to the original3060, use `Restore RTX3060 Unlock.cmd` and its exact
 identity/hash checks. This setup does not affect the separate Linux AMD system.

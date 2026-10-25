@@ -1,5 +1,19 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST current-card unlock preparation: new root Board/Ownership/Collect launchers
+call scripts/Prepare-RTX3080TiProbeUsb.ps1. Exact current Windows identity2208 /
+10de:1535 /BDF01:00.0 /VBIOS94.02.71.00.01 /12288MiB is checked before USB work.
+USB must be FAT32, non-system, busUSB; ambiguous/missing drives refused. Paths,
+hashes and reparse points checked, all collisions backed up before staging,
+disk/partition identity rechecked before writes; old capture directories retained.
+15 PowerShell5.1 policy tests pass;7 Python setup tests pass. Actual disconnected
+USB refused without staging. Both package ZIPs independently verified13/11 files.
+Registry Secure Boot0/off. No USB currently present; PROM/register/GOP captures
+still needed. Audit now binds subsystem10de:1535/address0000:01:00.0 and ownership
+config_before[2c]=153510de, refusing other3080Ti boards/slots. No firmware executed
+or built, no BCD/partition change or automatic reboot. Backups/copies stay under
+ignored data/uefi-probe/3080ti-usb/. Follow [USB workflow](RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
+
 LATEST installed3080Ti: [four-model comparison](RTX3080TI-VS-3060-20261025.md).
 PCI2208/subsystem10de:1535, VBIOS94.02.71.00.01,12288MiB, driver610.88,350W.
 No project3080Ti unlock attempted; selector state not independently captured.
