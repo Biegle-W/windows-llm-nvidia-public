@@ -1,5 +1,27 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST next-card preparation: [RTX3080 10GB workflow](RTX3080-10GB-UNLOCK-SETUP-20261025.md).
+User requests2206/10GB unlock next;3080Ti still installed. Board package
+data/uefi-probe/rtx3080-10gb-readonly/ and ZIP built from unchanged5c076dc source,
+including2206/GA102 mocks; ownership package under rtx3080-10gb-ownership/package/
+and adjacent ZIP passes grouped and explicit2206 entry tests. EFI hashes remain
+ae7b...785a (board) and58f4...42b8 (ownership); neither links an unlock.
+New scripts/rtx3080_setup.py handles identity/baseline/offline audit; accepts only
+nameRTX3080/PCI2206/10240MiB and binds reports to baseline subsystem/BDF. Nine
+unit tests pass; actual Ti refused before baseline compute/output and ownership
+staging. New Board/Ownership/Collect launchers and Capture RTX3080 10GB Baseline.cmd
+are at root. Stager loads shared path/USB policies via test-only import (41 pass).
+Board mode permits pre-swap staging; later modes require the installed3080.
+CURRENT USB: FAT32/RTX3080_10G, read-only board fallback,14 files independently
+verified. Previous Ti fallback/collisions backed up below
+data/uefi-probe/3080-10gb-usb/before-board-20261025-193231-01ab90b436764c8989d06dd32080e306/.
+All seven old capture files preserved. Next user full-shutdown/swaps3080/F8 USB,
+then Windows. Capture Windows identity/compute baseline and new2206 board run,
+then stage/boot/review ownership before adapting any manual unlock. No3080 PROM/
+topology is known yet and no unlock image built;2216/other variants require
+separate review. Current Ti session,3060 USB-only policy,empty NVMe ESP and12GB
+LLM/router admission limits unchanged. Older USB-mode paragraphs are historical.
+
 LATEST startup cleanup: [3060 NVMe unlock removed](RTX3060-NVME-UNLOCK-REMOVED-20261025.md)
 at explicit user request; future3060 unlocks USB-only. Exact dedicated ESP/disk/
 payload identity checked,41 files archived/hash verified, firmware entry deleted,

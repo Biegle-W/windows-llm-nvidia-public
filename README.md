@@ -23,6 +23,17 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
+**Next RTX3080 10GB unlock preparation:** a separate2206/10240MiB setup is ready.
+The3080Ti is still installed. Kingston D: now boots the read-only3080 board probe,
+label **RTX3080_10G**, with14 independently verified files; the Ti fallback was
+backed up and all seven old capture files retained. Both new diagnostic archives
+and2206 host fixtures pass; nine new guard tests pass. Baseline/ownership helpers
+refuse the currently installed Ti. **Next fully shut down, install the3080 10GB,
+then F8 ->UEFI Kingston for the read-only probe and return to Windows.** No3080
+unlock image can be built until its own PROM/register/ownership captures arrive.
+The3060/Ti manual images remain separate;12GB model-router guards are unchanged.
+[Separate3080 workflow](reports/RTX3080-10GB-UNLOCK-SETUP-20261025.md).
+
 **RTX3080Ti manual unlock verified, RUN01:** logs show U confirmed, one successful
 transaction/FLR, safe cleanup, restored display with9216 matching pixels and
 Windows handoff. Same-executable FP16 70.350 ->126.860TFLOPS (+80.3%), BF16

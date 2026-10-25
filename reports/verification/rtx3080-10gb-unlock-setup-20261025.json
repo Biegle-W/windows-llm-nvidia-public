@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-25",
+  "status": "3080-10gb-readonly-board-probe-staged-awaiting-card-swap",
+  "currently_installed_gpu": "RTX 3080 Ti 12GB",
+  "target_gpu": "RTX 3080 10GB",
+  "target_pci_id": "10de:2206",
+  "target_vram_mib": 10240,
+  "actual_target_subsystem_and_vbios_known": false,
+  "physical_3080_captures_available": false,
+  "previous_3080_benchmark_found": true,
+  "previous_benchmark_is_unlock_evidence": false,
+  "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
+  "efi_source_modified": false,
+  "packages": [
+    {
+      "name": "rtx3080-10gb-readonly.zip",
+      "mode": "read-only board capture",
+      "efi_sha256": "ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a",
+      "manifest_files": 13
+    },
+    {
+      "name": "rtx3080-10gb-ownership.zip",
+      "mode": "GC_TREE_ONLY",
+      "efi_sha256": "58f4d6beb444d423a8509dd4d1cdbb7a2e10a425e51ae2e65f2cceaa011342b8",
+      "manifest_files": 11,
+      "unlock_code_linked": false,
+      "firmware_assets_included": false
+    }
+  ],
+  "package_and_zip_contents_independently_verified": true,
+  "tests": {
+    "generic_probe_and_parser_mocks": "passed",
+    "2206_ga102_capture_fixture": "passed",
+    "pe_negative_checks": "passed",
+    "grouped_ownership_mocks": "passed",
+    "2206_entry_fixture": "passed",
+    "identity_profile_guard_unit_tests": 9,
+    "shared_usb_policy_checks": 41,
+    "actual_installed_ti_refused_before_baseline_compute_and_output": true,
+    "actual_installed_ti_refused_before_ownership_staging": true
+  },
+  "usb": {
+    "file_system": "FAT32",
+    "label": "RTX3080_10G",
+    "current_mode": "read-only2206 board probe",
+    "staged_files_independently_verified": 14,
+    "prior_ti_fallback_collisions_backed_up": true,
+    "prior_capture_files_preserved_and_hash_verified": 7,
+    "efi_copied_last": true,
+    "formatted": false
+  },
+  "current_gpu_session_changed": false,
+  "nvme_or_boot_entries_changed": false,
+  "llm_profiles_or_12gb_admission_guards_changed": false,
+  "3060_usb_only_policy_preserved": true,
+  "3080_unlock_image_built": false,
+  "3080_unlock_executed": false,
+  "remaining_dependency": "Install2206 RTX3080 10GB, boot the staged board probe, collect its Windows baseline and board capture, then collect/review ownership before building an exact-board manual unlock."
+}

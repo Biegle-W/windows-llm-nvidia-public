@@ -64,9 +64,9 @@
   "audit_bound_to_installed_subsystem_and_pci_address": true,
   "usb_staging_helper_sha256": "46691187465f16350b76fed9e57e6860e09c4efd7d7456ebd5aba177d99b9ceb",
   "usb_staging_physical_board_stage_passed": true,
-  "usb_staged_file_hashes_verified": 24,
+  "usb_staged_file_hashes_verified": 14,
   "usb_file_system": "FAT32",
-  "usb_label": "RTX3080TI",
+  "usb_label": "RTX3080_10G",
   "usb_format_performed_after_explicit_user_authorization": true,
   "discarded_recordings_backed_up": false,
   "one_drive_cloud_placeholders_supported": true,
@@ -74,7 +74,7 @@
   "existing_drive_root_parent_handling_verified": true,
   "c_partition_size_preserved": true,
   "physical_3080ti_ownership_captured": true,
-  "usb_current_mode": "manual unlock candidate",
+  "usb_current_mode": "read-only2206 RTX3080 10GB board probe for next card swap",
   "board_capture": {
     "run": "RUN00",
     "complete": true,
@@ -112,5 +112,6 @@
   "startup_policy": {
     "3060": "Manual USB only; NVMe entry/payload removed at user request.",
     "3080ti": "Current manual session verified; no automatic startup installed."
-  }
+  },
+  "verified_3080ti_manual_image_preserved_privately": true
 }
