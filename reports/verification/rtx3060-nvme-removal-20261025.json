@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-25",
+  "status": "3060-nvme-unlock-removed-future-use-usb-only",
+  "explicit_user_request": true,
+  "recorded_firmware_entry_removed": true,
+  "dedicated_esp_payload_removed": true,
+  "archived_files_hash_verified": 41,
+  "windows_boot_entry_preserved": true,
+  "windows_first": true,
+  "partition_inventory_preserved": true,
+  "dedicated_512mib_partition_retained": true,
+  "partitions_deleted": false,
+  "partitions_resized": false,
+  "temporary_mount_removed": true,
+  "usb_changed": false,
+  "gpu_or_driver_changed": false,
+  "reboot_initiated": false,
+  "root_restore_launcher_retired": true,
+  "restore_installer_updater_refuse_retired_state": true,
+  "manual_3060_usb_package_preserved": true,
+  "manual_3060_manifest_files_verified": 23,
+  "manual_3060_efi_sha256": "61fa2b71d1332d4d6180610175955d3cad015420c41f393b7abea717507d09e1",
+  "current_3080ti_usb_unchanged": true,
+  "current_3080ti_usb_efi_sha256": "c13c39eb98bae5b836c80e1a4e5d7f84c05ad910f35b5b62f2ad97311052fab4",
+  "policy_tests": {
+    "removal": 20,
+    "staging": 41,
+    "legacy_boot_mode": 10,
+    "powershell_versions": [
+      "5.1",
+      "7.6"
+    ],
+    "actual_retired_restore_refused_before_uac": true
+  },
+  "private_result_sha256": "c285c9754f524bbd0f390f3c1f428adbbbf53e928a8a62dfa8225e5346b208d4",
+  "policy": "Do not recreate 3060 NVMe startup without a new explicit user request."
+}

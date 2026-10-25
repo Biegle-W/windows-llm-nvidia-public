@@ -112,6 +112,10 @@ if ($Mode -eq 'SelfTest') {
     'PASS 20 installation policy/state/resume checks; no partition or boot mutation'
     return
 }
+if(Test-Path -LiteralPath $statePath){
+    $retirement=Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json
+    if($retirement.NvmeUnlockRemoved){throw '3060 internal startup was removed at the user request. Use manual USB; a new NVMe installation requires a new user request.'}
+}
 if ($Mode -eq 'Plan') {
     $snapshot=Get-Content -LiteralPath (Join-Path $stateRoot 'platform.private.json') -Raw | ConvertFrom-Json
     [ordered]@{Mode='Plan only';ShrinkCBytes=$newSize;CBefore=$snapshot.cSize;CAfter=$snapshot.cSize-$newSize;ExistingEspFree=$snapshot.espFree;NewPartition='512 MiB FAT32 dedicated GPT ESP on disk 0';WindowsEsp='Preserved';BootOrder='New unlock entry, original Windows Boot Manager, existing other entries';RequiresExplicitResizeSwitch=$true;RebootsAutomatically=$false} | ConvertTo-Json

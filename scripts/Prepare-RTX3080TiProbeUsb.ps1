@@ -67,7 +67,8 @@ function Assert-ManualInfo($Info,[string]$Expected) {
 }
 function Assert-ManualPrerequisites($Info,[datetimeoffset]$Now) {
     $age=($Now-[datetimeoffset]::Parse($Info.CheckedAtUtc,[Globalization.CultureInfo]::InvariantCulture)).TotalMinutes
-    if(-not $Info.Success -or $Info.SecureBootEnabled -ne $false -or $Info.BitlockerVolumeStatus -ne 'FullyDecrypted' -or $Info.BitlockerProtection -ne 'Off' -or -not $Info.WindowsFirst -or -not $Info.Verified3060EfiPreserved -or $age -gt 60 -or $age -lt -5){throw 'Fresh manual-platform prerequisite verification is required.'}
+    $legacyVerified=($Info.Verified3060EfiPreserved -eq $true -or $Info.Verified3060NvmeRemoval -eq $true)
+    if(-not $Info.Success -or $Info.SecureBootEnabled -ne $false -or $Info.BitlockerVolumeStatus -ne 'FullyDecrypted' -or $Info.BitlockerProtection -ne 'Off' -or -not $Info.WindowsFirst -or -not $legacyVerified -or $age -gt 60 -or $age -lt -5){throw 'Fresh manual-platform prerequisite verification is required.'}
 }
 function Assert-Card([string]$Text) {
     $rows=@($Text.Trim() -split '\r?\n')
@@ -102,7 +103,10 @@ if($Mode -eq 'SelfTest') {
     $prereq.CheckedAtUtc='2026-10-25T17:59:00-04:00';Assert-ManualPrerequisites $prereq $now
     foreach($time in @('2026-10-25T20:59:00Z','2026-10-25T22:06:00Z')){$bad=$prereq.Clone();$bad.CheckedAtUtc=$time;$rejected=$false;try{Assert-ManualPrerequisites $bad $now}catch{$rejected=$true};if(-not $rejected){throw 'Stale/future prerequisites accepted.'}}
     $bad=$prereq.Clone();$bad.WindowsFirst=$false;$rejected=$false;try{Assert-ManualPrerequisites $bad $now}catch{$rejected=$true};if(-not $rejected){throw 'Changed boot policy accepted.'}
-    'PASS 39 USB/card/path/manual-package/prerequisite policy checks; no USB or GPU changes.'
+    $usbOnly=$prereq.Clone();$usbOnly.Verified3060EfiPreserved=$false;$usbOnly.Verified3060NvmeRemoval=$true
+    Assert-ManualPrerequisites $usbOnly $now
+    $usbOnly.Verified3060NvmeRemoval=$false;$rejected=$false;try{Assert-ManualPrerequisites $usbOnly $now}catch{$rejected=$true};if(-not $rejected){throw 'Unverified legacy boot state accepted.'}
+    'PASS 41 USB/card/path/manual-package/prerequisite policy checks; no USB or GPU changes.'
     return
 }
 $inventory=(& nvidia-smi --query-gpu=name,pci.bus_id,pci.device_id,pci.sub_device_id,vbios_version,memory.total --format=csv,noheader,nounits | Out-String)

@@ -48,6 +48,13 @@ if($Mode -eq 'SelfTest') {
     'PASS 10 GPU-swap boot policy checks; no boot/GPU mutation'
     return
 }
+if(Test-Path -LiteralPath $statePath){
+    $retirement=Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json
+    if($retirement.NvmeUnlockRemoved){
+        if($Mode -eq 'Status'){'3060 NVMe startup is removed. Windows Boot Manager is the retained default; use manual USB for future 3060 unlocks.';return}
+        throw '3060 NVMe startup was retired at the user request. Use the preserved manual USB package; no UAC or boot change was initiated.'
+    }
+}
 $identity=[Security.Principal.WindowsIdentity]::GetCurrent()
 if(-not ([Security.Principal.WindowsPrincipal]::new($identity)).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     if(-not $Elevate){throw 'Administrator rights required; use -Elevate to display the UAC prompt.'}
@@ -60,6 +67,7 @@ $result=[ordered]@{Success=$false;Mode=$Mode;Error=$null;Message=$null;RebootIni
 $changed=$false;$mounted=$false
 try {
     $s=Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json
+    if($s.NvmeUnlockRemoved){throw 'The 3060 NVMe unlock was removed at the user request. Use its preserved manual USB package; do not recreate an internal boot entry.'}
     $entry=Read-Bcd $s.EntryId
     if($entry -notmatch 'RTX 3060 Automatic Unlock' -or $entry -notmatch [regex]::Escape('\EFI\LLMUnlock\Auto3060.efi')){throw 'Saved boot entry ownership differs.'}
     $firmware=Read-Bcd '{fwbootmgr}';$before=@(Read-Order $firmware)

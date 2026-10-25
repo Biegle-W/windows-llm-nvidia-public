@@ -5,7 +5,7 @@
   "rtx3080ti_physically_present": true,
   "usb_present_or_staged": true,
   "windows_first_boot_policy_retained": true,
-  "3060_profile_and_restore_command_preserved": true,
+  "3060_profile_and_restore_command_preserved": false,
   "setup_path": "data/uefi-probe/rtx3080ti-unlock-setup/",
   "packages": [
     {
@@ -53,7 +53,7 @@
     "vram_mib": 12288
   },
   "secure_boot_registry_enabled": false,
-  "usb_staging_policy_checks": 39,
+  "usb_staging_policy_checks": 41,
   "usb_staging_missing_drive_refusal_verified": true,
   "usb_staging_helper": "scripts/Prepare-RTX3080TiProbeUsb.ps1",
   "usb_staging_launchers": [
@@ -62,7 +62,7 @@
     "Collect RTX3080Ti Captures.cmd"
   ],
   "audit_bound_to_installed_subsystem_and_pci_address": true,
-  "usb_staging_helper_sha256": "710f42b40667e86c40526facaca8cfd6f75fa81a7b0dca2e6d0de66266bb6fa9",
+  "usb_staging_helper_sha256": "46691187465f16350b76fed9e57e6860e09c4efd7d7456ebd5aba177d99b9ceb",
   "usb_staging_physical_board_stage_passed": true,
   "usb_staged_file_hashes_verified": 24,
   "usb_file_system": "FAT32",
@@ -106,5 +106,11 @@
   "manual_u_required": true,
   "current_session_unlock_verified": true,
   "physical_3080ti_unlock_tested": true,
-  "latest_verified_manual_run": "RUN01"
+  "latest_verified_manual_run": "RUN01",
+  "3060_nvme_startup_removed": true,
+  "3060_manual_usb_package_preserved": true,
+  "startup_policy": {
+    "3060": "Manual USB only; NVMe entry/payload removed at user request.",
+    "3080ti": "Current manual session verified; no automatic startup installed."
+  }
 }

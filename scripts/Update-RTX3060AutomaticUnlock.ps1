@@ -33,6 +33,7 @@ try {
     $build=[IO.Path]::GetFullPath($BuildDirectory)
     if(-not $build.StartsWith(($stateRoot+'\'),[StringComparison]::OrdinalIgnoreCase)){throw 'Build must be in private internal-startup state.'}
     $s=Get-Content -LiteralPath $statePath -Raw | ConvertFrom-Json -AsHashtable
+    if($s.NvmeUnlockRemoved){throw '3060 NVMe startup was retired; use its preserved manual USB package.'}
     $info=Get-Content -LiteralPath (Join-Path $build 'BUILD-INFO.private.json') -Raw | ConvertFrom-Json
     if($info.preview_only -or -not $info.automatic -or -not $info.host_tests_passed -or -not $info.firmware_transaction_unchanged -or
         -not $info.hardware_tested_display_source_unchanged -or $info.host_auto_and_source_tests -ne 14 -or $info.host_actual_cold_check_tests -ne 23 -or

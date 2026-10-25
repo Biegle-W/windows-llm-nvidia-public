@@ -1,5 +1,24 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST startup cleanup: [3060 NVMe unlock removed](RTX3060-NVME-UNLOCK-REMOVED-20261025.md)
+at explicit user request; future3060 unlocks USB-only. Exact dedicated ESP/disk/
+payload identity checked,41 files archived/hash verified, firmware entry deleted,
+all owned payload files removed. Windows entry/order and complete partition
+inventory verified preserved; empty512MiB partition retained; U: removed. No USB,
+GPU, driver or model change and no reboot. Root Restore RTX3060 Unlock.cmd retired
+to archives/2026-10-25-3060-nvme-startup/*.disabled. Old restore/install/update
+helpers refuse NvmeUnlockRemoved state. Do not recreate3060 internal startup.
+Manual USB package still verified23 files under
+data/uefi-probe/windows3060-single-child-20261025-v3/manual-unlock-candidate/;
+EFI61fa2b71d1332d4d6180610175955d3cad015420c41f393b7abea717507d09e1.
+Private removal result data/uefi-probe/internal-startup/nvme-removal-result.private.json;
+archive data/uefi-probe/3060-nvme-removal-20261025-181709-4e8c5f3c98cd45998a3725aa829d0cb5/.
+Prior manual-platform evidence preserved there and invalidated as stale; future
+checker can verify removal instead of requiring the old EFI.20 removal/41 staging
+policy checks pass on PowerShell5.1/7.6;10 legacy policy checks pass; actual retired
+restore refuses before UAC. Current USB remains3080Ti manual image c13c...fab4.
+Older paragraphs below mentioning preservation/restoration are historical.
+
 LATEST manual3080Ti RUN01 SUCCESS: [verified result](RTX3080TI-WINDOWS-UNLOCK-RESULT-20261025.md).
 Current Windows boot18:02:44.5 America/New_York follows logged18:02:41 handoff.
 MANUAL_U confirmed, fixed board/PROM/51144015+1 initial state matched. One FLR,

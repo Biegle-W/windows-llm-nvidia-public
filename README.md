@@ -4,6 +4,11 @@
 
 This system now uses **Windows / NVIDIA RTX 3080 Ti 12 GB / i5-13600KF / 16 GB RAM**.
 The RTX 3060 remains supported for swapping back; its measurements are historical.
+**Current startup policy:** the3060 NVMe firmware entry and payload are removed
+at the user's request; future3060 unlocks use its preserved manual USB package.
+The empty dedicated512MiB ESP is retained without repartitioning. The root restore
+launcher is retired. Do not recreate3060 internal startup without a new request.
+[Removal and future USB workflow](reports/RTX3060-NVME-UNLOCK-REMOVED-20261025.md).
 The private operational repository is `windows-llm-nvidia`; its independently
 sanitized reference is [windows-llm-nvidia-public](https://github.com/Biegle-W/windows-llm-nvidia-public).
 Ubuntu AMD has separate private/public repositories named `ubuntu-llm-amd` and
@@ -84,9 +89,7 @@ default. CUDA now accepts exactly one RTX3060 or RTX3080Ti with12GB or more;
 the four model settings and memory guards remain unchanged. The3080Ti will boot
 at stock settings until its own board data is captured and reviewed. A separate
 read-only probe is packaged; no USB is currently connected or changed.
-When returning the original3060 to the same slot, run **Restore RTX3060 Unlock.cmd**
-and accept UAC to re-enable its verified entry. The helper refuses the3080Ti,
-other boards and changed identity/EFI state. [Swap workflow and validation](reports/WINDOWS-3060-3080TI-SWAP-20261025.md).
+The internal3060 restore launcher is retired at user request; use its preserved manual USB package instead. See the removal report above.
 
 **Historical paired3060 success, RUN0004:** The installed
 EFI accepted70520074/5, completed preflight and one safe transaction/FLR, restored

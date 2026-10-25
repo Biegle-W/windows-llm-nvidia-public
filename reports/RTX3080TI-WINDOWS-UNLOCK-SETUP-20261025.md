@@ -167,5 +167,7 @@ are now available. The separate card-specific manual candidate is built/tested
 and staged on USB; its first hardware transaction and Windows recovery remain
 unvalidated. Automatic startup is not configured for the3080Ti.
 
-For a return to the original3060, use `Restore RTX3060 Unlock.cmd` and its exact
-identity/hash checks. This setup does not affect the separate Linux AMD system.
+For a return to the original3060, use its preserved manual USB package. Its NVMe
+EFI and restore launcher were subsequently retired at the user's request;
+see [current USB-only policy](RTX3060-NVME-UNLOCK-REMOVED-20261025.md).
+This setup does not affect the separate Linux AMD system.
