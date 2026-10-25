@@ -1,0 +1,14 @@
+# Validation scope
+
+The Windows scripts, configuration, reports and retired files were copied from
+the already sanitized public `windows/` tree at commit `8fbe5b5`, with the
+platform directory removed. Source/configuration bytes are unchanged; only the
+README and combined ignore rules were adjusted, and this scope note added.
+All dated measurements, tested lengths and validation limits retain their
+original hardware and methods. This repository split is not an inference test.
+
+Publication checks cover file preservation, Python syntax, JSON parsing,
+JavaScript syntax, local document links, credential/identity scans and excluded
+model/runtime/private state. PowerShell and Windows runtime behavior were not
+executed on Linux. No private Git history was imported. Keep models, binaries,
+credentials, private data, raw logs and generated configuration outside Git.

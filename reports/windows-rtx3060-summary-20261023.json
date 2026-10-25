@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-23",
+  "hardware": {
+    "cpu": "i5-13600KF",
+    "ram_gb": 16,
+    "ram_mt_s": 6000,
+    "gpu": "RTX 3060 12 GB",
+    "driver": "610.88"
+  },
+  "runtime": "llama.cpp b11630 CUDA 13.4",
+  "model": "Qwen3.5-9B-UD-Q4_K_XL",
+  "context_allocated": 32768,
+  "retrieval_input_tokens": 8080,
+  "decode_tps": [
+    50.74,
+    50.9
+  ],
+  "gpu_placement": {
+    "passed": true,
+    "model_buffers_mib": {
+      "CUDA0": 5133.63
+    },
+    "cpu_model_buffers_mib": [],
+    "offloaded_layers": "offloaded 33/33 layers to GPU",
+    "full_gpu_weights": true
+  },
+  "functional_checks": {
+    "chat": true,
+    "streaming": true,
+    "speed": true,
+    "tool_round_trip": true,
+    "long_prompt": true
+  },
+  "live_api": {
+    "localhost": {
+      "catalog": true,
+      "unauthenticated_401": true,
+      "streaming": true,
+      "full_gpu_weights": true
+    },
+    "tailscale_ipv4": {
+      "catalog": true,
+      "unauthenticated_401": true
+    },
+    "tailscale_dns": {
+      "catalog": true,
+      "unauthenticated_401": true
+    }
+  },
+  "remote_client_access": "not tested",
+  "dsh_saved_catalog_updated": true,
+  "dsh_desktop_ui_or_sdk_tested": false,
+  "linux_build_modified": false
+}

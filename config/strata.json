@@ -1,0 +1,6 @@
+{
+  "enabled": false,
+  "disabledReason": "Retired on this RTX 3060 / 16 GB Windows build; Linux AMD is separate.",
+  "sourceArchive": "retired/20261023",
+  "runtimeArchive": "archive/retired-windows-20261023/runtimes/Strata"
+}

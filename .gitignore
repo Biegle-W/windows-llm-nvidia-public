@@ -1,0 +1,71 @@
+data/
+logs/
+*.log
+runtimes/
+models/
+archive/
+__pycache__/
+*.gguf
+*.gguf.part
+.env
+.env.*
+*.key
+*.pem
+
+# Weights and generated/private state must never enter this public repository.
+**/models/
+**/data/
+**/logs/
+**/workspace/
+**/generated/
+**/runtimes/
+**/.venv*/
+**/node_modules/
+**/__pycache__/
+*.pyc
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.db
+*.sqlite*
+*.log
+*.gguf*
+*.safetensors*
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.h5
+*.npz
+*.whl
+*.zip
+*.tar*
+*.bundle
+*.so
+*.dll
+*.exe
+
+# Private handoff originals and consolidation staging
+**/LLM-HANDOFF-ARCHIVE/
+
+# Local ComfyUI checkout/environment and generated media
+**/runtime/comfyui/
+**/graphics/generated/
+**/graphics/outputs/
+
+# Desktop app distributions are installed locally, never uploaded
+*.AppImage
+
+# Local activation/retirement backups may contain machine-specific paths.
+**/.private-backups/
+linux/maya/upstream/
+linux/maya/rocwmma-7.2.3/
+
+# Native frontend sampling preferences remain private.
+*.shared-settings.json
+
+# Official desktop packages and extracted runtimes
+**/runtime/comfy-desktop/

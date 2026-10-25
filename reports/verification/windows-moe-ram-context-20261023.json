@@ -1,0 +1,216 @@
+{
+  "date": "2026-10-23",
+  "hardware": {
+    "gpu": "RTX3060 12GB",
+    "ram_gb": 16,
+    "cpu": "i5-13600KF"
+  },
+  "runtime": "llama.cpp b11630 CUDA13.4",
+  "fast_profiles_unchanged": true,
+  "default_unchanged": true,
+  "models_reused_without_duplicate_weights": true,
+  "profiles": [
+    {
+      "id": "LFM2.5-24B-A2B-UD-IQ3_XXS-128K-RAM",
+      "context_allocated": 131072,
+      "kv_type": "q8_0/q8_0",
+      "kv_buffers_mib": [
+        {
+          "device": "CPU",
+          "mib": 1360.0
+        }
+      ],
+      "prompt_tokens_tested": 16268,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_samples_tps": [
+        64.75178143877439,
+        64.35570564004284
+      ],
+      "long_prompt_timings": {
+        "cache_n": 0,
+        "prompt_n": 16268,
+        "prompt_ms": 30671.248,
+        "prompt_per_token_ms": 1.8853730022129334,
+        "prompt_per_second": 530.3990238675649,
+        "predicted_n": 279,
+        "predicted_ms": 9884.575,
+        "predicted_per_token_ms": 35.55602517985612,
+        "predicted_per_second": 28.12462852474689
+      },
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7220.91
+        },
+        "cpu_model_buffers_mib": [
+          1520.58
+        ],
+        "offloaded_layers": "offloaded 41/41 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "memory_loaded": {
+        "physical_total_gib": 15.76,
+        "physical_available_gib": 2.1,
+        "commit_limit_gib": 53.76,
+        "commit_available_gib": 16.09
+      },
+      "memory_after_checks": {
+        "physical_total_gib": 15.76,
+        "physical_available_gib": 2.45,
+        "commit_limit_gib": 53.76,
+        "commit_available_gib": 15.83
+      },
+      "gpu_loaded": [
+        "0, NVIDIA GeForce RTX 3060, 10190 MiB, 1924 MiB, 34, 20.57 W"
+      ],
+      "admission": {
+        "minimumAvailableRAMGiB": 4.5,
+        "minimumCommitGiB": 20,
+        "minimumFreeVRAMMiB": 8192,
+        "minimumLoadedFreeVRAMMiB": 1024
+      },
+      "sdk_streaming": true
+    },
+    {
+      "id": "Ornith-1.5-35B-A3B-IQ2_S-128K-RAM",
+      "context_allocated": 131072,
+      "kv_type": "q8_0/q8_0",
+      "kv_buffers_mib": [
+        {
+          "device": "CPU",
+          "mib": 1360.0
+        }
+      ],
+      "prompt_tokens_tested": 35890,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_samples_tps": [
+        26.55112953104433,
+        26.70634065304363
+      ],
+      "long_prompt_timings": {
+        "cache_n": 0,
+        "prompt_n": 35890,
+        "prompt_ms": 108218.688,
+        "prompt_per_token_ms": 3.015288046809696,
+        "prompt_per_second": 331.64327403414836,
+        "predicted_n": 16,
+        "predicted_ms": 1307.528,
+        "predicted_per_token_ms": 87.16853333333333,
+        "predicted_per_second": 11.472029662079894
+      },
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7985.17
+        },
+        "cpu_model_buffers_mib": [
+          2499.81
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "memory_loaded": {
+        "physical_total_gib": 15.76,
+        "physical_available_gib": 1.63,
+        "commit_limit_gib": 53.76,
+        "commit_available_gib": 13.79
+      },
+      "memory_after_checks": {
+        "physical_total_gib": 15.76,
+        "physical_available_gib": 2.41,
+        "commit_limit_gib": 53.76,
+        "commit_available_gib": 13.75
+      },
+      "gpu_loaded": [
+        "0, NVIDIA GeForce RTX 3060, 10900 MiB, 1214 MiB, 43, 20.90 W"
+      ],
+      "admission": {
+        "minimumAvailableRAMGiB": 5,
+        "minimumCommitGiB": 20,
+        "minimumFreeVRAMMiB": 9216,
+        "minimumLoadedFreeVRAMMiB": 1024
+      },
+      "sdk_streaming": true
+    },
+    {
+      "id": "Qwen3.8-35B-A3B-IQ2_M-64K-RAM",
+      "context_allocated": 65536,
+      "kv_type": "q8_0/q8_0",
+      "kv_buffers_mib": [
+        {
+          "device": "CPU",
+          "mib": 680.0
+        }
+      ],
+      "prompt_tokens_tested": 16270,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_samples_tps": [
+        26.602045341196366,
+        26.532308726601688
+      ],
+      "long_prompt_timings": {
+        "cache_n": 0,
+        "prompt_n": 16270,
+        "prompt_ms": 53326.387,
+        "prompt_per_token_ms": 3.2775898586355257,
+        "prompt_per_second": 305.1022376595662,
+        "predicted_n": 11,
+        "predicted_ms": 636.261,
+        "predicted_per_token_ms": 63.626099999999994,
+        "predicted_per_second": 15.716820612924572
+      },
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 8145.88
+        },
+        "cpu_model_buffers_mib": [
+          2953.75
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "memory_loaded": {
+        "physical_total_gib": 15.76,
+        "physical_available_gib": 1.88,
+        "commit_limit_gib": 53.76,
+        "commit_available_gib": 14.4
+      },
+      "memory_after_checks": {
+        "physical_total_gib": 15.76,
+        "physical_available_gib": 1.94,
+        "commit_limit_gib": 53.76,
+        "commit_available_gib": 14.09
+      },
+      "gpu_loaded": [
+        "0, NVIDIA GeForce RTX 3060, 10813 MiB, 1301 MiB, 57, 38.22 W"
+      ],
+      "admission": {
+        "minimumAvailableRAMGiB": 5,
+        "minimumCommitGiB": 20,
+        "minimumFreeVRAMMiB": 9216,
+        "minimumLoadedFreeVRAMMiB": 1024
+      },
+      "sdk_streaming": true
+    }
+  ],
+  "installed_dsh_sdk_streaming_all_new_profiles": true
+}

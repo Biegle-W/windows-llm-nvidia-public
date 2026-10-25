@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-23",
+  "one_profile_per_model": true,
+  "models": [
+    {
+      "previous_profile": "Ornith-1.5-35B-A3B-IQ2_S-128K-RAM",
+      "id": "Ornith-1.5-35B-A3B-IQ2_S",
+      "context": 131072
+    },
+    {
+      "previous_profile": "LFM2.5-24B-A2B-UD-IQ3_XXS-128K-RAM",
+      "id": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+      "context": 131072
+    },
+    {
+      "previous_profile": "Qwen3.8-27B-UD-IQ3_XXS",
+      "id": "Qwen3.8-27B-UD-IQ3_XXS",
+      "context": 8192
+    },
+    {
+      "previous_profile": "Qwen3.8-35B-A3B-IQ2_M-64K-RAM",
+      "id": "Qwen3.8-35B-A3B-IQ2_M",
+      "context": 65536
+    }
+  ],
+  "default_model": "Ornith-1.5-35B-A3B-IQ2_S",
+  "options_and_guards_reused_from_verified_profiles": true,
+  "weights_unchanged": true,
+  "inference_rerun": false,
+  "live_catalog_verified": true,
+  "saved_dsh_catalog_verified": true,
+  "router_idle": true
+}

@@ -1,0 +1,41 @@
+{
+  "model": "Qwen3.8-27B-UD-IQ3_XXS",
+  "context_allocated": 65536,
+  "client": "DSH Desktop installed pi-ai SDK",
+  "synthetic_system_prompt_with_tools": true,
+  "input_tokens": 16310,
+  "first_usage": {
+    "input": 16310,
+    "output": 30,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "reasoning": 0,
+    "totalTokens": 16340,
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0
+    }
+  },
+  "first_stop": "toolUse",
+  "follow_input_tokens": 16362,
+  "follow_usage": {
+    "input": 23,
+    "output": 6,
+    "cacheRead": 16339,
+    "cacheWrite": 0,
+    "reasoning": 0,
+    "totalTokens": 16368,
+    "cost": {
+      "input": 0,
+      "output": 0,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "total": 0
+    }
+  },
+  "tool_round_trip": true,
+  "passed": true
+}

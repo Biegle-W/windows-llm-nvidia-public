@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-23",
+  "model": "Qwen3.8-27B-UD-IQ3_XXS",
+  "context_allocated": 65536,
+  "previous_context": 8192,
+  "one_profile_per_model": true,
+  "active_profile_count": 4,
+  "kv_buffers_mib": [
+    {
+      "device": "CPU",
+      "mib": 2176.0
+    }
+  ],
+  "kv_type": "q8_0/q8_0",
+  "checks": {
+    "chat": true,
+    "streaming": true,
+    "speed": true,
+    "tool_round_trip": true,
+    "long_prompt": true
+  },
+  "retrieval_input_tokens": 24460,
+  "short_decode_tps": [
+    6.7515824353595795,
+    6.71458980438708
+  ],
+  "retrieval_timings": {
+    "cache_n": 0,
+    "prompt_n": 24460,
+    "prompt_ms": 223027.241,
+    "prompt_per_token_ms": 9.118039288634506,
+    "prompt_per_second": 109.67270137193688,
+    "predicted_n": 11,
+    "predicted_ms": 2903.042,
+    "predicted_per_token_ms": 290.3042,
+    "predicted_per_second": 3.4446625298566125
+  },
+  "memory_loaded": {
+    "physical_total_gib": 15.76,
+    "physical_available_gib": 2.03,
+    "commit_limit_gib": 53.76,
+    "commit_available_gib": 19.81
+  },
+  "memory_after_checks": {
+    "physical_total_gib": 15.76,
+    "physical_available_gib": 2.66,
+    "commit_limit_gib": 53.76,
+    "commit_available_gib": 18.86
+  },
+  "gpu_loaded": [
+    "0, NVIDIA GeForce RTX 3060, 10531 MiB, 1583 MiB, 34, 18.16 W"
+  ],
+  "placement": {
+    "passed": true,
+    "model_buffers_mib": {
+      "CUDA0": 7960.59
+    },
+    "cpu_model_buffers_mib": [
+      2060.6
+    ],
+    "offloaded_layers": "offloaded 51/66 layers to GPU",
+    "full_gpu_weights": false
+  },
+  "admission": {
+    "minimumAvailableRAMGiB": 6,
+    "minimumCommitGiB": 20,
+    "minimumFreeVRAMMiB": 9216,
+    "minimumLoadedFreeVRAMMiB": 1024
+  },
+  "other_profiles_and_default_unchanged": true,
+  "full_window_tested": false,
+  "harness_sized_sdk_check": {
+    "model": "Qwen3.8-27B-UD-IQ3_XXS",
+    "context_allocated": 65536,
+    "client": "DSH Desktop installed pi-ai SDK",
+    "synthetic_system_prompt_with_tools": true,
+    "input_tokens": 16310,
+    "first_usage": {
+      "input": 16310,
+      "output": 30,
+      "cacheRead": 0,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 16340,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      }
+    },
+    "first_stop": "toolUse",
+    "follow_input_tokens": 16362,
+    "follow_usage": {
+      "input": 23,
+      "output": 6,
+      "cacheRead": 16339,
+      "cacheWrite": 0,
+      "reasoning": 0,
+      "totalTokens": 16368,
+      "cost": {
+        "input": 0,
+        "output": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0,
+        "total": 0
+      }
+    },
+    "tool_round_trip": true,
+    "passed": true
+  }
+}

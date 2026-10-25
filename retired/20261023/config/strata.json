@@ -1,0 +1,33 @@
+{
+  "label": "Qwen3.8 Flash-Next (IQ3_XXS, MTP-3) | 128K | CPU expert offload",
+  "source": "https://github.com/Niko1221/Strata",
+  "sourceCommit": "296b59d2f73c8f04a805df29c2fa97655adace78",
+  "directory": "runtimes/Strata",
+  "dataDirectory": "models/Strata",
+  "engineConfig": "strata-iq3_xxs.json",
+  "family": "qwen",
+  "quantization": "IQ3_XXS",
+  "context": 131072,
+  "kv": "int8",
+  "gpus": [
+    0
+  ],
+  "vramReserveMiB": 1536,
+  "vision": false,
+  "experimentalSpeedProjection": false,
+  "host": "127.0.0.1",
+  "port": 8081,
+  "terminalWindow": "Local-LLM",
+  "engineVersion": "0.1.44.1",
+  "engineOptions": {
+    "--vram-reserve-later-mib": "768",
+    "--pool-workers": "13"
+  },
+  "lowRamMode": "resident",
+  "kvStreaming": "on",
+  "engineEnvironment": {
+    "STRATA_STAGE_TRIM": "1"
+  },
+  "enabled": false,
+  "disabledReason": "Not configured on this single RTX 3060 / 16 GB Windows build; local Strata assets are absent. Linux AMD is a separate machine."
+}

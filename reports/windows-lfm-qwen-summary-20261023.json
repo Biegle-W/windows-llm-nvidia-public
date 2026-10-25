@@ -1,0 +1,192 @@
+{
+  "date": "2026-10-23",
+  "hardware": {
+    "gpu": "RTX 3060 12 GB",
+    "cpu": "i5-13600KF",
+    "ram_gb": 16,
+    "ram_mt_s": 6000,
+    "driver": "610.88"
+  },
+  "runtime": {
+    "build": "llama.cpp b11630",
+    "commit": "6868a52cb",
+    "backend": "CUDA 13.4"
+  },
+  "downloads": [
+    {
+      "repository": "unsloth/LFM2.5-24B-A2B-GGUF",
+      "revision": "aacc77834f6aa568c93b4dbd6d295059736be98c",
+      "file": "LFM2.5-24B-A2B-UD-IQ3_XXS.gguf",
+      "bytes": 8959328480,
+      "sha256": "e06694b1f0bb322ecfde6bf9af260d2f2047ed1b30bbfdd04d97bf55472bfeec",
+      "upstream_hash_matched": true
+    },
+    {
+      "repository": "unsloth/Qwen3.8-27B-GGUF",
+      "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+      "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf",
+      "bytes": 10934860704,
+      "sha256": "c0b7c3038681ed2e3040456c1dd45f9858b6c2290bed172c70388a94874f3eee",
+      "upstream_hash_matched": true
+    }
+  ],
+  "models": [
+    {
+      "id": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+      "passed": true,
+      "context_allocated": 8192,
+      "load_seconds": 8.56,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "generated_tokens_per_second": [
+        78.24,
+        85.04
+      ],
+      "generation_samples": [
+        {
+          "tokens": 128,
+          "visible_characters": 0,
+          "reasoning_characters": 561
+        },
+        {
+          "tokens": 128,
+          "visible_characters": 0,
+          "reasoning_characters": 561
+        }
+      ],
+      "short_stream": {
+        "first_generated_seconds": 0.11,
+        "first_visible_seconds": 1.828,
+        "total_seconds": 1.953,
+        "generated_tokens": 153,
+        "reasoning_characters": 553
+      },
+      "retrieval": {
+        "input_tokens": 6023,
+        "generated_tokens": 260,
+        "native_prefill_tokens_per_second": 665.55
+      },
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7426.41
+        },
+        "cpu_model_buffers_mib": [
+          1315.08
+        ],
+        "offloaded_layers": "offloaded 41/41 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "ram_available_after_load_gib": 2.44,
+      "ram_available_after_checks_gib": 2.77,
+      "observed_min_gpu_free_mib": 1771.0,
+      "observed_gpu_temperature_peak_c": 65.0,
+      "generation_telemetry_samples": 2
+    },
+    {
+      "id": "Qwen3.8-27B-UD-IQ3_XXS",
+      "passed": true,
+      "context_allocated": 8192,
+      "load_seconds": 10.53,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "generated_tokens_per_second": [
+        4.97,
+        5.59
+      ],
+      "generation_samples": [
+        {
+          "tokens": 128,
+          "visible_characters": 689,
+          "reasoning_characters": 0
+        },
+        {
+          "tokens": 128,
+          "visible_characters": 689,
+          "reasoning_characters": 0
+        }
+      ],
+      "short_stream": {
+        "first_generated_seconds": 0.922,
+        "first_visible_seconds": 0.922,
+        "total_seconds": 1.782,
+        "generated_tokens": 5,
+        "reasoning_characters": 0
+      },
+      "retrieval": {
+        "input_tokens": 6025,
+        "generated_tokens": 11,
+        "native_prefill_tokens_per_second": 164.48
+      },
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7140.2
+        },
+        "cpu_model_buffers_mib": [
+          2872.55
+        ],
+        "offloaded_layers": "offloaded 44/66 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "ram_available_after_load_gib": 1.53,
+      "ram_available_after_checks_gib": 2.2,
+      "observed_min_gpu_free_mib": 1659.0,
+      "observed_gpu_temperature_peak_c": 63.0,
+      "generation_telemetry_samples": 17
+    }
+  ],
+  "default_model": "Ornith-1.5-35B-A3B-IQ2_S",
+  "default_changed": false,
+  "production_restart_succeeded": false,
+  "production_restart_reason": "Existing production preflight refused current desktop memory pressure; production limits were not lowered.",
+  "paused_apps_restored": true,
+  "linux_modified": false,
+  "limits": [
+    "Two 128-token-limit generation samples; not a sustained or quality benchmark.",
+    "LFM samples were entirely reasoning, while Qwen thinking was disabled; throughput is not completed-answer speed.",
+    "8192 context allocated, roughly 6000 input tokens tested; no full-window validation.",
+    "GPU telemetry every three seconds during short generation plus snapshots; no continuous whole-run or CPU thermal peak.",
+    "No image projector, MTP, DSH Desktop GUI/SDK or remote Tailscale peer testing."
+  ],
+  "earlier_admission_attempts": [
+    {
+      "run_id": "lfm-qwen-20261023-194058",
+      "model": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+      "passed": false,
+      "error": "The registered profile requires 9728 MiB free on the RTX 3060; close GPU-heavy apps first.",
+      "inference_checks_completed": []
+    },
+    {
+      "run_id": "lfm-qwen-20261023-194058",
+      "model": "Qwen3.8-27B-UD-IQ3_XXS",
+      "passed": false,
+      "error": "The registered profile requires 9728 MiB free on the RTX 3060; close GPU-heavy apps first.",
+      "inference_checks_completed": []
+    },
+    {
+      "run_id": "lfm-qwen-20261023-194701",
+      "model": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+      "passed": false,
+      "error": "Actual loaded VRAM margin is below the test profile requirement",
+      "inference_checks_completed": []
+    },
+    {
+      "run_id": "lfm-qwen-20261023-194701",
+      "model": "Qwen3.8-27B-UD-IQ3_XXS",
+      "passed": false,
+      "error": "The registered profile requires 4 GiB available system RAM and 16 GiB commit headroom; close unused applications first.",
+      "inference_checks_completed": []
+    }
+  ]
+}

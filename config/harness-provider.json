@@ -1,0 +1,61 @@
+{
+  "provider": {
+    "displayName": "Local llama.cpp (RTX 3060 12 GB)",
+    "api": "openai-completions",
+    "baseURL": "http://127.0.0.1:10000/v1",
+    "apiKeyEnv": "LLAMA_CPP_API_KEY",
+    "timeoutMs": 600000,
+    "streamIdleTimeoutMs": 600000,
+    "compat": {
+      "supportsDeveloperRole": false,
+      "supportsStore": false,
+      "supportsReasoningEffort": false,
+      "supportsStrictMode": false,
+      "maxTokensField": "max_tokens",
+      "thinkingFormat": "chat-template"
+    },
+    "models": [
+      {
+        "id": "Ornith-1.5-35B-A3B-IQ2_S",
+        "name": "Ornith 1.5 35B-A3B (IQ2_S) | 128K | Q8 KV in RAM",
+        "contextWindow": 131072,
+        "maxTokens": 8192,
+        "input": [
+          "text"
+        ],
+        "reasoningEfforts": false
+      },
+      {
+        "id": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+        "name": "LFM2.5 24B-A2B (UD-IQ3_XXS) | 128K | Q8 KV in RAM",
+        "contextWindow": 131072,
+        "maxTokens": 4096,
+        "input": [
+          "text"
+        ],
+        "reasoningEfforts": false
+      },
+      {
+        "id": "Qwen3.8-27B-UD-IQ3_XXS",
+        "name": "Qwen3.8 27B (UD-IQ3_XXS) | 64K | Q8 KV in RAM",
+        "contextWindow": 65536,
+        "maxTokens": 4096,
+        "input": [
+          "text"
+        ],
+        "reasoningEfforts": false
+      },
+      {
+        "id": "Qwen3.8-35B-A3B-IQ2_M",
+        "name": "Empero Qwen3.8 35B-A3B (IQ2_M) | 64K | Q8 KV in RAM",
+        "contextWindow": 65536,
+        "maxTokens": 4096,
+        "input": [
+          "text"
+        ],
+        "reasoningEfforts": false
+      }
+    ]
+  },
+  "defaultModel": "Ornith-1.5-35B-A3B-IQ2_S"
+}

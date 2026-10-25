@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-23",
+  "unit_protocol_tests": 7,
+  "benchmark_rerun": false,
+  "endpoint": "http://127.0.0.1:10000/v1",
+  "checks": {
+    "authentication": true,
+    "four_model_catalog": true,
+    "unknown_model_preserves_worker": true,
+    "installed_dsh_streaming_all_four": true,
+    "tool_round_trip": true,
+    "json_output": true,
+    "default_reused": true,
+    "explicit_unload": true
+  },
+  "models": [
+    "Ornith-1.5-35B-A3B-IQ2_S",
+    "LFM2.5-24B-A2B-UD-IQ3_XXS",
+    "Qwen3.8-27B-UD-IQ3_XXS",
+    "Qwen3.8-35B-A3B-IQ2_M"
+  ],
+  "sdk": [
+    {
+      "model": "Ornith-1.5-35B-A3B-IQ2_S",
+      "passed": true,
+      "client": "DSH Desktop bundled pi-ai",
+      "stopReason": "stop"
+    },
+    {
+      "model": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+      "passed": true,
+      "client": "DSH Desktop bundled pi-ai",
+      "stopReason": "stop"
+    },
+    {
+      "model": "Qwen3.8-27B-UD-IQ3_XXS",
+      "passed": true,
+      "client": "DSH Desktop bundled pi-ai",
+      "stopReason": "stop"
+    },
+    {
+      "model": "Qwen3.8-35B-A3B-IQ2_M",
+      "passed": true,
+      "client": "DSH Desktop bundled pi-ai",
+      "stopReason": "stop"
+    }
+  ],
+  "passed": true
+}

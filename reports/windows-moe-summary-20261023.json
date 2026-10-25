@@ -1,0 +1,401 @@
+{
+  "date": "2026-10-23",
+  "hardware": {
+    "cpu": "i5-13600KF",
+    "ram_gb": 16,
+    "gpu": "RTX 3060 12 GB",
+    "ram_mt_s": 6000,
+    "driver": "610.88"
+  },
+  "runtime": "llama.cpp b11630 CUDA 13.4",
+  "selected_model": "Ornith-1.5-35B-A3B-IQ2_S",
+  "downloads": [
+    {
+      "repository": "empero-ai/Qwen3.8-35B-A3B-Distill-GGUF",
+      "revision": "b1f9d1dcc3de8aa867669b0ab919384aeeb9b8d5",
+      "file": "Qwen3.8-35B-A3B-IQ2_M.gguf",
+      "bytes": 12558245760,
+      "sha256": "9c095175f7af0c4acc18e552f0dd7ac8180d81f9ac4bf38d62a03c76a0d6e084",
+      "upstream_hash_matched": true
+    },
+    {
+      "repository": "bartowski/Ornith-1.5-35B-A3B-GGUF",
+      "revision": "64b0493d34a5ca4c1b4ad67bb99b41d74b4f07d6",
+      "file": "Ornith-1.5-35B-A3B-IQ2_S.gguf",
+      "bytes": 11486963360,
+      "sha256": "49b923ebe5f4d4a4384ccb86dd2b93effacc96ec1a3054a0192cc61dc045ebab",
+      "upstream_hash_matched": true
+    }
+  ],
+  "experiments": [
+    {
+      "mode": "automatic fit, 1536 MiB target",
+      "model": "Empero-Qwen3.8-35B-A3B-IQ2_M",
+      "passed": true,
+      "options": {
+        "fit": "on",
+        "gpu-layers": "auto",
+        "fit-target": 1536,
+        "no-host": false
+      },
+      "context_allocated": 32768,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_tps": [
+        59.99,
+        59.75
+      ],
+      "decode_tokens": [
+        128,
+        128
+      ],
+      "retrieval_input_tokens": 8080,
+      "retrieval_native_prefill_tps": 609.27,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 9050.53
+        },
+        "cpu_model_buffers_mib": [
+          2058.1
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false,
+        "parser_correction": "CUDA_Host weight buffers included from original log; no inference was rerun."
+      },
+      "available_ram_after_load_gib": 1.6,
+      "available_ram_after_checks_gib": 1.53,
+      "observed_min_gpu_free_mib": 381.0,
+      "observed_gpu_temperature_peak_c": 43.0,
+      "short_generation_telemetry_samples": 2,
+      "thermal_coverage": "3-second generation samples plus before/after snapshots; no continuous whole-run or CPU temperature maximum"
+    },
+    {
+      "mode": "automatic fit, 1536 MiB target",
+      "model": "Ornith-1.5-35B-A3B-IQ2_S",
+      "passed": true,
+      "options": {
+        "fit": "on",
+        "gpu-layers": "auto",
+        "fit-target": 1536,
+        "no-host": false
+      },
+      "context_allocated": 32768,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_tps": [
+        62.18,
+        63.63
+      ],
+      "decode_tokens": [
+        128,
+        128
+      ],
+      "retrieval_input_tokens": 8080,
+      "retrieval_native_prefill_tps": 659.73,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 9095.17
+        },
+        "cpu_model_buffers_mib": [
+          1394.31
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false,
+        "parser_correction": "CUDA_Host weight buffers included from original log; no inference was rerun."
+      },
+      "available_ram_after_load_gib": 2.47,
+      "available_ram_after_checks_gib": 2.15,
+      "observed_min_gpu_free_mib": 363.0,
+      "observed_gpu_temperature_peak_c": 49.0,
+      "short_generation_telemetry_samples": 2,
+      "thermal_coverage": "3-second generation samples plus before/after snapshots; no continuous whole-run or CPU temperature maximum"
+    },
+    {
+      "mode": "automatic fit, no-host, 1536 MiB target",
+      "model": "Empero-Qwen3.8-35B-A3B-IQ2_M",
+      "passed": true,
+      "options": {
+        "fit": "on",
+        "gpu-layers": "auto",
+        "fit-target": 1536,
+        "no-host": true
+      },
+      "context_allocated": 32768,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_tps": [
+        60.24,
+        60.81
+      ],
+      "decode_tokens": [
+        128,
+        128
+      ],
+      "retrieval_input_tokens": 8080,
+      "retrieval_native_prefill_tps": 472.72,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 9050.53
+        },
+        "cpu_model_buffers_mib": [
+          2049.1
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "available_ram_after_load_gib": 1.94,
+      "available_ram_after_checks_gib": 1.59,
+      "observed_min_gpu_free_mib": 303.0,
+      "observed_gpu_temperature_peak_c": 51.0,
+      "short_generation_telemetry_samples": 2,
+      "thermal_coverage": "3-second generation samples plus before/after snapshots; no continuous whole-run or CPU temperature maximum"
+    },
+    {
+      "mode": "automatic fit, no-host, 1536 MiB target",
+      "model": "Ornith-1.5-35B-A3B-IQ2_S",
+      "passed": true,
+      "options": {
+        "fit": "on",
+        "gpu-layers": "auto",
+        "fit-target": 1536,
+        "no-host": true
+      },
+      "context_allocated": 32768,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_tps": [
+        58.54,
+        60.96
+      ],
+      "decode_tokens": [
+        128,
+        128
+      ],
+      "retrieval_input_tokens": 8080,
+      "retrieval_native_prefill_tps": 566.82,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 9095.17
+        },
+        "cpu_model_buffers_mib": [
+          1389.81
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "available_ram_after_load_gib": 2.6,
+      "available_ram_after_checks_gib": 2.5,
+      "observed_min_gpu_free_mib": 363.0,
+      "observed_gpu_temperature_peak_c": 58.0,
+      "short_generation_telemetry_samples": 2,
+      "thermal_coverage": "3-second generation samples plus before/after snapshots; no continuous whole-run or CPU temperature maximum"
+    },
+    {
+      "mode": "explicit CPU experts, fit off",
+      "model": "Empero-Qwen3.8-35B-A3B-IQ2_M",
+      "passed": true,
+      "options": {
+        "fit": "off",
+        "gpu-layers": "all",
+        "n-cpu-moe": 8
+      },
+      "context_allocated": 32768,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_tps": [
+        62.27,
+        64.17
+      ],
+      "decode_tokens": [
+        128,
+        128
+      ],
+      "retrieval_input_tokens": 8080,
+      "retrieval_native_prefill_tps": 619.72,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 8848.23
+        },
+        "cpu_model_buffers_mib": [
+          2260.4
+        ],
+        "offloaded_layers": "offloaded 42/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "available_ram_after_load_gib": 2.01,
+      "available_ram_after_checks_gib": 1.86,
+      "observed_min_gpu_free_mib": 570.0,
+      "observed_gpu_temperature_peak_c": 59.0,
+      "short_generation_telemetry_samples": 2,
+      "thermal_coverage": "3-second generation samples plus before/after snapshots; no continuous whole-run or CPU temperature maximum"
+    },
+    {
+      "mode": "explicit CPU experts, fit off",
+      "model": "Ornith-1.5-35B-A3B-IQ2_S",
+      "passed": true,
+      "options": {
+        "fit": "off",
+        "gpu-layers": "all",
+        "n-cpu-moe": 6
+      },
+      "context_allocated": 32768,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_tps": [
+        64.98,
+        66.53
+      ],
+      "decode_tokens": [
+        128,
+        128
+      ],
+      "retrieval_input_tokens": 8080,
+      "retrieval_native_prefill_tps": 660.95,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 8829.08
+        },
+        "cpu_model_buffers_mib": [
+          1660.4
+        ],
+        "offloaded_layers": "offloaded 42/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "available_ram_after_load_gib": 2.75,
+      "available_ram_after_checks_gib": 2.32,
+      "observed_min_gpu_free_mib": 531.0,
+      "observed_gpu_temperature_peak_c": 62.0,
+      "short_generation_telemetry_samples": 2,
+      "thermal_coverage": "3-second generation samples plus before/after snapshots; no continuous whole-run or CPU temperature maximum"
+    },
+    {
+      "mode": "selected: automatic fit, no-host, 2816 MiB target",
+      "model": "Ornith-1.5-35B-A3B-IQ2_S",
+      "passed": true,
+      "options": {
+        "fit": "on",
+        "gpu-layers": "auto",
+        "fit-target": 2816,
+        "no-host": true
+      },
+      "context_allocated": 32768,
+      "checks": {
+        "chat": true,
+        "streaming": true,
+        "speed": true,
+        "tool_round_trip": true,
+        "long_prompt": true
+      },
+      "decode_tps": [
+        48.24,
+        44.29
+      ],
+      "decode_tokens": [
+        128,
+        128
+      ],
+      "retrieval_input_tokens": 8080,
+      "retrieval_native_prefill_tps": 405.59,
+      "placement": {
+        "passed": true,
+        "model_buffers_mib": {
+          "CUDA0": 7840.74
+        },
+        "cpu_model_buffers_mib": [
+          2643.67
+        ],
+        "offloaded_layers": "offloaded 41/42 layers to GPU",
+        "full_gpu_weights": false
+      },
+      "available_ram_after_load_gib": 1.6,
+      "available_ram_after_checks_gib": 1.33,
+      "observed_min_gpu_free_mib": 1336.0,
+      "observed_gpu_temperature_peak_c": 61.0,
+      "short_generation_telemetry_samples": 2,
+      "thermal_coverage": "3-second generation samples plus before/after snapshots; no continuous whole-run or CPU temperature maximum"
+    }
+  ],
+  "normal_api": {
+    "checked_at": "2026-10-23T00:24:59.439496-04:00",
+    "model": "Ornith-1.5-35B-A3B-IQ2_S",
+    "checks": {
+      "localhost": {
+        "catalog": true,
+        "unauthenticated_401": true,
+        "streaming": true,
+        "gpu_plus_ram_weights": true
+      },
+      "tailscale_ipv4": {
+        "catalog": true,
+        "unauthenticated_401": true
+      },
+      "tailscale_dns": {
+        "catalog": true,
+        "unauthenticated_401": true
+      }
+    },
+    "placement": {
+      "gpu_model_buffer_mib": 7840.74,
+      "host_model_buffer_mib": 2643.67,
+      "full_gpu_weights": false
+    },
+    "memory_after_stream": {
+      "physical_total_gib": 15.76,
+      "physical_available_gib": 1.19,
+      "commit_limit_gib": 53.76,
+      "commit_available_gib": 18.46
+    },
+    "whole_card_after_stream": {
+      "used_mib": 10543.0,
+      "free_mib": 1571.0,
+      "temperature_c": 52.0,
+      "power_w": 23.98
+    },
+    "remote_client_access": "not tested; host self-checks only",
+    "passed": true
+  },
+  "linux_modified": false,
+  "limitations": [
+    "Low-bit quantizations; these checks do not establish general answer-quality superiority.",
+    "Two short synthetic decode samples per experiment, no controlled cross-model quality benchmark.",
+    "32K allocated; 8080 input tokens tested, not the full window.",
+    "Remote Tailscale peer and DSH Desktop GUI/SDK not tested.",
+    "Windows RAM is tight; one model at a time, fresh admission requires 4 GiB available RAM and 16 GiB commit headroom."
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-23",
+  "models": [
+    {
+      "file": "Ornith-1.5-35B-A3B-IQ2_S.gguf",
+      "path": "models/Ornith-1.5-35B-A3B-IQ2_S.gguf",
+      "bytes": 11486963360,
+      "previously_verified_sha256": "49b923ebe5f4d4a4384ccb86dd2b93effacc96ec1a3054a0192cc61dc045ebab",
+      "relocated_sha256": "49b923ebe5f4d4a4384ccb86dd2b93effacc96ec1a3054a0192cc61dc045ebab",
+      "hash_matched": true
+    },
+    {
+      "file": "Qwen3.8-35B-A3B-IQ2_M.gguf",
+      "path": "models/Qwen3.8-35B-A3B-IQ2_M.gguf",
+      "bytes": 12558245760,
+      "previously_verified_sha256": "9c095175f7af0c4acc18e552f0dd7ac8180d81f9ac4bf38d62a03c76a0d6e084",
+      "relocated_sha256": "9c095175f7af0c4acc18e552f0dd7ac8180d81f9ac4bf38d62a03c76a0d6e084",
+      "hash_matched": true
+    },
+    {
+      "file": "LFM2.5-24B-A2B-UD-IQ3_XXS.gguf",
+      "path": "models/LFM2.5-24B-A2B-UD-IQ3_XXS.gguf",
+      "bytes": 8959328480,
+      "previously_verified_sha256": "e06694b1f0bb322ecfde6bf9af260d2f2047ed1b30bbfdd04d97bf55472bfeec",
+      "relocated_sha256": "e06694b1f0bb322ecfde6bf9af260d2f2047ed1b30bbfdd04d97bf55472bfeec",
+      "hash_matched": true
+    },
+    {
+      "file": "Qwen3.8-27B-UD-IQ3_XXS.gguf",
+      "path": "models/Qwen3.8-27B-UD-IQ3_XXS.gguf",
+      "bytes": 10934860704,
+      "previously_verified_sha256": "c0b7c3038681ed2e3040456c1dd45f9858b6c2290bed172c70388a94874f3eee",
+      "relocated_sha256": "c0b7c3038681ed2e3040456c1dd45f9858b6c2290bed172c70388a94874f3eee",
+      "hash_matched": true
+    }
+  ],
+  "source": "Windows Downloads; same-volume rename into project models/",
+  "verification": "All four relocated files rehashed; SHA256 matches prior verified download receipts; no source duplicates remain in Downloads.",
+  "inference_rerun": false
+}

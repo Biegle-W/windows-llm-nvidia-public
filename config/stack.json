@@ -1,0 +1,18 @@
+{
+  "runtime": "runtimes/llama.cpp-b11630-cuda-13.4/llama-server.exe",
+  "defaultModel": "Ornith-1.5-35B-A3B-IQ2_S",
+  "preferredFastModel": "Ornith-1.5-35B-A3B-IQ2_S",
+  "backendVersion": "b11630",
+  "cudaRuntime": "13.4",
+  "terminalWindow": "Local-LLM",
+  "backend": "cuda",
+  "devices": [
+    "CUDA0"
+  ],
+  "targetGpu": "NVIDIA GeForce RTX 3060",
+  "router": {
+    "port": 10000,
+    "workerPort": 10001,
+    "loadTimeoutSeconds": 240
+  }
+}

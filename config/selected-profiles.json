@@ -1,0 +1,106 @@
+[
+  {
+    "id": "Ornith-1.5-35B-A3B-IQ2_S",
+    "label": "Ornith 1.5 35B-A3B (IQ2_S) | 128K | Q8 KV in RAM",
+    "path": "models/Ornith-1.5-35B-A3B-IQ2_S.gguf",
+    "context": 131072,
+    "options": {
+      "fit": "on",
+      "gpu-layers": "auto",
+      "fit-target": 2816,
+      "no-host": "true",
+      "no-kv-offload": "true"
+    },
+    "requireFullGpu": false,
+    "minimumFreeVRAMMiB": 9216,
+    "minimumAvailableRAMGiB": 5,
+    "minimumCommitGiB": 20,
+    "minimumLoadedFreeVRAMMiB": 1024,
+    "chatTemplateKwargs": {
+      "enable_thinking": false
+    },
+    "continueAfterCheckFailure": false,
+    "checkMaxTokens": 2048,
+    "streamMaxTokens": 2048
+  },
+  {
+    "context": 131072,
+    "minimumLoadedFreeVRAMMiB": 1024,
+    "continueAfterCheckFailure": false,
+    "checkMaxTokens": 2048,
+    "streamMaxTokens": 2048,
+    "id": "LFM2.5-24B-A2B-UD-IQ3_XXS",
+    "label": "LFM2.5 24B-A2B (UD-IQ3_XXS) | 128K | Q8 KV in RAM",
+    "path": "models/LFM2.5-24B-A2B-UD-IQ3_XXS.gguf",
+    "chatTemplateKwargs": {},
+    "checkTemperature": 0.1,
+    "minimumFreeVRAMMiB": 8192,
+    "minimumAvailableRAMGiB": 4.5,
+    "minimumCommitGiB": 20,
+    "options": {
+      "fit": "on",
+      "gpu-layers": "auto",
+      "fit-target": 3584,
+      "no-host": "true",
+      "chat-template-kwargs": "{}",
+      "temp": 0.1,
+      "top-k": 50,
+      "repeat-penalty": 1.05,
+      "no-kv-offload": "true"
+    },
+    "maxTokens": 4096,
+    "requireFullGpu": false,
+    "requiresThinking": true
+  },
+  {
+    "context": 65536,
+    "minimumLoadedFreeVRAMMiB": 1024,
+    "continueAfterCheckFailure": false,
+    "checkMaxTokens": 2048,
+    "streamMaxTokens": 128,
+    "id": "Qwen3.8-27B-UD-IQ3_XXS",
+    "label": "Qwen3.8 27B (UD-IQ3_XXS) | 64K | Q8 KV in RAM",
+    "path": "models/Qwen3.8-27B-UD-IQ3_XXS.gguf",
+    "chatTemplateKwargs": {
+      "enable_thinking": false
+    },
+    "minimumFreeVRAMMiB": 9216,
+    "minimumAvailableRAMGiB": 6,
+    "minimumCommitGiB": 20,
+    "options": {
+      "fit": "on",
+      "gpu-layers": "auto",
+      "fit-target": 2816,
+      "no-host": "true",
+      "chat-template-kwargs": "{\"enable_thinking\":false}",
+      "no-kv-offload": "true"
+    },
+    "maxTokens": 4096,
+    "requireFullGpu": false
+  },
+  {
+    "id": "Qwen3.8-35B-A3B-IQ2_M",
+    "label": "Empero Qwen3.8 35B-A3B (IQ2_M) | 64K | Q8 KV in RAM",
+    "path": "models/Qwen3.8-35B-A3B-IQ2_M.gguf",
+    "context": 65536,
+    "maxTokens": 4096,
+    "options": {
+      "fit": "on",
+      "gpu-layers": "auto",
+      "fit-target": 2816,
+      "no-host": "true",
+      "no-kv-offload": "true"
+    },
+    "chatTemplateKwargs": {
+      "enable_thinking": false
+    },
+    "requireFullGpu": false,
+    "minimumFreeVRAMMiB": 9216,
+    "minimumAvailableRAMGiB": 5,
+    "minimumCommitGiB": 20,
+    "minimumLoadedFreeVRAMMiB": 1024,
+    "continueAfterCheckFailure": false,
+    "checkMaxTokens": 2048,
+    "streamMaxTokens": 2048
+  }
+]
