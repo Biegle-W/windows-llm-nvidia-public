@@ -31,7 +31,11 @@ change the separate AMD Linux build or the archived NVIDIA Linux setup.
 now includes real desktop3060/2504 results and a no-iGPU Intel/3070Ti boot.
 The reviewed craftingmod GA10x framework is a candidate for this Gigabyte2503 /
 B760M host, whose own unlock boot remains untested. Next step is a separate
-read-only UEFI capture. No boot entry, driver or inference setting changed.
+read-only UEFI capture. The [probe package is now prepared](reports/RTX3060-READONLY-UEFI-PROBE.md)
+from pinned5c076dc with LLVM20.1.8/Bun1.4.4. Upstream/exact2503 mocks,11 parser
+tests and3 negative PE cases pass; physical USB boot remains pending. Binary,
+ZIP, toolchain and captures stay ignored under `data/`/`runtimes/`. No boot entry,
+driver or inference setting changed.
 
 ## One setting per model — October 23, 2026
 
@@ -91,7 +95,8 @@ Qwen27B's8K-only setting was replaced in place by64K/Q8 KV in RAM; no extra prof
 ## Public repository maintenance
 
 Write all GitHub-facing documentation, comments, CLI messages, commit messages,
-issues and pull requests in English. Chat may remain Chinese. Preserve historical
+issues and pull requests in English. English is the primary communication
+language; Chinese is secondary, when useful or requested. Preserve historical
 multilingual benchmark/test payload values using Unicode escapes rather than
 translating measured inputs or outputs. Explain fixtures in English and retain
 attribution links when using Latin-script author names.

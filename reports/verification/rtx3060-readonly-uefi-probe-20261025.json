@@ -1,0 +1,40 @@
+{
+  "upstream": "https://github.com/craftingmod/rtx30-unlock",
+  "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
+  "source_modified_for_efi": false,
+  "expected_pci_id": "10de:2503",
+  "expected_subsystem": "1458:407b",
+  "compiler": "clang version 20.1.8",
+  "linker": "LLD 20.1.8",
+  "bun": "1.4.4",
+  "pe": {
+    "path": "BOOTX64.EFI",
+    "bytes": 14848,
+    "sha256": "ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a",
+    "machine": "AMD64",
+    "subsystem": 10,
+    "entry": "efi_main",
+    "entry_rva": 9530,
+    "imports": 0,
+    "iat": 0,
+    "delay_imports": 0,
+    "nx": true,
+    "dynamic_base": true
+  },
+  "host_validation": {
+    "probe_build": "passed",
+    "upstream_probe_mocks": "passed",
+    "report_parser_11_tests": "passed",
+    "gigabyte_2503_407b1458_capture_mocks": "passed",
+    "pe_rejects_wrong_machine": "passed",
+    "pe_rejects_wrong_subsystem": "passed",
+    "pe_rejects_unexpected_import": "passed"
+  },
+  "physical_uefi_boot_tested": false,
+  "gpu_unlock_performed": false,
+  "persistent_writes": "new USB capture files only",
+  "package_zip_bytes": 1586193,
+  "package_integrity": "passed",
+  "unsigned": true,
+  "only_efi_in_package": "EFI/BOOT/BOOTX64.EFI"
+}

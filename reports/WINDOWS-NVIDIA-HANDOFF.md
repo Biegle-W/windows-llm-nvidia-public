@@ -1,5 +1,12 @@
 # Windows NVIDIA handoff — 23 October 2026
 
+Read-only UEFI probe prepared October25: [USB instructions and scope](RTX3060-READONLY-UEFI-PROBE.md).
+Pinned5c076dc/LLVM20.1.8/Bun1.4.4 EFI is14848 bytes, SHA256
+`ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a`.
+Upstream and exact2503/407b1458 mocks,11 parser tests and3 negative PE cases pass.
+Package/ZIP are ignored under `data/uefi-probe/`; raw captures must also remain
+private. No USB was connected; physical capture, unlock and performance are pending.
+
 Repository organization: private `windows-llm-nvidia`, sanitized
 `windows-llm-nvidia-public`; retired source/documentation is indexed in
 [archives](../archives/README.md). Ubuntu AMD repositories remain independent.

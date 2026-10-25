@@ -2,6 +2,10 @@
 
 **Windows UEFI unlocks have succeeded on real hardware, including a desktop RTX 3060. This host still needs adaptation and its first validated boot; installing Linux is not a prerequisite for the technique.** This investigation reviewed source and read inventory only. No EFI was installed, system ESP mounted, BCD/NVRAM changed, disk decrypted, driver changed or unlock attempted.
 
+Preparation update: the [standalone read-only probe package](RTX3060-READONLY-UEFI-PROBE.md)
+has now been built and checked on the host, including an exact2503/407b1458 mocked
+capture. The prepared EFI is not an unlock image. Physical USB boot is pending.
+
 ## Host compatibility
 
 | Item | Observed configuration |
