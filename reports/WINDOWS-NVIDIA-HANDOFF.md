@@ -1,5 +1,20 @@
 # Windows NVIDIA handoff â€” 23 October 2026
 
+**Latest October25 result: first physical unlock succeeded in Windows.**
+[Execution and identical-executable comparison](RTX3060-WINDOWS-UNLOCK-RESULT-20261025.md).
+RUN01 logs are hash-verified in ignored `data/uefi-probe/captures/20261025-UNLOCK-RUN01/`.
+One FLR, maps0/retained0/fault0/safe1, SS0=88888888/SS1=8, display restoration,
+resolution cycle and9216-pixel zero-mismatch readback pass; Windows Boot Manager
+starts without a reset. Driver610.88 recognizes the3060 with StatusOK/error0;
+no nvlddmkm Error/Critical events since this boot were found at inspection.
+At unchanged170W, the same short CUDA GEMM executable measures FP16
+26.835->50.724TFLOPS (+89.0%), BF16 26.788->50.591 (+88.9%), FP32 8.643->8.540.
+This is one boot and one short sample per arm; no LLM, INT8, broad numerical,
+long-run, repeat-boot or sleep/resume validation. USB remains manual-only with no
+ESP/BCD/boot-order/driver/VBIOS change. Do not rerun unlock in this boot. Preserve
+prior build/profile flags as historical; record physical validation separately.
+Earlier preparation notes below precede this successful attempt.
+
 Current first-trial preparation, October25: the ownership capture passed but
 rejects the generic two-child design. [Single-child adaptation and manual trial](RTX3060-WINDOWS-FIRST-UNLOCK-TRIAL.md)
 is built under ignored `data/uefi-probe/windows3060-single-child-20261025-v3/`.

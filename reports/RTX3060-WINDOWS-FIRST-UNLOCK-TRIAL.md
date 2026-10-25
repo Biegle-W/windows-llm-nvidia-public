@@ -1,5 +1,10 @@
 # RTX 3060 first Windows unlock trial — October 25, 2026
 
+**Result update:** the first physical trial succeeded. Windows FP16/BF16 Tensor
+GEMM throughput increased about89%, with safe transaction/display logs and a
+healthy NVIDIA device. See [execution evidence and limits](RTX3060-WINDOWS-UNLOCK-RESULT-20261025.md).
+The following text preserves the pre-trial design and procedure.
+
 The physical ownership capture completed successfully without a detach or GPU
 write. It reveals a **single-child AMI aggregate-console chain**, not the
 two-child layout expected by the earlier generic candidate. A separate fixed-board

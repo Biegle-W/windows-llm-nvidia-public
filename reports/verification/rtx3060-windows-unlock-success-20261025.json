@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-25",
+  "status": "Successful first physical manual unlock and Windows compute observation",
+  "capture_slot": "RUN01",
+  "gpu": "Gigabyte RTX 3060 12 GB",
+  "pci_id": "10de:2503",
+  "subsystem": "1458:407b",
+  "motherboard": "ASUS TX GAMING B760M WIFI",
+  "bios": "1836",
+  "cpu": "i5-13600KF",
+  "windows_nvidia_driver": "610.88",
+  "power_limit_watts": 170,
+  "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
+  "display_adaptation": "fixed single-child AMI chain; five captured driver metadata/method-offset profiles",
+  "efi_sha256": "61fa2b71d1332d4d6180610175955d3cad015420c41f393b7abea717507d09e1",
+  "manual_u_confirmed": true,
+  "transaction_result": 0,
+  "flr_count": 1,
+  "dma_maps_at_handoff": 0,
+  "dma_resources_retained": false,
+  "transaction_fault": false,
+  "safe_to_handoff": true,
+  "post_flr_selectors": {
+    "ss0": "88888888",
+    "ss1": "00000008"
+  },
+  "display_restored": true,
+  "resolution_cycle_passed": true,
+  "green_framebuffer_pixels_checked": 9216,
+  "green_framebuffer_mismatches": 0,
+  "windows_boot_manager_started_without_reset": true,
+  "windows_gpu_device_status": "OK",
+  "windows_gpu_device_error_code": 0,
+  "compute_improvement_observed_in_windows": true,
+  "same_benchmark_executable": true,
+  "cuda_runtime": 13030,
+  "cublas": 130600,
+  "benchmarks": [
+    {
+      "mode": "fp32_pedantic",
+      "stock_tflops": 8.642602,
+      "unlocked_tflops": 8.539924000000001,
+      "throughput_gain_percent": -1.1880449892289313,
+      "stock_median_ms": 15.902496,
+      "unlocked_median_ms": 16.093697
+    },
+    {
+      "mode": "fp16_tensor_fp32_accumulate",
+      "stock_tflops": 26.835493999999997,
+      "unlocked_tflops": 50.724468,
+      "throughput_gain_percent": 89.02006424774594,
+      "stock_median_ms": 5.121536,
+      "unlocked_median_ms": 2.70952
+    },
+    {
+      "mode": "bf16_tensor_fp32_accumulate",
+      "stock_tflops": 26.788294999999998,
+      "unlocked_tflops": 50.590928,
+      "throughput_gain_percent": 88.85460235524509,
+      "stock_median_ms": 5.13056,
+      "unlocked_median_ms": 2.716672
+    }
+  ],
+  "post_benchmark_gpu_temperature_c": 39,
+  "raw_logs_backed_up_and_hash_verified": true,
+  "raw_logs_published": false,
+  "usb_remains_manual_only": true,
+  "system_esp_bcd_or_boot_order_changed": false,
+  "vbios_flashed": false,
+  "limitations": [
+    "One physical unlock boot and one short benchmark per arm; not repeated A/B/A",
+    "All-ones GEMM checks first/last output elements only; not broad numerical validation",
+    "No quantized LLM performance test or INT8 claim",
+    "Sleep/resume, reboot persistence and long-run stability remain untested",
+    "No persistent automatic boot installation"
+  ],
+  "nvidia_error_or_critical_events_since_windows_boot": 0
+}

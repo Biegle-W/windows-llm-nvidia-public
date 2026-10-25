@@ -17,6 +17,16 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
+**Successful Windows unlock, October25:** the first manual single-child3060
+trial completed one FLR, safe DMA cleanup, display recovery and Windows handoff.
+The unchanged-driver/170W short GEMM comparison measured FP16 26.84->50.72TFLOPS
+(+89.0%) and BF16 26.79->50.59TFLOPS (+88.9%); FP32 was approximately unchanged.
+The Windows GPU reports StatusOK/error0. [Physical result and measurement limits](reports/RTX3060-WINDOWS-UNLOCK-RESULT-20261025.md).
+The USB remains manual-only; no persistent boot installation or VBIOS flash was
+made. Unlock persistence, repeat-boot reliability and LLM speed gains are untested.
+Do not rerun the unlock in the current boot. The preparation paragraphs below
+describe earlier stages, not the latest hardware result.
+
 Sanitized reference for the independent Windows RTX3060 12GB /i5-13600KF /16GB
 build, llama.cpp b11630 CUDA13.4, NVIDIA610.88. Linux AMD remains separate in [ubuntu-llm-amd-public](https://github.com/Biegle-W/ubuntu-llm-amd-public).
 
