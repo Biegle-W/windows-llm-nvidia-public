@@ -9,15 +9,21 @@ disk/partition identity rechecked before writes; old capture directories retaine
 22 PowerShell5.1/7.6 policy tests pass;7 Python setup tests pass. Actual disconnected
 USB refused without staging. Both package ZIPs independently verified13/11 files.
 Registry Secure Boot0/off. Kingston D: was exFAT with recordings; user explicitly
-authorized format without backup. Now FAT32/RTX3080TI, board probe staged and all14
-files hash verified. OneDrive cloud-tag handling and existing drive-root parent
+authorized format without backup. Now FAT32/RTX3080TI. Physical board RUN00 passed
+exact2208/10de:1535 identity,16 valid register reads and1MiB PROM. Four private
+capture files match the USB; offline audit passes FWSEC fuse2/booter1 signatures,
+DMA geometry, boot descriptor, layout and host-copy FRTS encoding plus negative
+parser cases. Audit output data/uefi-probe/3080ti-board-audit-20261025-run00/;
+raw copy data/uefi-probe/3080ti-usb/captures-20261025-170200-5156551ec31e4c2d80848e60b4258684/.
+Ownership probe now staged; all12 package files independently hash verified;
+board RUN00 retained on USB. OneDrive cloud-tag handling and existing drive-root parent
 creation fixed after real staging refusals; symbolic links/junctions/unknown tags
-remain refused. Next user manually boots F8 ->UEFI Kingston, lets board probe
-finish, then Windows Boot Manager. Collect/review board run before staging the
-ownership probe for its separate boot. PROM/register/GOP captures still needed.
+remain refused. Next user manually boots F8 ->UEFI Kingston, lets ownership probe
+finish, then Windows Boot Manager. Collect/review RTX-UNLOCK/RUNnn/GOP.TXT before
+building the unlock. GPU OK/error0, zero NVIDIA Error/Critical events this boot.
 Audit now binds subsystem10de:1535/address0000:01:00.0 and ownership
-config_before[2c]=153510de, refusing other3080Ti boards/slots. No firmware executed
-or built, no BCD/partition change or automatic reboot. Backups/copies stay under
+config_before[2c]=153510de, refusing other3080Ti boards/slots. No unlock firmware
+executed or built, no internal partition/BCD change or automatic reboot. Backups/copies stay under
 ignored data/uefi-probe/3080ti-usb/. Follow [USB workflow](RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
 
 LATEST installed3080Ti: [four-model comparison](RTX3080TI-VS-3060-20261025.md).

@@ -1,6 +1,6 @@
 {
   "date": "2026-10-25",
-  "status": "installed-3080ti-board-probe-staged-awaiting-physical-boot",
+  "status": "board-run00-audited-ownership-probe-staged-awaiting-boot",
   "currently_installed_gpu": "RTX 3080 Ti",
   "rtx3080ti_physically_present": true,
   "usb_present_or_staged": true,
@@ -12,7 +12,8 @@
       "name": "01-board-probe.zip",
       "mode": "read-only PCI/register/ROM/PROM capture",
       "efi_sha256": "ae7b5cdd1cc579fc516ebda68c9d438d433697fb78d151304d56a2cbca41785a",
-      "manifest_files_verified": 13
+      "manifest_files_verified": 13,
+      "physical_readonly_probe_capture_passed": true
     },
     {
       "name": "02-ownership-probe.zip",
@@ -20,7 +21,8 @@
       "efi_sha256": "58f4d6beb444d423a8509dd4d1cdbb7a2e10a425e51ae2e65f2cceaa011342b8",
       "manifest_files_verified": 11,
       "unlock_code_linked": false,
-      "firmware_assets_included": false
+      "firmware_assets_included": false,
+      "physical_readonly_probe_capture_passed": false
     }
   ],
   "zip_contents_match_manifests": true,
@@ -36,13 +38,13 @@
   "baseline_launcher": "Capture RTX3080Ti Baseline.cmd",
   "offline_capture_auditor": "scripts/rtx3080ti_setup.py audit",
   "physical_3080ti_baseline_recorded": true,
-  "physical_3080ti_capture_audited": false,
+  "physical_3080ti_capture_audited": true,
   "3080ti_unlock_image_built": false,
   "3080ti_firmware_executed": false,
   "3080ti_automatic_boot_installed": false,
   "boot_or_partition_changes_this_preparation": false,
   "linux_amd_changed": false,
-  "remaining_dependency": "Manually boot F8 -> UEFI Kingston board probe, return through Windows Boot Manager, collect/review board run, then stage/boot/collect the separate ownership probe before an exact-board unlock build.",
+  "remaining_dependency": "Manually boot F8 -> UEFI Kingston for read-only ownership capture, return through Windows Boot Manager, then collect/review GOP.TXT before building an exact-board manual unlock.",
   "current_card": {
     "pci": "10de:2208",
     "subsystem": "10de:1535",
@@ -62,7 +64,7 @@
   "audit_bound_to_installed_subsystem_and_pci_address": true,
   "usb_staging_helper_sha256": "0a7ab5b012a95c17d2c16f6ee02f89dcba891045cf74a4d579d55b355ecb3d34",
   "usb_staging_physical_board_stage_passed": true,
-  "usb_staged_file_hashes_verified": 14,
+  "usb_staged_file_hashes_verified": 12,
   "usb_file_system": "FAT32",
   "usb_label": "RTX3080TI",
   "usb_format_performed_after_explicit_user_authorization": true,
@@ -70,5 +72,33 @@
   "one_drive_cloud_placeholders_supported": true,
   "symbolic_links_junctions_and_unknown_reparse_tags_refused": true,
   "existing_drive_root_parent_handling_verified": true,
-  "c_partition_size_preserved": true
+  "c_partition_size_preserved": true,
+  "physical_3080ti_ownership_captured": false,
+  "usb_current_mode": "read-only ownership capture",
+  "board_capture": {
+    "run": "RUN00",
+    "complete": true,
+    "valid_register_reads": 16,
+    "prom_bytes": 1048576,
+    "rom_image_bytes": 164352,
+    "exact_installed_subsystem_and_pci_address_match": true,
+    "private_copy_and_usb_capture_hashes_match": true,
+    "no_gpu_writes": true,
+    "no_gpu_resets": true,
+    "no_boot_variable_changes": true
+  },
+  "offline_firmware_checks": {
+    "passed": true,
+    "fwsec_fuse_version": 2,
+    "booter_fuse_version": 1,
+    "dma_geometry_aligned": true,
+    "negative_parser_cases_rejected": true,
+    "cpu_only": true,
+    "diagnostic_validation_flags_unchanged": true
+  },
+  "post_boot_health": {
+    "gpu_status": "OK",
+    "device_error_code": 0,
+    "nvlddmkm_error_critical_events_found": 0
+  }
 }

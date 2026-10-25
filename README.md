@@ -27,10 +27,13 @@ hashes and backs up every colliding file without formatting or deleting old runs
 hash verified. OneDrive cloud placeholders are accepted while symbolic links,
 junctions and unknown reparse tags remain refused. The offline auditor rejects
 other subsystems/slots. After explicit authorization to discard its recordings,
-Kingston D: was formatted FAT32/RTX3080TI and the board probe staged with14 files
-hash verified. Secure Boot is off; next manually boot F8 ->UEFI Kingston USB,
-then return through Windows Boot Manager. PROM/ownership captures and the actual
-unlock image remain pending. [Boot and collection steps](reports/RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
+Kingston D: was formatted FAT32/RTX3080TI. Physical board RUN00 now passes exact
+identity,16 valid register reads,1MiB PROM and offline FWSEC/signature/DMA/layout
+checks. Captures are preserved privately and on USB. The ownership probe is now
+staged with12 files independently hash verified. Next manually boot F8 ->UEFI
+Kingston USB for the ownership capture, then return through Windows Boot Manager.
+GPU OK/error0 and no NVIDIA Error/Critical events found this boot. No unlock ran;
+ownership review and the unlock image remain pending. [Boot and collection steps](reports/RTX3080TI-WINDOWS-UNLOCK-SETUP-20261025.md).
 
 **RTX3080Ti installed and tested, October25:** all four unchanged profiles pass
 short chat, streaming and two128-token samples. Mean generation: Ornith30.72t/s,
