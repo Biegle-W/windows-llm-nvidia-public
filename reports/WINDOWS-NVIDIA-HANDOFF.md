@@ -1,5 +1,18 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST installed RTX3080Ti; dedicated4GB USB RUN00 refused preflight/touched0
+before U/transaction/FLR because its initial pair differs from earlier Ti success.
+Current FP32 25.899118/FP16 69.966565/BF16 69.997918TFLOPS; references pass,
+GPU OK/error0/zero NVIDIA Error-Critical this boot. Current session NOT unlocked.
+Exact observed-pair v4 now staged on4GB General USB/RTX3080TI/F:, EFI4649c0...f632,
+24 files/two refusal logs independently checked, old image backed up.29 Python
+policy tests/22 actualColdCheck (old+mixed pairs refuse)/8suites/8manual/31display/
+22simulated/26driver checks pass. Original diagnostic profile stays unchanged;
+derived expected pair only, actualColdCheck/transaction/livePROM/layout/driver
+checks retained. Fresh platform prerequisites pass; no internal/automatic startup.
+Next fullshutdown/F8 4GB General USB/U once after preflight/allow Windows directly.
+3060 and3080 dedicated USBs unchanged. Previous3080/Ti success paragraphs historical.
+
 LATEST RTX3080 10GB MANUAL v2 RUN04 SUCCESS: confirmed U, two live-PROM
 matches, one safe transaction/FLR (result0/containment0/started1/quiesced1/fault0/
 retained0/maps0/FLR1/safe1). Unlocked state retained through display/output;

@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-25",
+  "status": "ti-dedicated-run00-refused-exact-pair-v4-staged",
+  "currently_installed_gpu": "RTX 3080 Ti 12GB",
+  "usb_run": "RUN00 on dedicated4GB USB",
+  "preflight_status": "EFI_NOT_READY",
+  "cause": "Both initial selector values differ from the earlier successful Ti boot",
+  "gpu_touched": 0,
+  "manual_u_reached": false,
+  "unlock_transaction_or_flr_attempted": false,
+  "current_compute_tflops": {
+    "fp32_pedantic": 25.899117999999998,
+    "fp16_tensor_fp32_accumulate": 69.966565,
+    "bf16_tensor_fp32_accumulate": 69.997918
+  },
+  "compute_reference_checks_passed": 3,
+  "current_session_unlocked": false,
+  "gpu_status": "OK",
+  "gpu_config_error_code": 0,
+  "nvidia_error_critical_since_boot": 0,
+  "driver": "610.88",
+  "power_limit_w": 350,
+  "correction": {
+    "version": "v4",
+    "original_diagnostic_evidence_unchanged": true,
+    "derived_header_binds_exact_untouched_refusal_pair": true,
+    "unknown_zero_old_mixed_and_unlocked_states_refuse": true,
+    "actual_cold_check_and_transaction_source_unchanged": true,
+    "live_prom_layout_gfw_pci_driver_checks_retained": true,
+    "manual_u_required": true,
+    "automatic_execution": false,
+    "tests": {
+      "python_policy_tests": 29,
+      "new_ti_refusal_test_methods": 6,
+      "actual_cold_check_scenarios": 22,
+      "upstream_host_suites": 8,
+      "manual_gate_flows": 8,
+      "display_rejoin_cases": 31,
+      "simulated_unlock_cases": 22,
+      "driver_policy_cases": 26
+    }
+  },
+  "usb": {
+    "device": "General USB Flash Disk",
+    "capacity_gb": 4,
+    "label": "RTX3080TI",
+    "efi_sha256": "4649c0ed12800ce5c8f6988f637bf5319809c4153d2f1249e0107abc7571f632",
+    "independently_verified_package_files": 24,
+    "verified_retained_capture_files": 2,
+    "previous_image_backed_up": true,
+    "formatted": false
+  },
+  "fresh_platform_prerequisites_passed": true,
+  "other_cards_usb_changed": false,
+  "internal_startup_driver_power_models_changed": false,
+  "earlier_original_pair_ti_success_preserved_as_history": true,
+  "v4_physical_unlock_tested": false,
+  "next_step": "Full shutdown; F8 ->4GB General USB / RTX3080TI; U once only after preflight passes; allow Windows to start directly."
+}

@@ -1,5 +1,9 @@
 # RTX 3080 Ti manual Windows unlock result — October 25, 2026
 
+**Current-boot update:** this original-pair success is historical. After reinstalling
+the Ti, the dedicated USB refused a different initial pair; corrected v4 is staged.
+[Current Ti state and retry](RTX3080TI-DEDICATED-USB-REFUSAL-20261025.md).
+
 **RUN01 succeeded.** The exact-board manual image accepted its captured initial
 state, received U, completed one transaction/FLR with safe resource cleanup,
 restored display output and handed off to Windows. The same retained compute

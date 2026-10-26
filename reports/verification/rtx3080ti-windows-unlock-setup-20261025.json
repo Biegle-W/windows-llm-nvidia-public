@@ -1,6 +1,6 @@
 {
   "date": "2026-10-25",
-  "status": "manual-run01-success-current-windows-compute-verified",
+  "status": "ti-dedicated-run00-refused-exact-pair-v4-staged",
   "currently_installed_gpu": "RTX 3080 Ti",
   "rtx3080ti_physically_present": true,
   "usb_present_or_staged": true,
@@ -44,7 +44,7 @@
   "3080ti_automatic_boot_installed": false,
   "boot_or_partition_changes_this_preparation": false,
   "linux_amd_changed": false,
-  "remaining_dependency": "No 3080 Ti automatic startup installed. Repeated-start/sleep/update stability and post-unlock LLM measurements remain unvalidated; do not rerun unlock in this firmware session.",
+  "remaining_dependency": "Boot the4GB General USB / RTX3080TI after full shutdown; U once after preflight; verify new logs and Windows performance.",
   "current_card": {
     "pci": "10de:2208",
     "subsystem": "10de:1535",
@@ -53,7 +53,7 @@
     "vram_mib": 12288
   },
   "secure_boot_registry_enabled": false,
-  "usb_staging_policy_checks": 41,
+  "usb_staging_policy_checks": 49,
   "usb_staging_missing_drive_refusal_verified": true,
   "usb_staging_helper": "scripts/Prepare-RTX3080TiProbeUsb.ps1",
   "usb_staging_launchers": [
@@ -62,19 +62,19 @@
     "Collect RTX3080Ti Captures.cmd"
   ],
   "audit_bound_to_installed_subsystem_and_pci_address": true,
-  "usb_staging_helper_sha256": "46691187465f16350b76fed9e57e6860e09c4efd7d7456ebd5aba177d99b9ceb",
+  "usb_staging_helper_sha256": "8a773c3539e49a7a0e69c3744f410f901605c1167f5779be1c5ebc199d46c7dd",
   "usb_staging_physical_board_stage_passed": true,
-  "usb_staged_file_hashes_verified": 14,
+  "usb_staged_file_hashes_verified": 24,
   "usb_file_system": "FAT32",
-  "usb_label": "RTX3080_10G",
-  "usb_format_performed_after_explicit_user_authorization": true,
+  "usb_label": "RTX3080TI",
+  "usb_format_performed_after_explicit_user_authorization": false,
   "discarded_recordings_backed_up": false,
   "one_drive_cloud_placeholders_supported": true,
   "symbolic_links_junctions_and_unknown_reparse_tags_refused": true,
   "existing_drive_root_parent_handling_verified": true,
   "c_partition_size_preserved": true,
   "physical_3080ti_ownership_captured": true,
-  "usb_current_mode": "read-only2206 RTX3080 10GB board probe for next card swap",
+  "usb_current_mode": "exact-pair manual v4; physical retry pending",
   "board_capture": {
     "run": "RUN00",
     "complete": true,
@@ -102,16 +102,21 @@
     "nvlddmkm_error_critical_events_found": 0
   },
   "physical_3080ti_ownership_reviewed": true,
-  "manual_efi_sha256": "c13c39eb98bae5b836c80e1a4e5d7f84c05ad910f35b5b62f2ad97311052fab4",
+  "manual_efi_sha256": "4649c0ed12800ce5c8f6988f637bf5319809c4153d2f1249e0107abc7571f632",
   "manual_u_required": true,
-  "current_session_unlock_verified": true,
+  "current_session_unlock_verified": false,
   "physical_3080ti_unlock_tested": true,
   "latest_verified_manual_run": "RUN01",
   "3060_nvme_startup_removed": true,
   "3060_manual_usb_package_preserved": true,
   "startup_policy": {
     "3060": "Manual USB only; NVMe entry/payload removed at user request.",
-    "3080ti": "Current manual session verified; no automatic startup installed."
+    "3080ti": "Current boot safely refused; exact-pair manual v4 staged on dedicated4GB USB. No automatic startup."
   },
-  "verified_3080ti_manual_image_preserved_privately": true
+  "verified_3080ti_manual_image_preserved_privately": true,
+  "current_verification": "rtx3080ti-dedicated-refusal-v4-20261025.json",
+  "latest_verified_manual_run_is_current_boot": false,
+  "current_v4_physically_tested": false,
+  "current_boot_gpu_mutation": false,
+  "historical_kingston_formatted_after_user_authorization": true
 }
