@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-25",
+  "status": "manual-v2-run04-unlock-and-compute-verified",
+  "gpu": "RTX 3080 10GB",
+  "run": "RUN04",
+  "manual_u_confirmed": true,
+  "automatic_execution": false,
+  "live_prom_matched": true,
+  "transaction": {
+    "result": 0,
+    "containment": 0,
+    "started": 1,
+    "quiesced": 1,
+    "fault": 0,
+    "retained": 0,
+    "maps": 0,
+    "flr_count": 1,
+    "safe": 1
+  },
+  "unlocked_state_retained_through_display_and_output": true,
+  "display": {
+    "final_status": 0,
+    "touched": 1,
+    "restored": 1,
+    "readback_pixels": 9216,
+    "mismatches": 0,
+    "separate_user_visual_confirmation": false
+  },
+  "windows_handoff": {
+    "reboot": 0,
+    "report_complete_local": "2026-10-25 21:13:40",
+    "observed_boot_local": "2026-10-25 21:13:42.5",
+    "timezone": "America/New_York"
+  },
+  "compute_executable_sha256": "aa8cca683335ee33ab000829b0aa47eceb7de04281eec39d3d36103b2338916e",
+  "measurements": [
+    {
+      "mode": "fp32_pedantic",
+      "before_tflops": 23.142982,
+      "after_tflops": 23.155024,
+      "change_percent": 0.05
+    },
+    {
+      "mode": "fp16_tensor_fp32_accumulate",
+      "before_tflops": 60.196178,
+      "after_tflops": 113.374534,
+      "change_percent": 88.34
+    },
+    {
+      "mode": "bf16_tensor_fp32_accumulate",
+      "before_tflops": 60.052673999999996,
+      "after_tflops": 113.455387,
+      "change_percent": 88.93
+    }
+  ],
+  "reference_checks_passed": 3,
+  "n": 4096,
+  "samples": 30,
+  "warmup_seconds": 2,
+  "gpu_status": "OK",
+  "gpu_config_error_code": 0,
+  "nvidia_error_critical_since_boot": 0,
+  "post_compute_temperature_c": 36,
+  "post_compute_free_vram_mib": 9248,
+  "driver": "610.88",
+  "power_limit_w": 320,
+  "usb": {
+    "device": "Kingston DataTraveler 2.0",
+    "capacity_gb": 16,
+    "label": "RTX3080_10G",
+    "efi_sha256": "c5a04df68ed1eeb4fc9e427f0a70a8c0845aa01f1d44168cd33e750a6fc80a10",
+    "verified_package_files": 24,
+    "verified_retained_capture_files": 20
+  },
+  "automatic_or_internal_startup_installed": false,
+  "3060_nvme_removal_preserved": true,
+  "driver_power_model_guards_or_linux_changed": false,
+  "post_unlock_llm_speed_tested": false,
+  "repeat_boot_sleep_updates_or_long_stability_tested": false,
+  "do_not_repeat_unlock_in_current_session": true
+}

@@ -1,5 +1,19 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST RTX3080 10GB MANUAL v2 RUN04 SUCCESS: confirmed U, two live-PROM
+matches, one safe transaction/FLR (result0/containment0/started1/quiesced1/fault0/
+retained0/maps0/FLR1/safe1). Unlocked state retained through display/output;
+FULL_FINAL0/touched1/restored1,9216 readback pixels/zero mismatches. Reportcomplete
+21:13:40,Windows observed21:13:42.5 America/New_York, handoff reboot0.
+Same retained executable FP32 23.155024 (+0.05%),FP16 113.374534 (+88.34%),
+BF16 113.455387 (+88.93%);4096-square/2secwarmup/30samples,all references pass.
+GPU OK/error0,36C/9248MiBfree,zero NVIDIA Error/Critical since boot after compute.
+610.88/320W unchanged. Current session unlocked; DO NOT rerun unlock this session.
+Dedicated16GB Kingston2.0/RTX3080_10G remains verified v2c5a04d...0a10,24 package
+files/20 captures checked. Future boots manual; no internal/automatic startup.
+3060 NVMe remains removed. LLM speeds/repeats/sleep/updates/stability untested;
+12GB router guards unchanged. No driver/power/model/Linux changes.
+
 LATEST3080 RUN03 safely REFUSED at unlock-preflight EFI_NOT_READY/touched0,
 before U/transaction/FLR. One initial selector differs from original capture.
 Stock-like same-executable FP32 23.103147/FP16 60.268402/BF16 60.626983TFLOPS;

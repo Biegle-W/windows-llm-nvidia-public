@@ -1,5 +1,9 @@
 # RTX 3080 10 GB first-boot refusal and v2 correction — October 25, 2026
 
+**Result update: manual v2 RUN04 succeeded. Current session is unlocked; do not repeat.**
+[Read the verified physical result](RTX3080-10GB-WINDOWS-UNLOCK-RESULT-20261025.md).
+The preparation/refusal text below is historical.
+
 **RUN03 did not unlock the card.** The image refused during unlock preflight
 with EFI_NOT_READY and touched=0. Manual U confirmation was never reached;
 no unlock transaction, display teardown or FLR was attempted. Its exact initial

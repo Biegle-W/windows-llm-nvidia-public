@@ -4,7 +4,7 @@
 
 This system now has **Windows / NVIDIA RTX 3080 10 GB / i5-13600KF / 16 GB RAM**.
 The existing model-router profiles remain scoped to the 12 GB RTX 3060/3080 Ti;
-the 10 GB card is undergoing separate unlock diagnostics.
+the10GB card now has one verified manual-unlock boot; its LLM profiles remain unvalidated.
 The RTX 3060 remains supported for swapping back; its measurements are historical.
 **Current startup policy:** the3060 NVMe firmware entry and payload are removed
 at the user's request; future3060 unlocks use its preserved manual USB package.
@@ -25,7 +25,19 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**RTX 3080 10 GB RUN03 refused; corrected v2 staged:** one startup selector
+**RTX 3080 10 GB unlock verified, manual v2 RUN04:** U was confirmed, one
+transaction/FLR completed with safe cleanup, display recovery passed9216 pixels
+with zero mismatches, and Windows started directly. Same-executable FP16
+**60.196 ->113.375TFLOPS (+88.34%)**, BF16 **60.053 ->113.455TFLOPS (+88.93%)**;
+FP32 essentially unchanged. All three reference checks pass. GPU OK/error0;
+no NVIDIA Error/Critical events found this boot after compute;610.88/320W unchanged.
+**Current session is unlocked; do not run the unlock again in this firmware
+session.** Future fresh starts remain manual using16GB Kingston2.0/RTX3080_10G;
+no automatic/internal startup is installed.24 package files/20 captures verify.
+LLM speeds, repeated starts/sleep/updates and long stability remain untested;
+existing12GB router admission guards remain unchanged. [Physical result and limits](reports/RTX3080-10GB-WINDOWS-UNLOCK-RESULT-20261025.md).
+
+**Historical RUN03 refusal and v2 preparation:** one startup selector
 differed from the earlier capture. Preflight returned EFI_NOT_READY/touched0,
 before U, any unlock transaction or FLR. Compute remains near baseline: FP16
 60.268/BF16 60.627TFLOPS; all reference checks pass. GPU OK/error0; no NVIDIA
@@ -58,8 +70,8 @@ General USB Flash Disk / `RTX3080TI` holds the preserved manual3080Ti unlock.
 All24/24/24 package files verify. Each has GPU-USB.txt; no format or internal
 boot change. The old F: BIOS file was removed with explicit approval. Drive
 letters may change; use device name/capacity/label and unplug the other drives
-if F8 is ambiguous. **For the installed3080, use the16GB Kingston2.0; U once after
-preflight is required for the next manual trial.** [Assignment and boot instructions](reports/GPU-USB-ASSIGNMENTS-20261025.md).
+if F8 is ambiguous. **The current3080 session is unlocked; do not repeat it. Future fresh
+boots use the16GB Kingston2.0 manual image.** [Assignment and boot instructions](reports/GPU-USB-ASSIGNMENTS-20261025.md).
 
 **Historical RTX 3080 10 GB board capture verification, superseded by the manual trial above:** the card is now installed.
 Both read-only board runs match the Windows identity and contain identical PROM,

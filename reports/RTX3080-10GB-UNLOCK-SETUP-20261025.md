@@ -1,5 +1,9 @@
 # RTX 3080 10 GB unlock preparation — October 25, 2026
 
+**Result update: manual v2 RUN04 succeeded. Current session is unlocked; do not repeat.**
+[Read the verified physical result](RTX3080-10GB-WINDOWS-UNLOCK-RESULT-20261025.md).
+The preparation/refusal text below is historical.
+
 **Latest: first image refused before U or GPU mutation; corrected v2 is staged.**
 [Use current v2 instructions and result](RTX3080-10GB-FIRST-BOOT-REFUSAL-20261025.md).
 Older readiness/hash statements below describe the prior image.
