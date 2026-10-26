@@ -6,7 +6,7 @@ Windows assignments and may change after reconnecting.
 
 | Current drive | Physical device | Capacity | Volume label | Assigned GPU | Current boot payload |
 |---|---|---:|---|---|---|
-| D: | Kingston DataTraveler 2.0 | 16 GB | `RTX3080_10G` | RTX 3080 10 GB | Fixed-board manual unlock; first physical trial pending |
+| D: | Kingston DataTraveler 2.0 | 16 GB | `RTX3080_10G` | RTX 3080 10 GB | Manual v2; v1 refused before GPU mutation |
 | E: | Kingston DataTraveler 3.0 | 32 GB | `RTX3060` | RTX 3060 12 GB | Preserved exact-board manual unlock |
 | F: | General USB Flash Disk | 4 GB | `RTX3080TI` | RTX 3080 Ti 12 GB | Preserved exact-board manual unlock |
 
@@ -19,11 +19,11 @@ no internal ESP or boot entry was changed, and no firmware was executed.
 
 ## Current RTX 3080 next boot
 
-Use the **16 GB Kingston DataTraveler 2.0**, labeled **RTX3080_10G**. Both
-diagnostics passed and its manual image is now staged. Fully shut down, press F8,
+Use the **16 GB Kingston DataTraveler 2.0**, labeled **RTX3080_10G**. The first
+manual image refused before GPU mutation; corrected v2 is now staged. Fully shut down, press F8,
 choose that UEFI USB, and press **U once after preflight**. Allow up to10 minutes
 for Windows to start directly; do not repeat the unlock in the same firmware
-session. [Current first-trial instructions](RTX3080-10GB-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
+session. [Current first-trial instructions](RTX3080-10GB-FIRST-BOOT-REFUSAL-20261025.md).
 
 The firmware menu may show the USB device name instead of its volume label.
 If the menu is ambiguous, disconnect the other two drives before booting. Put

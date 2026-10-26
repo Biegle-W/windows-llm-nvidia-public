@@ -25,7 +25,19 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**RTX 3080 10 GB manual unlock ready, October 25:** its read-only ownership
+**RTX 3080 10 GB RUN03 refused; corrected v2 staged:** one startup selector
+differed from the earlier capture. Preflight returned EFI_NOT_READY/touched0,
+before U, any unlock transaction or FLR. Compute remains near baseline: FP16
+60.268/BF16 60.627TFLOPS; all reference checks pass. GPU OK/error0; no NVIDIA
+Error/Critical events found this boot. The corrected image uses only the exact
+new untouched preflight state, preserves the original diagnostic profile, and
+keeps live PROM/layout/board/driver checks plus the actual cold-check/transaction
+code.23 policy tests,20 actual cold-check cases and all prior host suites pass.
+**The16GB Kingston2.0 / RTX3080_10G now has v2**,24 files and18 captures verified.
+No3080 unlock has run. Next full shutdown ->F8 correct USB ->U once after preflight;
+allow Windows to start directly. [Refusal, correction and next steps](reports/RTX3080-10GB-FIRST-BOOT-REFUSAL-20261025.md).
+
+**Historical v1 manual unlock preparation, superseded by v2 above:** its read-only ownership
 RUN02 passed, and a separate exact-board candidate is now staged and verified on
 the **16 GB Kingston DataTraveler 2.0 / RTX3080_10G**. All 24 package files and
 16 retained capture files verify; the previous probe is backed up. The image uses

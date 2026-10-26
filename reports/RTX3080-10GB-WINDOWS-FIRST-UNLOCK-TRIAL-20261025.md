@@ -1,5 +1,9 @@
 # RTX 3080 10 GB first Windows unlock trial — October 25, 2026
 
+**Latest: first image refused before U or GPU mutation; corrected v2 is staged.**
+[Use current v2 instructions and result](RTX3080-10GB-FIRST-BOOT-REFUSAL-20261025.md).
+Older readiness/hash statements below describe the prior image.
+
 **Staged and independently verified:**24 package files and16 retained capture
 files pass hash checks. Manual EFI SHA256:
 `bb850c2144d7a22d5934823732e0ff315f2ba823a979f873aaa3b6561b0f9075`.

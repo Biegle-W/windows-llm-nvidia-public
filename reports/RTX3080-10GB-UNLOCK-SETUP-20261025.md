@@ -1,5 +1,9 @@
 # RTX 3080 10 GB unlock preparation — October 25, 2026
 
+**Latest: first image refused before U or GPU mutation; corrected v2 is staged.**
+[Use current v2 instructions and result](RTX3080-10GB-FIRST-BOOT-REFUSAL-20261025.md).
+Older readiness/hash statements below describe the prior image.
+
 **Latest:** both captures passed; the guarded manual candidate is now staged on
 the dedicated16GB Kingston. The read-only instructions below are historical.
 [Use the current first-trial instructions](RTX3080-10GB-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).

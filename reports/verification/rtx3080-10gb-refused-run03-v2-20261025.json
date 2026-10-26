@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-25",
+  "status": "run03-preflight-refused-corrected-v2-manual-staged",
+  "gpu": "RTX 3080 10GB",
+  "refused_run": "RUN03",
+  "refusal_stage": "unlock-preflight",
+  "refusal_status": "EFI_NOT_READY",
+  "cause": "One initial selector differed from the original board capture",
+  "manual_u_confirmation_reached": false,
+  "gpu_touched": 0,
+  "unlock_transaction_attempted": false,
+  "flr_attempted": false,
+  "post_refusal_compute": [
+    {
+      "mode": "fp32_pedantic",
+      "before_tflops": 23.142982,
+      "after_refusal_tflops": 23.103147,
+      "change_percent": -0.17
+    },
+    {
+      "mode": "fp16_tensor_fp32_accumulate",
+      "before_tflops": 60.196178,
+      "after_refusal_tflops": 60.268402,
+      "change_percent": 0.12
+    },
+    {
+      "mode": "bf16_tensor_fp32_accumulate",
+      "before_tflops": 60.052673999999996,
+      "after_refusal_tflops": 60.626983,
+      "change_percent": 0.96
+    }
+  ],
+  "compute_reference_checks_passed": 3,
+  "compute_is_llm_speed": false,
+  "gpu_status": "OK",
+  "gpu_config_error_code": 0,
+  "nvidia_error_critical_since_boot": 0,
+  "driver": "610.88",
+  "power_limit_w": 320,
+  "driver_or_power_cap_changed": false,
+  "correction": {
+    "version": "v2",
+    "evidence": "Exact untouched RUN03 preflight tuple",
+    "original_diagnostic_profile_preserved": true,
+    "expected_header_selector_changed": true,
+    "unknown_and_unlocked_states_refused": true,
+    "transaction_and_actual_cold_check_source_unchanged": true,
+    "prom_layout_gfw_pci_and_driver_checks_retained": true,
+    "manual_u_required": true,
+    "automatic_execution": false,
+    "host_tests": {
+      "python_policy_tests": 23,
+      "new_refusal_evidence_test_methods": 6,
+      "actual_cold_check_scenarios": 20,
+      "upstream_suites": 8,
+      "manual_gate_flows": 8,
+      "display_rejoin_cases": 31,
+      "simulated_unlock_cases": 22,
+      "driver_policy_cases": 26
+    }
+  },
+  "usb": {
+    "device": "Kingston DataTraveler 2.0",
+    "capacity_gb": 16,
+    "label": "RTX3080_10G",
+    "efi_sha256": "c5a04df68ed1eeb4fc9e427f0a70a8c0845aa01f1d44168cd33e750a6fc80a10",
+    "independently_verified_package_files": 24,
+    "retained_capture_files_verified": 18,
+    "previous_image_backed_up": true,
+    "formatted": false
+  },
+  "fresh_platform_prerequisites_passed": true,
+  "internal_startup_or_llm_profiles_changed": false,
+  "v2_physical_unlock_tested": false,
+  "next_step": "Full shutdown; F8 ->16GB Kingston2.0 / RTX3080_10G; U once only after preflight passes; allow Windows to start directly."
+}

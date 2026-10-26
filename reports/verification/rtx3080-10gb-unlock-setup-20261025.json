@@ -1,6 +1,6 @@
 {
   "date": "2026-10-25",
-  "status": "manual-unlock-staged-awaiting-first-physical-trial",
+  "status": "run03-preflight-refused-corrected-v2-manual-staged",
   "currently_installed_gpu": "RTX 3080 10GB",
   "target_gpu": "RTX 3080 10GB",
   "target_pci_id": "10de:2206",
@@ -42,10 +42,10 @@
   "usb": {
     "file_system": "FAT32",
     "label": "RTX3080_10G",
-    "current_mode": "fixed-board manual unlock",
+    "current_mode": "fixed-board manual unlock v2",
     "staged_files_independently_verified": 24,
     "prior_ti_fallback_collisions_backed_up": true,
-    "prior_capture_files_preserved_and_hash_verified": 16,
+    "prior_capture_files_preserved_and_hash_verified": 18,
     "efi_copied_last": true,
     "formatted": false,
     "board_fallback_collisions_backed_up": true,
@@ -57,9 +57,9 @@
   "3060_usb_only_policy_preserved": true,
   "3080_unlock_image_built": true,
   "3080_unlock_executed": false,
-  "remaining_dependency": "Full shutdown; F8 ->16GB Kingston DataTraveler2.0 / RTX3080_10G; U once after passing preflight; allow Windows to start directly.",
+  "remaining_dependency": "Full shutdown; F8 ->16GB Kingston2.0 / RTX3080_10G; U once only after preflight passes; allow Windows to start directly.",
   "physical_3080_ownership_capture_available": true,
-  "current_verification": "rtx3080-10gb-manual-preparation-20261025.json",
+  "current_verification": "rtx3080-10gb-refused-run03-v2-20261025.json",
   "pinned_upstream_checkout_modified": false,
   "display_source_override": true,
   "transaction_source_modified": false

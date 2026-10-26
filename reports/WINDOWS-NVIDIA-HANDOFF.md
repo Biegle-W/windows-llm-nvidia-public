@@ -1,5 +1,20 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST3080 RUN03 safely REFUSED at unlock-preflight EFI_NOT_READY/touched0,
+before U/transaction/FLR. One initial selector differs from original capture.
+Stock-like same-executable FP32 23.103147/FP16 60.268402/BF16 60.626983TFLOPS;
+all reference checks pass, GPU OK/error0/zero NVIDIA Error-Critical this boot.
+Corrected v2 derived header changes only expected initial SS0 from exact untouched
+RUN03 tuple and paired GOP refusal. Original diagnostic evidence remains unchanged;
+actual ColdCheck, transaction, live PROM/layout/PCI/GFW/driver checks retained.
+Unknown/zero/old/unlocked states refuse; not a generic selector relaxation.
+23 policy tests/20 actualColdCheck and prior8 suites/8manual/31display/22simulated/
+26driver checks pass. CURRENT16GB Kingston2.0/RTX3080_10G: EFIc5a04d...0a10,
+24 files/18 captures checked, v1 backed up; fresh platform checks pass.
+No3080 successful unlock; next fullshutdown/F8 correctUSB/U once after preflight,
+allow Windows directly. Do not rerun in same firmware session. Review new logs
+before claiming success or benchmarking unlock gains.
+
 LATEST RTX3080 10GB MANUAL READY: ownership RUN02 passed with four handles,
 five roles/ten active edges, complete1/touched0/detach0. NVIDIA GOP177920bytes,
 version0x60009/start0x774/stop0x698; other roles have their own captured metadata.
