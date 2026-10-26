@@ -1,6 +1,6 @@
 {
   "enabled": false,
-  "disabledReason": "Retired on this RTX 3060 / 16 GB Windows build; Linux AMD is separate.",
-  "sourceArchive": "retired/20261023",
+  "disabledReason": "Retired Windows engine settings are in the private central archive; native Linux is separate.",
+  "sourceArchive": "https://github.com/Biegle-W/retired-llm-setting/tree/main/windows-nvidia/archives/2026-10-23-strata",
   "runtimeArchive": "archive/retired-windows-20261023/runtimes/Strata"
 }

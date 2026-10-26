@@ -69,3 +69,8 @@ linux/maya/rocwmma-7.2.3/
 
 # Official desktop packages and extracted runtimes
 **/runtime/comfy-desktop/
+
+# Central private retirement repository owns source/settings archives.
+/archives/*
+!/archives/README.md
+/retired/
