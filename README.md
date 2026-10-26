@@ -2,9 +2,9 @@
 
 ## Repository and archive map
 
-This system now has **Windows / NVIDIA RTX 3080 Ti 12 GB / i5-13600KF / 16 GB RAM**.
+This system now has **Windows / NVIDIA RTX 3080 Ti 12 GB / i5-13600KF / 64 GB RAM**.
 The existing model-router profiles remain scoped to the 12 GB RTX 3060/3080 Ti;
-the Ti is currently awaiting an exact-state manual retry. The separate3080 10GB
+the Ti now has a verified v4 manual-unlock boot and64GB RAM. The separate3080 10GB
 manual unlock succeeded in an earlier boot; that card is no longer installed.
 The RTX 3060 remains supported for swapping back; its measurements are historical.
 **Current startup policy:** the3060 NVMe firmware entry and payload are removed
@@ -26,7 +26,18 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**Current RTX3080Ti boot: dedicated USB RUN00 safely refused.** Both initial
+**Current Ti v4 unlock succeeded; RAM upgrade verified.** Dedicated4GB USB
+RUN01 completed U confirmation, one safe transaction/FLR, display recovery and
+direct Windows handoff. Same-executable FP16 **126.501TFLOPS (+79.82%)**, BF16
+**130.344TFLOPS (+85.24%)** versus the saved stock baseline; all reference checks
+pass. GPU OK/error0 and no NVIDIA Error/Critical events found this boot. Hardware
+is now **64GB RAM (4x16GB), configured4200MT/s, plus12GB VRAM**. No timing/model
+settings were changed. **Current session is unlocked; do not repeat the unlock.**
+Future starts remain manual with4GB General USB/RTX3080TI; no automatic/internal
+startup is installed.24 package files/four captures verify. LLM speeds and repeated
+v4/sleep/update stability remain untested. [Verified result and hardware](reports/RTX3080TI-V4-64GB-UNLOCK-RESULT-20261025.md).
+
+**Historical dedicated Ti RUN00 refusal, superseded by v4 RUN01 success:** Both initial
 selectors differ from the earlier successful Ti boot; preflight refused/touched0
 before U, transaction or FLR. This Windows session is not unlocked: same-executable
 FP16/BF16 measure69.97/70.00TFLOPS, all references pass. GPU OK/error0 and no NVIDIA
@@ -82,8 +93,8 @@ General USB Flash Disk / `RTX3080TI` now holds the corrected manualTi v4 image.
 All24/24/24 package files verify. Each has GPU-USB.txt; no format or internal
 boot change. The old F: BIOS file was removed with explicit approval. Drive
 letters may change; use device name/capacity/label and unplug the other drives
-if F8 is ambiguous. **Currently use the4GB General USB for the installed Ti; the16GB Kingston
-is reserved for the3080 10GB.** [Assignment and boot instructions](reports/GPU-USB-ASSIGNMENTS-20261025.md).
+if F8 is ambiguous. **The current Ti session is unlocked; do not repeat it. Future fresh boots
+use4GB General USB;16GB Kingston remains reserved for the3080 10GB.** [Assignment and boot instructions](reports/GPU-USB-ASSIGNMENTS-20261025.md).
 
 **Historical RTX 3080 10 GB board capture verification, superseded by the manual trial above:** the card is now installed.
 Both read-only board runs match the Windows identity and contain identical PROM,

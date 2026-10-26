@@ -1,5 +1,20 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST Ti v4 dedicated4GB USB RUN01 SUCCESS. Current Windows boot21:44:11.5
+America/New_York follows reportcomplete21:44:08; handoffreboot0. U confirmed,
+two PROM matches, transactionresult0/containment0/started1/quiesced1/fault0/
+retained0/maps0/FLR1/safe1; displayrestored,9216pixels/zeromismatch, unlocked state
+retained through output. Compute FP32 25.281169(-1.56%),FP16 126.501152(+79.82%),
+BF16 130.344076(+85.24%) vs original stock; all three reference checks pass.
+NEW RAM:64GiB installed,4x16GiB Corsair,about63.76GiB OS-usable,all configured
+4200MT/s. Old16GB/6000 results historical; no timings/XMP/model/profile edits.
+GPU OK/error0,42C/11106MiBfree,zero NVIDIA Error/Critical since boot after compute.
+Current session unlocked; DO NOT repeat in same firmware session. Future boots
+manual on4GB General/RTX3080TI,v4EFI4649c0...f632;24files/fourlogs verify.
+No automatic/internal startup, no3060 NVMe restoration, no other USB changes.
+LLM speed/repeatedv4/sleep/updates/long stress on64GB untested. RAM changed since
+stock baseline; compute comparison is not a controlled full-system A/B/A.
+
 LATEST installed RTX3080Ti; dedicated4GB USB RUN00 refused preflight/touched0
 before U/transaction/FLR because its initial pair differs from earlier Ti success.
 Current FP32 25.899118/FP16 69.966565/BF16 69.997918TFLOPS; references pass,

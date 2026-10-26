@@ -1,5 +1,10 @@
 # RTX 3080 Ti manual Windows unlock result — October 25, 2026
 
+**Latest: dedicated4GB USB v4 RUN01 succeeded; current Ti session is unlocked,
+with64GB RAM. Do not repeat the unlock in this firmware session.**
+[Current verified result](RTX3080TI-V4-64GB-UNLOCK-RESULT-20261025.md).
+Earlier current-boot/refusal statements below are historical.
+
 **Current-boot update:** this original-pair success is historical. After reinstalling
 the Ti, the dedicated USB refused a different initial pair; corrected v4 is staged.
 [Current Ti state and retry](RTX3080TI-DEDICATED-USB-REFUSAL-20261025.md).

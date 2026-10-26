@@ -1,5 +1,10 @@
 # RTX 3080 Ti dedicated-USB refusal and v4 retry — October 25, 2026
 
+**Latest: dedicated4GB USB v4 RUN01 succeeded; current Ti session is unlocked,
+with64GB RAM. Do not repeat the unlock in this firmware session.**
+[Current verified result](RTX3080TI-V4-64GB-UNLOCK-RESULT-20261025.md).
+Earlier current-boot/refusal statements below are historical.
+
 The original RTX3080Ti is installed again. Its dedicated4GB USB booted the
 previous manual image, but RUN00 refused at unlock preflight with EFI_NOT_READY
 and touched0. Both initial selectors differed from the earlier successful Ti

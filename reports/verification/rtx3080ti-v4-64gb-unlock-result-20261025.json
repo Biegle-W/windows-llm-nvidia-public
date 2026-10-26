@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-25",
+  "status": "ti-v4-dedicated-run01-unlock-verified-64gb-ram",
+  "currently_installed_gpu": "RTX 3080 Ti",
+  "vram_mib": 12288,
+  "installed_ram_gib": 64,
+  "dimm_count": 4,
+  "dimm_capacity_gib": 16,
+  "configured_ram_mts": 4200,
+  "windows_usable_ram_gib": 63.76,
+  "current_session_unlocked": true,
+  "manual_u_confirmed": true,
+  "automatic_execution": false,
+  "transaction": {
+    "result": 0,
+    "containment": 0,
+    "started": 1,
+    "quiesced": 1,
+    "fault": 0,
+    "retained": 0,
+    "maps": 0,
+    "flr_count": 1,
+    "safe": 1
+  },
+  "live_prom_matched": true,
+  "display_restored": true,
+  "readback_pixels": 9216,
+  "readback_mismatches": 0,
+  "unlocked_state_retained_through_display_output": true,
+  "separate_visual_marker_confirmation": false,
+  "windows_handoff_reboot": 0,
+  "report_complete_local": "2026-10-25 21:44:08",
+  "windows_boot_local": "2026-10-25 21:44:11.5",
+  "timezone": "America/New_York",
+  "measurements": [
+    {
+      "mode": "fp32_pedantic",
+      "stock_tflops": 25.682687,
+      "current_unlocked_tflops": 25.281169000000002,
+      "change_percent": -1.56
+    },
+    {
+      "mode": "fp16_tensor_fp32_accumulate",
+      "stock_tflops": 70.34990300000001,
+      "current_unlocked_tflops": 126.501152,
+      "change_percent": 79.82
+    },
+    {
+      "mode": "bf16_tensor_fp32_accumulate",
+      "stock_tflops": 70.36316099999999,
+      "current_unlocked_tflops": 130.344076,
+      "change_percent": 85.24
+    }
+  ],
+  "compute_reference_checks_passed": 3,
+  "compute_n": 4096,
+  "compute_samples": 30,
+  "compute_warmup_seconds": 2,
+  "system_ram_changed_since_stock_baseline": true,
+  "controlled_aba": false,
+  "gpu_status": "OK",
+  "gpu_config_error_code": 0,
+  "nvidia_error_critical_since_boot": 0,
+  "post_compute_temperature_c": 42,
+  "post_compute_free_vram_mib": 11106,
+  "driver": "610.88",
+  "power_limit_w": 350,
+  "usb": {
+    "device": "General USB Flash Disk",
+    "capacity_gb": 4,
+    "label": "RTX3080TI",
+    "efi_sha256": "4649c0ed12800ce5c8f6988f637bf5319809c4153d2f1249e0107abc7571f632",
+    "verified_package_files": 24,
+    "verified_retained_capture_files": 4
+  },
+  "automatic_or_internal_startup_installed": false,
+  "3060_nvme_removal_preserved": true,
+  "driver_power_profiles_or_memory_timings_changed_by_this_task": false,
+  "post_unlock_llm_speed_tested_on_64gb": false,
+  "repeated_v4_boot_sleep_updates_or_long_stress_tested": false,
+  "do_not_repeat_unlock_in_current_session": true
+}

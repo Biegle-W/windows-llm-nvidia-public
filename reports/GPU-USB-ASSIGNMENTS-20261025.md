@@ -8,7 +8,7 @@ Windows assignments and may change after reconnecting.
 |---|---|---:|---|---|---|
 | D: | Kingston DataTraveler 2.0 | 16 GB | `RTX3080_10G` | RTX 3080 10 GB | Manual v2 verified in RUN04 |
 | E: | Kingston DataTraveler 3.0 | 32 GB | `RTX3060` | RTX 3060 12 GB | Preserved exact-board manual unlock |
-| F: | General USB Flash Disk | 4 GB | `RTX3080TI` | RTX 3080 Ti 12 GB | Manual v4; exact-pair retry pending |
+| F: | General USB Flash Disk | 4 GB | `RTX3080TI` | RTX 3080 Ti 12 GB | Manual v4 verified in dedicated RUN01 |
 
 All package files were checked against their source manifests: 24 on D:, 24 on
 E: and 24 on F:, including each manifest. Each drive also contains `GPU-USB.txt`
@@ -31,15 +31,16 @@ matching physical stickers on the drives to make future card swaps easier.
 
 ## RTX 3060 and RTX 3080 Ti
 
-**Current Ti:** its dedicated-USB RUN00 refused untouched; corrected v4 is now
-staged on4GB General USB/RTX3080TI. [Current retry instructions](RTX3080TI-DEDICATED-USB-REFUSAL-20261025.md).
+**Current Ti session is unlocked:** dedicated4GB USB v4 RUN01 succeeded with64GB
+system RAM. Do not repeat in this firmware session. Future fresh starts use this
+same4GB General USB/RTX3080TI. [Verified result](RTX3080TI-V4-64GB-UNLOCK-RESULT-20261025.md).
 
 Use only the drive assigned to the original captured matching card. Both saved
 unlock images are manual: start from a fresh firmware boot, let preflight run,
 and press U once if it passes. Esc cancels. Do not repeat an unlock in the same
 firmware session, use another card's image or configure automatic internal startup.
-The original images have prior hardware validation. The new Ti v4 is physically
-untested; its dedicated USB already booted successfully into a safe refusal.
+The original images have prior hardware validation. The Ti v4 now has one verified
+physical success on its dedicated USB.
 This preparation does not unlock the
 currently installed Ti or change the model router's 12 GB admission limits.
 
