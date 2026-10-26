@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "date": "2026-10-25",
+  "status": "read-only pair preparation staged; dual unlock not built or tested",
+  "planned_gpus": [
+    "RTX 3080 Ti 12 GB",
+    "RTX 3080 10 GB"
+  ],
+  "installed_gpus_at_preparation": [
+    "RTX 3080 Ti 12 GB"
+  ],
+  "host_ram_gib": 64,
+  "usb": {
+    "device": "SanDisk Cruzer Force",
+    "nominal_capacity_gb": 8,
+    "label": "RTX3080PAIR",
+    "filesystem": "FAT32",
+    "format_explicitly_authorized": true,
+    "old_files_discarded_per_user": true,
+    "verified_package_files": 22,
+    "independent_post_stage_hash_check": "passed"
+  },
+  "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
+  "efi": {
+    "sha256": "10ca4010c4b1824ae2925a54d4c30a4910c0bac52bdd90e783213fa0cdf685dd",
+    "bytes": 27136,
+    "machine": "AMD64",
+    "subsystem": 10,
+    "imports": 0,
+    "nx": true,
+    "dynamic_base": true
+  },
+  "validation": {
+    "upstream_suites": [
+      "probe",
+      "probe-profile",
+      "gop-cycle"
+    ],
+    "upstream_suites_passed": true,
+    "controller_scenarios_passed": 18,
+    "actual_board_entry_scenarios_passed": 6,
+    "actual_tree_entry_scenarios_passed": 3,
+    "usb_package_policy_checks_passed": 22,
+    "shared_usb_path_policy_checks_passed": 49,
+    "powershell_versions_checked": [
+      "Windows PowerShell 5.1",
+      "PowerShell 7.6"
+    ],
+    "gpu_mutation_api_scan": "passed",
+    "linked_mutation_symbol_scan": "passed",
+    "efi_pe_validation": "passed"
+  },
+  "gpu_unlock_executed": false,
+  "gpu_reset_executed": false,
+  "driver_detach_executed": false,
+  "dual_unlock_built": false,
+  "physical_pair_boot_tested": false,
+  "windows_boot_entries_preserved": true,
+  "windows_partition_size_preserved": true,
+  "active_inference_profiles_changed": false,
+  "llm_tests_run": false,
+  "other_usb_packages_changed": false,
+  "linux_amd_build_changed": false,
+  "next": "Install the pair, keep the display on the Ti, F8 UEFI SanDisk, capture without U, return to Windows and collect logs."
+}

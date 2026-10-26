@@ -1,5 +1,13 @@
 # Windows LLM NVIDIA — RTX 3080 / RTX 3080 Ti / RTX 3060
 
+**Next hardware change: 3080 Ti + 3080 dual GPU.** The new 8 GB SanDisk Cruzer
+Force is prepared as FAT32, label `RTX3080PAIR`, with a verified **read-only pair
+probe**. It is not a dual unlock image. After installing both cards, keep the
+display on the Ti, boot this SanDisk through F8 once, return to Windows and run
+`Collect RTX3080 Dual Captures.cmd`. Fresh pair ownership/cold-state evidence is
+required before building a coordinated manual unlock. Existing single-card USB
+images and inference guards are unchanged. [Tomorrow's procedure and limits](reports/RTX3080-DUAL-WINDOWS-PREPARATION-20261025.md).
+
 ## Repository and archive map
 
 This system now has **Windows / NVIDIA RTX 3080 Ti 12 GB / i5-13600KF / 64 GB RAM**.

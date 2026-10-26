@@ -1,5 +1,22 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+NEXT: user plans 3080 Ti + 3080 tomorrow, then a PCIe switch and 3060 later.
+New 8 GB SanDisk Cruzer Force (currently D:) explicitly erased at user's request,
+FAT32/RTX3080PAIR, 22 package files independently verified. Read-only pair EFI
+10ca4010c4b1824ae2925a54d4c30a4910c0bac52bdd90e783213fa0cdf685dd;
+18 controller + 6 actual board-entry + 3 actual tree-entry scenarios and three
+upstream suites pass, plus 22 USB/package checks under Windows PowerShell 5.1
+and PowerShell 7.6 and shared path checks. No unlock/reset/detach code linked.
+No current GPU/driver/router/internal boot changes; Windows firmware entries and
+C: size preserved. Other three single-card USB packages untouched/disconnected.
+Tomorrow: keep Ti primary/display, install both cards, F8 UEFI SanDisk, capture
+without U, select Windows Boot Manager, run Collect RTX3080 Dual Captures.cmd.
+Collect helper discovers the SanDisk by private identity, not a fixed letter.
+DO NOT use old USBs to chain unlocks. No dual unlock is ready or tested: capture
+both current board/PROM/cold states and display/headless ownership first. Router
+still refuses multiple NVIDIA GPUs; no profile edits or inference tests this turn.
+See RTX3080-DUAL-WINDOWS-PREPARATION-20261025.md and verification summary.
+
 LATEST Ti v4 dedicated4GB USB RUN01 SUCCESS. Current Windows boot21:44:11.5
 America/New_York follows reportcomplete21:44:08; handoffreboot0. U confirmed,
 two PROM matches, transactionresult0/containment0/started1/quiesced1/fault0/

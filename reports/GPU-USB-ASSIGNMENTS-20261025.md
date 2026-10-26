@@ -1,23 +1,31 @@
 # Dedicated GPU USB drives — October 25, 2026
 
-Each card now has its own FAT32 USB drive. Identify the physical device by its
-name and capacity, then check the volume label. Drive letters are the current
-Windows assignments and may change after reconnecting.
+Each card has its own FAT32 USB drive; a fourth drive now prepares the planned
+Ti/3080 pair. Identify the physical device by name, capacity and volume label.
+Only the new SanDisk is currently connected, as D:. Older letters below are
+historical and can be reassigned after reconnecting.
 
-| Current drive | Physical device | Capacity | Volume label | Assigned GPU | Current boot payload |
+| Last recorded drive | Physical device | Capacity | Volume label | Assigned GPU | Current boot payload |
 |---|---|---:|---|---|---|
-| D: | Kingston DataTraveler 2.0 | 16 GB | `RTX3080_10G` | RTX 3080 10 GB | Manual v2 verified in RUN04 |
-| E: | Kingston DataTraveler 3.0 | 32 GB | `RTX3060` | RTX 3060 12 GB | Preserved exact-board manual unlock |
-| F: | General USB Flash Disk | 4 GB | `RTX3080TI` | RTX 3080 Ti 12 GB | Manual v4 verified in dedicated RUN01 |
+| Disconnected; formerly D: | Kingston DataTraveler 2.0 | 16 GB | `RTX3080_10G` | RTX 3080 10 GB | Manual v2 verified in RUN04 |
+| Disconnected; formerly E: | Kingston DataTraveler 3.0 | 32 GB | `RTX3060` | RTX 3060 12 GB | Preserved exact-board manual unlock |
+| Disconnected; formerly F: | General USB Flash Disk | 4 GB | `RTX3080TI` | RTX 3080 Ti 12 GB | Manual v4 verified in dedicated RUN01 |
+| D: now | SanDisk Cruzer Force | 8 GB | `RTX3080PAIR` | Ti + 3080 pair preparation | Read-only pair capture; no unlock |
 
-All package files were checked against their source manifests: 24 on D:, 24 on
-E: and 24 on F:, including each manifest. Each drive also contains `GPU-USB.txt`
+The new SanDisk was explicitly authorized for erasure, formatted FAT32 and staged
+with 22 verified package files. Boot it only after installing both captured cards,
+then collect its logs in Windows. It does not unlock either card and does not
+replace the three single-card packages. [Pair procedure](RTX3080-DUAL-WINDOWS-PREPARATION-20261025.md).
+
+At the original three-drive assignment, all package files were checked against
+their source manifests: 24 per drive, including each manifest. Each original drive also contains `GPU-USB.txt`
 with its assignment and instructions. Overwritten files and old captures were
 backed up privately; unrelated files were preserved. The obsolete motherboard
-BIOS file on F: was removed after explicit user approval. Nothing was formatted,
-no internal ESP or boot entry was changed, and no firmware was executed.
+BIOS file on F: was removed after explicit user approval. That original assignment
+formatted nothing. The later SanDisk format is recorded above; neither operation
+changed an internal ESP or boot entry or executed firmware.
 
-## RTX 3080 history and future boots
+## RTX 3080 history and future single-card boots
 
 The3080 10GB had a successful manual v2 RUN04 in an earlier boot and is now
 removed; the Ti is installed. The16GB drive remains dedicated to the3080. For future fresh
