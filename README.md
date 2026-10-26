@@ -25,6 +25,16 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
+**Dedicated GPU USB drives:** D: / 16 GB Kingston DataTraveler 2.0 /
+`RTX3080_10G` is the RTX3080 10GB read-only ownership probe; E: / 32 GB Kingston
+DataTraveler 3.0 / `RTX3060` holds the preserved manual3060 unlock; F: / 4 GB
+General USB Flash Disk / `RTX3080TI` holds the preserved manual3080Ti unlock.
+All12/24/24 package files verify. Each has GPU-USB.txt; no format or internal
+boot change. The old F: BIOS file was removed with explicit approval. Drive
+letters may change; use device name/capacity/label and unplug the other drives
+if F8 is ambiguous. **For the installed3080, use the16GB Kingston2.0; no U press
+is needed for its pending diagnostic.** [Assignment and boot instructions](reports/GPU-USB-ASSIGNMENTS-20261025.md).
+
 **RTX 3080 10 GB board capture verified, October 25:** the card is now installed.
 Both read-only board runs match the Windows identity and contain identical PROM,
 ROM and register values. All 16 register reads, the 1 MiB PROM and offline

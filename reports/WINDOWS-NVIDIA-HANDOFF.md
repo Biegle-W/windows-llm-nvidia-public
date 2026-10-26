@@ -1,5 +1,16 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST dedicated USB assignment: [physical device mapping](GPU-USB-ASSIGNMENTS-20261025.md).
+D:16GB Kingston DataTraveler2.0 / RTX3080_10G / read-only3080 ownership probe;
+E:32GB Kingston DataTraveler3.0 / RTX3060 / preserved manual3060 unlock;
+F:4GB General USB Flash Disk / RTX3080TI / preserved manual3080Ti unlock.
+All12/24/24 package files verified; GPU-USB.txt added to each; collisions and
+captures backed up privately. No formatting/BCD/internal ESP/firmware execution.
+Obsolete F: BIOS file removed after explicit user approval. Letters can change;
+identify physical model/capacity/label. Current3080 uses16GB Kingston2.0: F8 USB,
+read-only ownership capture, Windows Boot Manager, no U press. Do not replace
+another card's dedicated USB to advance this workflow. Future3060 remains USB-only.
+
 LATEST RTX3080 10GB board audit: installed2206/10240MiB, driver610.88/320W.
 RUN01 and RUN02 are complete; PROM/ROM/registers agree and match actual Windows
 identity. All16 reads,1MiB PROM and CPU-only FWSEC fuse2/booter1, signature,
