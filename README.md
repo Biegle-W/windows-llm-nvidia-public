@@ -25,17 +25,31 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
+**RTX 3080 10 GB manual unlock ready, October 25:** its read-only ownership
+RUN02 passed, and a separate exact-board candidate is now staged and verified on
+the **16 GB Kingston DataTraveler 2.0 / RTX3080_10G**. All 24 package files and
+16 retained capture files verify; the previous probe is backed up. The image uses
+its own board/PROM/cold-state and NVIDIA GOP metadata, with no automatic mode.
+Eight upstream suites, 31 display/22 simulated unlock/26 driver-policy/19 actual
+cold-check/eight manual-entry cases pass; 17 ownership unit tests and 49 shared
+plus 19 new USB policy checks pass. Original 3060/Ti adaptations reproduce their
+saved sources. Fresh Secure Boot-off, BitLocker-off, Windows-first and removed
+3060 NVMe checks pass. **No 3080 unlock has run yet. Next full shutdown -> F8 ->
+the 16 GB Kingston -> U once after preflight.** Allow up to 10 minutes for Windows
+to start directly; do not rerun in the same firmware session. E:/F: remain for
+3060/Ti and were not changed. [First-trial instructions](reports/RTX3080-10GB-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
+
 **Dedicated GPU USB drives:** D: / 16 GB Kingston DataTraveler 2.0 /
-`RTX3080_10G` is the RTX3080 10GB read-only ownership probe; E: / 32 GB Kingston
+`RTX3080_10G` now holds its fixed-board manual unlock; E: / 32 GB Kingston
 DataTraveler 3.0 / `RTX3060` holds the preserved manual3060 unlock; F: / 4 GB
 General USB Flash Disk / `RTX3080TI` holds the preserved manual3080Ti unlock.
-All12/24/24 package files verify. Each has GPU-USB.txt; no format or internal
+All24/24/24 package files verify. Each has GPU-USB.txt; no format or internal
 boot change. The old F: BIOS file was removed with explicit approval. Drive
 letters may change; use device name/capacity/label and unplug the other drives
-if F8 is ambiguous. **For the installed3080, use the16GB Kingston2.0; no U press
-is needed for its pending diagnostic.** [Assignment and boot instructions](reports/GPU-USB-ASSIGNMENTS-20261025.md).
+if F8 is ambiguous. **For the installed3080, use the16GB Kingston2.0; U once after
+preflight is required for the next manual trial.** [Assignment and boot instructions](reports/GPU-USB-ASSIGNMENTS-20261025.md).
 
-**RTX 3080 10 GB board capture verified, October 25:** the card is now installed.
+**Historical RTX 3080 10 GB board capture verification, superseded by the manual trial above:** the card is now installed.
 Both read-only board runs match the Windows identity and contain identical PROM,
 ROM and register values. All 16 register reads, the 1 MiB PROM and offline
 firmware/signature/DMA/memory-layout checks pass. Pre-project-unlock GEMM baseline:

@@ -1,6 +1,6 @@
 {
   "date": "2026-10-25",
-  "status": "board-captures-audited-ownership-probe-staged",
+  "status": "manual-unlock-staged-awaiting-first-physical-trial",
   "currently_installed_gpu": "RTX 3080 10GB",
   "target_gpu": "RTX 3080 10GB",
   "target_pci_id": "10de:2206",
@@ -10,7 +10,7 @@
   "previous_3080_benchmark_found": true,
   "previous_benchmark_is_unlock_evidence": false,
   "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
-  "efi_source_modified": false,
+  "efi_source_modified": true,
   "packages": [
     {
       "name": "rtx3080-10gb-readonly.zip",
@@ -42,21 +42,25 @@
   "usb": {
     "file_system": "FAT32",
     "label": "RTX3080_10G",
-    "current_mode": "GC_TREE_ONLY read-only ownership probe",
-    "staged_files_independently_verified": 12,
+    "current_mode": "fixed-board manual unlock",
+    "staged_files_independently_verified": 24,
     "prior_ti_fallback_collisions_backed_up": true,
-    "prior_capture_files_preserved_and_hash_verified": 15,
+    "prior_capture_files_preserved_and_hash_verified": 16,
     "efi_copied_last": true,
     "formatted": false,
-    "board_fallback_collisions_backed_up": true
+    "board_fallback_collisions_backed_up": true,
+    "ownership_probe_collisions_backed_up": true
   },
   "current_gpu_session_changed": false,
   "nvme_or_boot_entries_changed": false,
   "llm_profiles_or_12gb_admission_guards_changed": false,
   "3060_usb_only_policy_preserved": true,
-  "3080_unlock_image_built": false,
+  "3080_unlock_image_built": true,
   "3080_unlock_executed": false,
-  "remaining_dependency": "Boot UEFI Kingston USB for read-only ownership capture, then return through Windows Boot Manager. Review that capture before building an exact-board manual unlock.",
-  "physical_3080_ownership_capture_available": false,
-  "current_verification": "rtx3080-10gb-board-capture-20261025.json"
+  "remaining_dependency": "Full shutdown; F8 ->16GB Kingston DataTraveler2.0 / RTX3080_10G; U once after passing preflight; allow Windows to start directly.",
+  "physical_3080_ownership_capture_available": true,
+  "current_verification": "rtx3080-10gb-manual-preparation-20261025.json",
+  "pinned_upstream_checkout_modified": false,
+  "display_source_override": true,
+  "transaction_source_modified": false
 }

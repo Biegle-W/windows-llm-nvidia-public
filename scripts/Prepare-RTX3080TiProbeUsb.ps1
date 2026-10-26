@@ -66,7 +66,17 @@ function Assert-ManualInfo($Info,[string]$Expected) {
        $Info.display_children -ne 1 -or $Info.driver_roles -ne 5 -or $Info.firmware_assets_verified -ne 5){throw 'Manual package policy or reviewed EFI hash differs.'}
 }
 function Assert-ManualPrerequisites($Info,[datetimeoffset]$Now) {
-    $age=($Now-[datetimeoffset]::Parse($Info.CheckedAtUtc,[Globalization.CultureInfo]::InvariantCulture)).TotalMinutes
+    # PowerShell7 JSON may materialize ISO dates as DateTime; string conversion
+    # would discard its UTC Kind and reinterpret it in the local time zone.
+    $stamp=$Info.CheckedAtUtc
+    if($stamp -is [datetimeoffset]){$checked=$stamp}
+    elseif($stamp -is [datetime]){
+        if($stamp.Kind -eq [DateTimeKind]::Unspecified){throw 'Prerequisite timestamp has no time zone.'}
+        $checked=[datetimeoffset]::new($stamp)
+    }elseif($stamp -is [string] -and $stamp -match '(Z|[+-]\d{2}:\d{2})$'){
+        $checked=[datetimeoffset]::Parse($stamp,[Globalization.CultureInfo]::InvariantCulture)
+    }else{throw 'Prerequisite timestamp type or time zone is invalid.'}
+    $age=($Now-$checked).TotalMinutes
     $legacyVerified=($Info.Verified3060EfiPreserved -eq $true -or $Info.Verified3060NvmeRemoval -eq $true)
     if(-not $Info.Success -or $Info.SecureBootEnabled -ne $false -or $Info.BitlockerVolumeStatus -ne 'FullyDecrypted' -or $Info.BitlockerProtection -ne 'Off' -or -not $Info.WindowsFirst -or -not $legacyVerified -or $age -gt 60 -or $age -lt -5){throw 'Fresh manual-platform prerequisite verification is required.'}
 }
@@ -106,7 +116,16 @@ if($Mode -eq 'SelfTest') {
     $usbOnly=$prereq.Clone();$usbOnly.Verified3060EfiPreserved=$false;$usbOnly.Verified3060NvmeRemoval=$true
     Assert-ManualPrerequisites $usbOnly $now
     $usbOnly.Verified3060NvmeRemoval=$false;$rejected=$false;try{Assert-ManualPrerequisites $usbOnly $now}catch{$rejected=$true};if(-not $rejected){throw 'Unverified legacy boot state accepted.'}
-    'PASS 41 USB/card/path/manual-package/prerequisite policy checks; no USB or GPU changes.'
+    $utc=[datetime]::Parse('2026-10-25T21:59:00Z',[Globalization.CultureInfo]::InvariantCulture,[Globalization.DateTimeStyles]::RoundtripKind)
+    foreach($stamp in @($utc,$utc.ToLocalTime(),[datetimeoffset]::Parse('2026-10-25T17:59:00-04:00'))){$typed=$prereq.Clone();$typed.CheckedAtUtc=$stamp;Assert-ManualPrerequisites $typed $now}
+    foreach($stamp in @([datetime]::SpecifyKind($utc,[DateTimeKind]::Unspecified),12345,'2026-10-25T21:59:00')){
+        $typed=$prereq.Clone();$typed.CheckedAtUtc=$stamp;$rejected=$false;try{Assert-ManualPrerequisites $typed $now}catch{$rejected=$true};if(-not $rejected){throw 'Ambiguous timestamp accepted.'}
+    }
+    foreach($stamp in @('2026-10-25T21:59:00Z','2026-10-25T17:59:00-04:00')){
+        $roundtrip=$prereq.Clone();$roundtrip.CheckedAtUtc=$stamp
+        $roundtrip=$roundtrip | ConvertTo-Json | ConvertFrom-Json;Assert-ManualPrerequisites $roundtrip $now
+    }
+    'PASS 49 USB/card/path/manual-package/prerequisite policy checks; no USB or GPU changes.'
     return
 }
 $inventory=(& nvidia-smi --query-gpu=name,pci.bus_id,pci.device_id,pci.sub_device_id,vbios_version,memory.total --format=csv,noheader,nounits | Out-String)

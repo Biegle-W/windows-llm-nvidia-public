@@ -1,5 +1,9 @@
 # RTX 3080 10 GB unlock preparation — October 25, 2026
 
+**Latest:** both captures passed; the guarded manual candidate is now staged on
+the dedicated16GB Kingston. The read-only instructions below are historical.
+[Use the current first-trial instructions](RTX3080-10GB-WINDOWS-FIRST-UNLOCK-TRIAL-20261025.md).
+
 **Current result:** the RTX 3080 10 GB is installed. Its two read-only board
 captures, RUN01 and RUN02, pass identity and capture checks. The PROM, ROM and
 all 16 captured register values agree between the runs. The 1 MiB PROM passes

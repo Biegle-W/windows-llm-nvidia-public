@@ -1,5 +1,22 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST RTX3080 10GB MANUAL READY: ownership RUN02 passed with four handles,
+five roles/ten active edges, complete1/touched0/detach0. NVIDIA GOP177920bytes,
+version0x60009/start0x774/stop0x698; other roles have their own captured metadata.
+Separate fixed-board candidate uses own PROM and exact captured initial state;
+transaction/ColdCheck unchanged, no automatic/SSD/production/profile-refresh mode.
+Tests pass:8 upstream suites,31 display,22 simulated unlock,26 driver policy,
+19 actual ColdCheck,8 manual gate,8 new3080+9 Ti ownership tests,49 shared+19
+additional3080 staging checks on PS5.1/7.6. Original3060/Ti adaptations unchanged.
+CURRENT USB:16GB Kingston2.0/RTX3080_10G, manual EFIbb850c...9075,24 files checked,
+16 captures retained/verified, previous probe backed up, GPU-USB.txt updated.
+Fresh admin SecureBoot off/C fully decrypted+protection off/Windows-first/3060
+NVMe removal checks pass. GPU OK/error0,zero NVIDIA Error/Critical since boot.
+No unlock executed; next user full shutdown/F8 correct16GBUSB/U once after
+preflight, allow up to10min for Windows directly. Do not repeat in same firmware
+session. Collect new GOP.TXT+UNLOCK.TXT and compare the retained compute executable
+to FP16 60.196178/BF16 60.052674 baseline. E3060/F3080Ti unchanged/disconnected.
+
 LATEST dedicated USB assignment: [physical device mapping](GPU-USB-ASSIGNMENTS-20261025.md).
 D:16GB Kingston DataTraveler2.0 / RTX3080_10G / read-only3080 ownership probe;
 E:32GB Kingston DataTraveler3.0 / RTX3060 / preserved manual3060 unlock;
