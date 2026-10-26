@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-25",
+  "status": "board-captures-audited-ownership-probe-staged",
+  "gpu": "RTX 3080 10GB",
+  "pci_id": "10de:2206",
+  "vram_mib": 10240,
+  "driver": "610.88",
+  "power_limit_w": 320,
+  "board_runs": [
+    "RUN01",
+    "RUN02"
+  ],
+  "register_reads_valid": 16,
+  "prom_bytes": 1048576,
+  "rom_image_bytes": 156672,
+  "two_runs_same_prom_rom_and_registers": true,
+  "board_capture_identity_matches_actual_windows_card": true,
+  "offline_fwsec_fuse_version": 2,
+  "offline_booter_fuse_version": 1,
+  "offline_fwsec_signature_dma_and_layout_checks": "passed",
+  "negative_truncated_rom_and_missing_signature_rejected": true,
+  "compute_executable_sha256": "aa8cca683335ee33ab000829b0aa47eceb7de04281eec39d3d36103b2338916e",
+  "baseline_tflops": {
+    "fp32_pedantic": 23.142982,
+    "fp16_tensor_fp32_accumulate": 60.196178,
+    "bf16_tensor_fp32_accumulate": 60.052674
+  },
+  "baseline_reference_checks_passed": 3,
+  "baseline_n": 4096,
+  "baseline_samples": 30,
+  "baseline_warmup_seconds": 2,
+  "baseline_is_llm_speed": false,
+  "lock_state_independently_asserted": false,
+  "gpu_status": "OK",
+  "gpu_config_error_code": 0,
+  "nvidia_error_critical_events_since_boot": 0,
+  "usb": {
+    "label": "RTX3080_10G",
+    "mode": "GC_TREE_ONLY read-only ownership probe",
+    "efi_sha256": "58f4d6beb444d423a8509dd4d1cdbb7a2e10a425e51ae2e65f2cceaa011342b8",
+    "independently_verified_files": 12,
+    "prior_capture_files_preserved_and_hash_verified": 15,
+    "collisions_backed_up": true,
+    "formatted": false
+  },
+  "firmware_executed": false,
+  "unlock_built": false,
+  "unlock_executed": false,
+  "internal_boot_configuration_changed": false,
+  "model_profiles_or_guards_changed": false,
+  "next_step": "Boot UEFI Kingston USB for read-only ownership capture, then return through Windows Boot Manager."
+}

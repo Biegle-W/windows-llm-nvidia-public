@@ -1,5 +1,40 @@
 # RTX 3080 10 GB unlock preparation — October 25, 2026
 
+**Current result:** the RTX 3080 10 GB is installed. Its two read-only board
+captures, RUN01 and RUN02, pass identity and capture checks. The PROM, ROM and
+all 16 captured register values agree between the runs. The 1 MiB PROM passes
+CPU-only firmware descriptor, fuse/signature selection, aligned DMA and 10 GB
+memory-layout checks. Deliberate truncated-ROM/missing-signature cases refuse.
+No firmware was executed by the offline auditor, and diagnostic approval flags
+remain false. Display ownership still needs its physical capture and review.
+
+The retained compute executable records this pre-project-unlock baseline:
+
+| Mode | TFLOPS | Reference check |
+|---|---:|---|
+| FP32 pedantic | 23.142982 | Pass |
+| FP16 tensor, FP32 accumulation | 60.196178 | Pass |
+| BF16 tensor, FP32 accumulation | 60.052674 | Pass |
+
+Each uses a 4096-square GEMM, two-second warmup and 30 samples. These synthetic
+compute rates are not LLM generation speed; no gain is claimed before a later
+same-executable comparison. Third-party lock state is not independently asserted.
+Driver 610.88 and 320 W cap are unchanged. GPU reports OK/error 0, and no NVIDIA
+Error/Critical events were found since this Windows boot after the baseline.
+
+**Next boot:** Kingston D:, FAT32/RTX3080_10G, now contains the read-only
+GC_TREE_ONLY ownership probe. All 12 package files independently match source
+and manifest; all 15 prior raw capture files still match their private copies.
+Colliding files were backed up, EFI copied last, and no formatting, internal ESP,
+BCD or model-profile change was performed. Restart, F8 -> UEFI Kingston USB,
+let the probe finish, then select Windows Boot Manager. There is no U unlock
+confirmation in this diagnostic. Return for ownership review and a separate
+exact-board manual candidate. Neither an unlock nor automatic startup is staged.
+
+The original preparation notes below are historical; this section supersedes
+their statements that the Ti remains installed or that no board capture exists.
+[Curated board-stage verification](verification/rtx3080-10gb-board-capture-20261025.json).
+
 **Prepared and staged:** Kingston D: is FAT32, labeled **RTX3080_10G**, and now
 boots the read-only board probe. All14 staged files were independently verified.
 The previous3080Ti manual fallback and colliding files were archived before any

@@ -1,5 +1,21 @@
 # Windows NVIDIA handoff — 25 October 2026
 
+LATEST RTX3080 10GB board audit: installed2206/10240MiB, driver610.88/320W.
+RUN01 and RUN02 are complete; PROM/ROM/registers agree and match actual Windows
+identity. All16 reads,1MiB PROM and CPU-only FWSEC fuse2/booter1, signature,
+aligned DMA and10GB memory layout checks pass; truncated ROM/missing signature
+negative checks reject as expected. Diagnostic approval flags remain false.
+Same retained compute executable: FP32 23.142982 / FP16 60.196178 /
+BF16 60.052674 TFLOPS,4096-square,2s warmup,30 samples,all reference checks pass.
+This is a pre-project-unlock compute baseline, not an LLM speed measurement or
+independent lock-state proof. GPU OK/error0,zero NVIDIA Error/Critical this boot.
+CURRENT USB: read-only ownership GC_TREE_ONLY, EFI58f4...42b8,12 files verified,
+15 retained raw capture files verified, collisions backed up; no formatting/BCD
+or GPU firmware change. Next user F8 -> UEFI Kingston, then Windows Boot Manager.
+Collect new2206 GOP.TXT, bind it to this baseline, review exact topology/driver
+metadata, then extend the board-scoped manual builder. No3080 unlock built/run.
+Do not reuse3060/Ti state or install automatic startup.12GB router guards remain.
+
 LATEST next-card preparation: [RTX3080 10GB workflow](RTX3080-10GB-UNLOCK-SETUP-20261025.md).
 User requests2206/10GB unlock next;3080Ti still installed. Board package
 data/uefi-probe/rtx3080-10gb-readonly/ and ZIP built from unchanged5c076dc source,

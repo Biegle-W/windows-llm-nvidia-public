@@ -1,8 +1,10 @@
-# Windows LLM NVIDIA — RTX 3080 Ti / RTX 3060
+# Windows LLM NVIDIA — RTX 3080 / RTX 3080 Ti / RTX 3060
 
 ## Repository and archive map
 
-This system now uses **Windows / NVIDIA RTX 3080 Ti 12 GB / i5-13600KF / 16 GB RAM**.
+This system now has **Windows / NVIDIA RTX 3080 10 GB / i5-13600KF / 16 GB RAM**.
+The existing model-router profiles remain scoped to the 12 GB RTX 3060/3080 Ti;
+the 10 GB card is undergoing separate unlock diagnostics.
 The RTX 3060 remains supported for swapping back; its measurements are historical.
 **Current startup policy:** the3060 NVMe firmware entry and payload are removed
 at the user's request; future3060 unlocks use its preserved manual USB package.
@@ -23,7 +25,22 @@ The archive is not an active launcher or a request to restore retired models.
 
 
 
-**Next RTX3080 10GB unlock preparation:** a separate2206/10240MiB setup is ready.
+**RTX 3080 10 GB board capture verified, October 25:** the card is now installed.
+Both read-only board runs match the Windows identity and contain identical PROM,
+ROM and register values. All 16 register reads, the 1 MiB PROM and offline
+firmware/signature/DMA/memory-layout checks pass. Pre-project-unlock GEMM baseline:
+FP32 **23.143**, FP16 **60.196**, BF16 **60.053 TFLOPS**; all three reference
+checks pass. These are compute measurements, not LLM generation speeds.
+GPU OK/error 0; no NVIDIA Error/Critical events found since this boot.
+**Kingston D: now boots the read-only ownership probe**, label **RTX3080_10G**;
+all 12 package files and all 15 retained capture files were independently verified.
+Next restart, press **F8 -> UEFI Kingston USB**, let the probe finish, then select
+**Windows Boot Manager** and report back. No U confirmation is needed for this
+diagnostic. Ownership review and the exact-board manual unlock remain pending.
+The 3060/Ti images stay separate; model profiles and their 12 GB admission guards
+are unchanged. [Board results and next step](reports/RTX3080-10GB-UNLOCK-SETUP-20261025.md).
+
+**Historical RTX3080 10GB unlock preparation:** a separate2206/10240MiB setup is ready.
 The3080Ti is still installed. Kingston D: now boots the read-only3080 board probe,
 label **RTX3080_10G**, with14 independently verified files; the Ti fallback was
 backed up and all seven old capture files retained. Both new diagnostic archives

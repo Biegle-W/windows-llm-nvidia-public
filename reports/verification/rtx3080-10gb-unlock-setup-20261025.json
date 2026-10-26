@@ -1,12 +1,12 @@
 {
   "date": "2026-10-25",
-  "status": "3080-10gb-readonly-board-probe-staged-awaiting-card-swap",
-  "currently_installed_gpu": "RTX 3080 Ti 12GB",
+  "status": "board-captures-audited-ownership-probe-staged",
+  "currently_installed_gpu": "RTX 3080 10GB",
   "target_gpu": "RTX 3080 10GB",
   "target_pci_id": "10de:2206",
   "target_vram_mib": 10240,
-  "actual_target_subsystem_and_vbios_known": false,
-  "physical_3080_captures_available": false,
+  "actual_target_subsystem_and_vbios_known": true,
+  "physical_3080_captures_available": true,
   "previous_3080_benchmark_found": true,
   "previous_benchmark_is_unlock_evidence": false,
   "source_commit": "5c076dc4ee7fa369639669fa591ac74d8f6dfcd8",
@@ -42,12 +42,13 @@
   "usb": {
     "file_system": "FAT32",
     "label": "RTX3080_10G",
-    "current_mode": "read-only2206 board probe",
-    "staged_files_independently_verified": 14,
+    "current_mode": "GC_TREE_ONLY read-only ownership probe",
+    "staged_files_independently_verified": 12,
     "prior_ti_fallback_collisions_backed_up": true,
-    "prior_capture_files_preserved_and_hash_verified": 7,
+    "prior_capture_files_preserved_and_hash_verified": 15,
     "efi_copied_last": true,
-    "formatted": false
+    "formatted": false,
+    "board_fallback_collisions_backed_up": true
   },
   "current_gpu_session_changed": false,
   "nvme_or_boot_entries_changed": false,
@@ -55,5 +56,7 @@
   "3060_usb_only_policy_preserved": true,
   "3080_unlock_image_built": false,
   "3080_unlock_executed": false,
-  "remaining_dependency": "Install2206 RTX3080 10GB, boot the staged board probe, collect its Windows baseline and board capture, then collect/review ownership before building an exact-board manual unlock."
+  "remaining_dependency": "Boot UEFI Kingston USB for read-only ownership capture, then return through Windows Boot Manager. Review that capture before building an exact-board manual unlock.",
+  "physical_3080_ownership_capture_available": false,
+  "current_verification": "rtx3080-10gb-board-capture-20261025.json"
 }
